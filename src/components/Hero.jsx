@@ -6,9 +6,12 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import ReactTypingEffect from 'react-typing-effect';
+import TypeWriterEffect from 'react-typewriter-effect';
 
 
 function Hero() {
+
+  const myRef = document.querySelector('.scrollable-div')
 
  
 
@@ -21,25 +24,16 @@ function Hero() {
         <div className='flex items-center h-full pt-8'>
           <div className='flex-1 flex flex-col items-center lg:items-start'>
 
-          <ReactTypingEffect
-            text={["Hey there, I'm Berk"]}
-            cursorRenderer={cursor => <h1>{cursor}</h1>}
-            displayTextRenderer={(text, i) => {
-              return (
-                <p className='text-lg text-accent text-md mb-[22px]'>
-                  {text.split('').map((char, i) => {
-                    const key = `${i}`;
-                    return (
-                      <span
-                        key={key}
-                        
-                      >{char}</span>
-                    );
-                  })}
-                </p>
-              );
-            }}        
-          />
+
+            <TypeWriterEffect
+                  textStyle={{ color:'orange' }}
+                  startDelay={100}
+                  cursorColor="orange"
+                  text="Hello 🌏, I'm Berk"
+                  typeSpeed={100}
+                  scrollArea={myRef}
+                  
+            />
           
             <h1 className='text-4xl leading-[44px] md:text-5xl md:leading-tight lg:text-7xl lg:leading-[1.2] font-bold md:tracking-[-2px]'>
               React & Flutter Developer <br/> 
