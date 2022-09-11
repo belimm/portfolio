@@ -4,6 +4,8 @@ import React,{useState} from 'react'
 import { contact } from '../data';
 import { ToastContainer, toast } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Contact() {
     var name="";
@@ -17,6 +19,16 @@ function Contact() {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log("Tıklandııı");
+
+    toast.success('Mail was sent!', {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   };
 
   const handleChange = (e) => {
@@ -28,6 +40,7 @@ function Contact() {
 
     const sendMail  = ()=>{
       console.log("Mail yollandııı");
+
       toast.success('Mail was sent to!', {
         position: "top-right",
         autoClose: 3000,
@@ -87,11 +100,12 @@ function Contact() {
                   
                   onChange={handleChange}
                 ></textarea>
-                  <button className='btn btn-lg bg-accent hover:bg-secondary-hover rounded-lg'>
+                  <button className='btn btn-lg bg-accent hover:bg-secondary-hover rounded-lg text-sm'>
                     Send message
                   </button>
 
               </form>
+              <ToastContainer/>
             </div>
           </div>
         </section>

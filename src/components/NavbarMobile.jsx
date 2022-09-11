@@ -8,17 +8,20 @@ import { MenuAlt3Icon } from '@heroicons/react/outline';
 import { navigation } from '../data';
 
 // import components
-import Socials from './Socials';
+
+import {socialMobile} from '../data'
 
 // import framer
 import { motion } from 'framer-motion';
 
 // import Link
 import { Link } from 'react-scroll';
+import { keyboardImplementationWrapper } from '@testing-library/user-event/dist/keyboard';
 
 
 function NavbarMobile() {
   const [isOpen, setIsOpen] = useState(false);
+
 
   const circleVariants = {
     hidden: {
@@ -75,21 +78,55 @@ function NavbarMobile() {
         >
           <XIcon className='w-8 h-8' />
         </div>
+        
         {navigation.map((item, idx) => {
+          
           return (
-            <li key={idx} className='mb-8'>
-              <Link
-                to={item.href}
-                smooth={true}
-                duration={500}
-                offset={-70}
-                className='text-xl cursor-pointer capitalize'
-              >
-                {item.name}
-              </Link>
+            <div>
+              <li key={idx} className='mb-8'>
+                <Link
+                  to={item.href}
+                  smooth={true}
+                  duration={500}
+                  offset={-70}
+                  className='text-xl cursor-pointer capitalize'
+                >
+                  <button onClick={()=>{setIsOpen(false);}}>
+                    {item.name}
+                  </button>
+                  
+                </Link>
+              </li>
+            </div>
+              
+            
+            
+          );
+
+          
+        })}
+
+        <br></br>
+        <br></br>
+        <br></br>
+
+        {socialMobile.map((item, index) => {
+          return (
+            <div className='mb-8'>
+                <li
+              className='flex justify-center items-center text-accent'
+              key={index}
+            >
+              <a className='text-base' href={item.href} target="_blank">
+                {item.icon}
+              </a>
             </li>
+            </div>
+            
           );
         })}
+
+        
         <a href='https://github.com/berklimoncu'>
           
         </a>

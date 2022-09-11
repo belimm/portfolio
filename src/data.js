@@ -25,12 +25,7 @@ import{
 
 } from 'react-icons/si'
 
-// companies icons
-import FreelancerBrandIcon from './assets/img/brands/freelancer.png';
-import UpworkBrandIcon from './assets/img/brands/upwork.png';
-import FiverBrandIcon from './assets/img/brands/fiverr.png';
-import BehanceBrandIcon from './assets/img/brands/behance.png';
-import DribbbleBrandIcon from './assets/img/brands/dribbble.png';
+
 
 // projects images
 import Project1 from './assets/img/projects/Project1.webp';
@@ -58,20 +53,20 @@ import TestiImage3 from './assets/img/testimonials/testimonial-3.webp';
 // navigation
 export const navigation = [
   {
-    name: 'home',
+    name: 'Home',
     href: 'home',
   },
   {
-    name: 'about',
+    name: 'About',
     href: 'about',
   },
   {
-    name: 'portfolio',
+    name: 'Portfolio',
     href: 'portfolio',
   },  
   
   {
-    name: 'contact',
+    name: 'Contact',
     href: 'contact',
   },
 ];
@@ -84,7 +79,7 @@ export const social = [
   },
   {
     icon: <FaLinkedin size={"24"} />,
-    href: 'https://www.linkedin.com/in/berk-limoncu-828a14136/',
+    href: 'https://www.linkedin.com/in/berklimoncu/',
   },
   {
     icon: <FaMedium size={"24"}/>,
@@ -92,6 +87,25 @@ export const social = [
   },
   {
     icon: <FaTwitterSquare size={"24"} />,
+    href: 'https://twitter.com/berklimoncu',
+  },
+];
+
+export const socialMobile = [
+  {
+    icon: <FaGithub size={"24"} color={'white'}/>,
+    href: 'https://github.com/berklimoncu',
+  },
+  {
+    icon: <FaLinkedin size={"24"} color={'white'}/>,
+    href: 'https://www.linkedin.com/in/berklimoncu/',
+  },
+  {
+    icon: <FaMedium size={"24"} color={'white'}/>,
+    href: 'https://medium.com/@berklimoncu',
+  },
+  {
+    icon: <FaTwitterSquare size={"24"} color={'white'} />,
     href: 'https://twitter.com/berklimoncu',
   },
 ];

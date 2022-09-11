@@ -18,11 +18,15 @@ function Footer() {
                   );
                 })}
               </div>
+
+              <hr className='mb-8' />
               <div>
               <a href='#'>
                 <p style={{fontSize:40,fontWeight:"Bold"}}>Berk Limoncu</p>
             </a>
               </div>
+
+              
               <p className='text-paragraph opacity-80 text-[15px]'>
                 &copy; Berk Limoncu
               </p>
