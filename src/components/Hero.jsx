@@ -11,7 +11,8 @@ import TypeWriterEffect from 'react-typewriter-effect';
 
 function Hero() {
 
-  const myRef = document.querySelector('.scrollable-div')
+  const myRef = document.querySelector('.scrollable-div');
+  
 
  
 
