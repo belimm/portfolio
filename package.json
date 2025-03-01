@@ -1,52 +1,28 @@
 {
-  "name": "portfolio-website-main",
-  "version": "0.1.0",
+  "name": "portfolio",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-lazy-load-image-component": "^1.5.5",
-    "react-scripts": "5.0.0",
-    "react-toastify": "^9.0.8",
-    "react-typewriter-effect": "^1.1.0",
-    "react-typing-effect": "^2.0.5",
-    "web-vitals": "^2.1.4"
-  },
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "framer-motion": "^12.4.7",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@heroicons/react": "^1.0.6",
-    "autoprefixer": "^10.4.2",
-    "framer-motion": "^6.2.8",
-    "postcss": "^8.4.8",
-    "react-icons": "^4.3.1",
-    "react-scroll": "^1.8.6",
-    "swiper": "^8.0.7",
-    "tailwindcss": "^3.0.23"
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "vite": "^6.2.0"
   }
 }
