@@ -63,7 +63,7 @@ function ProjectCard({ src, link, h3, p, paragraph, url }) {
    // If a link is provided, the card is a clickable link.
    if (link) {
       return (
-         <a href={link} target="_blank" rel="noopener noreferrer">
+         <a href={link} target="_blank" rel="noopener noreferrer" className="">
             <img className={styles.projectImage} src={src} alt={`${h3} logo`} />
             <h3 className={styles.projectTitle}>{h3}</h3>
             <p className={styles.projectDefinition}>{p}</p>
