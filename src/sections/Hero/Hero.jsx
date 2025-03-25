@@ -24,8 +24,8 @@ function Hero() {
                className={styles.hero}
                alt="Profile picture of Berk Limoncu"
                style={{
-                  width: '512px',
-                  height: '512px',
+                  width: '250px',
+                  height: '250px',
                   borderRadius: '50%',
                   objectFit: 'cover',
                }}
