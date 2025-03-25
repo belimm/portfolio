@@ -12,6 +12,7 @@
       height: 300px;
       border-radius: 50%;
       object-fit: cover;
+      margin-top: 50px;
 
       @media (min-width: 800px) {
          width: 512px;
@@ -63,6 +64,7 @@
 
 .colorModeContainer {
    position: relative;
+   margin-top: 50px
 }
 
 .colorMode {
