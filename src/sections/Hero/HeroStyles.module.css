@@ -1,101 +1,103 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-  text-align: center;
-  height: 100dvh;
-  min-height: 500px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   gap: 20px;
+   text-align: center;
+   height: 100dvh;
+   min-height: 500px;
 
-  .hero {
-    max-width: 200px;
-  }
+   .hero {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      object-fit: cover;
 
-  span {
-    display: flex;
-    gap: 25px;
-    justify-content: center;
-
-    a {
-      margin: 0;
-
-      img {
-        width: 30px;
+      @media (min-width: 800px) {
+         width: 512px;
+         height: 512px;
       }
-    }
-  }
+   }
 
-  a {
-    width: fit-content;
-    align-self: center;
-  }
+   span {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
 
-  button {
-    background-color: var(--btn-color);
-    color: var(--btn-text-color);
-    border: none;
-    border-radius: 20px;
-    width: 126px;
-    height: 50px;
-    font-size: 20px;
-    font-weight: bold;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    transition: box-shadow 200ms ease-in-out, transform 200ms ease-in-out;
-  }
+      a {
+         margin: 0;
 
-  button:hover {
-    transform: scale(1.05);
-  }
+         img {
+            width: 30px;
+         }
+      }
+   }
 
-  button:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
-  }
+   a {
+      width: fit-content;
+      align-self: center;
+   }
+
+   button {
+      background-color: var(--btn-color);
+      color: var(--btn-text-color);
+      border: none;
+      border-radius: 20px;
+      width: 126px;
+      height: 50px;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+      transition: box-shadow 200ms ease-in-out, transform 200ms ease-in-out;
+   }
+
+   button:hover {
+      transform: scale(1.05);
+   }
+
+   button:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+   }
 }
 
 .colorModeContainer {
-  position: relative;
+   position: relative;
 }
 
 .colorMode {
-  position: absolute;
-  right: 0;
-  width: 25px;
+   position: absolute;
+   right: 10px;
+   width: 25px;
 }
 
 .colorMode:hover {
-  cursor: pointer;
+   cursor: pointer;
 }
 
 .description {
-  max-width: 30ch;
+   max-width: 30ch;
 }
 
 .info {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 20px;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   gap: 20px;
 }
 
-@media (width >= 800px) {
-  .container {
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-evenly;
-
-    .hero {
-      max-width: 350px;
-      width: 350px;
-    }
-  }
+@media (min-width: 800px) {
+   .hero {
+      width: 512px;
+      height: 512px;
+   }
 }
 
 @media (width >= 1400px) {
-  .container {
-    .hero {
-      max-width: 400px;
-      width: 400px;
-    }
-  }
+   .container {
+      .hero {
+         max-width: 400px;
+         width: 400px;
+      }
+   }
 }
