@@ -1,6 +1,4 @@
 import styles from './ProjectsStyles.module.css';
-//import vetQualityAssurance from '../../assets/vetQualityAssurance.png';
-import logoGOPA from '../../assets/logo-gopa-share.png';
 import scalable_analyzer from '../../assets/scalable-analyzer.png';
 import peeka from '../../assets/peeka.webp';
 import fibabanka from '../../assets/fibabanka-logo.avif';
@@ -13,13 +11,7 @@ function Projects() {
       <section id="projects" className={styles.container}>
          <h1 className="sectionTitle">Projects</h1>
          <div className={styles.projectsContainer}>
-            <ProjectCard
-               src={logoGOPA} // You'll need to add this image to your assets
-               h3="EU VET Quality Assurance"
-               p="Vocational Education Reform in TRNC"
-               paragraph="Aligned 12 Cypriot vocational schools with EU standards (EQAVET/ECVET) under the EU Aid Programme. Developed accreditation frameworks and trained 50+ administrators. Technologies: Quality assurance databases, EU compliance tools."
-               url="https://www.gopa.de/"
-            />
+           
 
             <ProjectCard
                src={scalable_analyzer}
