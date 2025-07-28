@@ -7,7 +7,11 @@ import Image from 'next/image';
 import avatar from '../../assets/berk_avatar.jpg';
 import styles from './ProjectsStyles.module.css';
 
-export default function Title() {
+interface TitleProps {
+   onContactClick?: () => void;
+}
+
+export default function Title({ onContactClick }: TitleProps) {
    // 1. Manage terminal state here
    const [terminalEntries, setTerminalEntries] = useState([
       { command: 'whoami', output: 'Berk Limoncu - Full Stack Developer' },
@@ -20,30 +24,36 @@ export default function Title() {
          ...prev,
          {
             command: 'curl -O https://berk.dev/cv.pdf',
-            output:
-               '  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n100  245k  100  245k    0     0   245k      0  0:00:01  0:00:01 --:--:--  245k\nCV downloaded successfully!',
-         },
-         {
-            command: 'ls -lh cv.pdf',
-            output: '-rw-r--r--  1 berk  staff   245K Dec 15 10:30 cv.pdf',
-         },
-         {
-            command: 'open cv.pdf',
-            output: 'Opening CV in default application...',
+            output: 'Downloading...',
          },
       ]);
 
       // Actually download the CV file from Google Drive
       const link = document.createElement('a');
-      // Replace this with your actual Google Drive link
-      // Format: https://drive.google.com/uc?export=download&id=YOUR_FILE_ID
       link.href =
          'https://drive.google.com/uc?export=download&id=1JtAdsEvPX0x-Ec_QyNcTAwne678c5s5k';
       link.download = 'Berk_Limoncu_CV.pdf';
-      link.target = '_blank'; // Open in new tab as fallback
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
+      // Show success message when user interacts with the page (assumes download completed)
+      const handleUserInteraction = () => {
+         setTerminalEntries((prev) => [
+            ...prev.slice(0, -1), // Remove the last entry
+            {
+               command: 'curl -O https://berk.dev/cv.pdf',
+               output: 'CV downloaded successfully!',
+            },
+         ]);
+         // Remove the event listeners
+         document.removeEventListener('click', handleUserInteraction);
+         document.removeEventListener('keydown', handleUserInteraction);
+      };
+
+      // Add event listeners for user interaction
+      document.addEventListener('click', handleUserInteraction);
+      document.addEventListener('keydown', handleUserInteraction);
    };
 
    // 2. Update terminal state on button click
@@ -56,6 +66,9 @@ export default function Title() {
                'Email: berk@example.com\nLinkedIn: linkedin.com/in/berklimoncu\nLocation: Berlin, Germany\nGitHub: github.com/belimm',
          },
       ]);
+
+      // Trigger blinking effect for social icons
+      onContactClick?.();
    };
 
    return (

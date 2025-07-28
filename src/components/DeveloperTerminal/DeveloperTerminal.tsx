@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './DeveloperTerminal.module.css';
-import TypeWriter from '../TypeWriter/TypeWriter';
 
 type TerminalEntry = {
    command: string;
@@ -47,9 +46,7 @@ const DeveloperTerminal: React.FC<DeveloperTerminalProps> = ({
                   <span className={styles.prompt}>$</span>
                   {entry.command}
                   {entry.output && (
-                     <div className={styles.output}>
-                        {entry.output}
-                     </div>
+                     <div className={styles.output}>{entry.output}</div>
                   )}
                </div>
             ))}

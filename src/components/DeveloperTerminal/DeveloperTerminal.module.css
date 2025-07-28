@@ -7,7 +7,8 @@
    font-size: 0.95rem;
    padding: 0.25rem 0;
    width: 50%;
-   max-width: 100%;
+   
+   
 }
 
 /* Mobile responsive styles */
@@ -28,7 +29,7 @@
 }
 
 .terminalScroll {
-   height: 90px; /* fixed height, smaller */
+   height: 300px; /* fixed height, smaller */
    overflow-y: scroll; /* always show scrollbar */
    padding: 0 0.5rem;
    scrollbar-width: thin;

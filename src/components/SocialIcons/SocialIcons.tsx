@@ -2,7 +2,11 @@
 
 import React, { useState } from 'react';
 
-export default function SocialIcons() {
+interface SocialIconsProps {
+   isBlinking?: boolean;
+}
+
+export default function SocialIcons({ isBlinking = false }: SocialIconsProps) {
    const [githubHovered, setGithubHovered] = useState(false);
    const [linkedinHovered, setLinkedinHovered] = useState(false);
 
@@ -16,10 +20,26 @@ export default function SocialIcons() {
             gap: '1rem',
             zIndex: 1000,
          }}>
+         <style jsx>{`
+            @keyframes blink {
+               0%,
+               50% {
+                  opacity: 1;
+               }
+               51%,
+               100% {
+                  opacity: 0.3;
+               }
+            }
+            .blinking {
+               animation: blink 1s infinite;
+            }
+         `}</style>
          <a
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
+            className={isBlinking ? 'blinking' : ''}
             style={{
                width: '24px',
                height: '24px',
@@ -40,6 +60,7 @@ export default function SocialIcons() {
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
+            className={isBlinking ? 'blinking' : ''}
             style={{
                width: '24px',
                height: '24px',
