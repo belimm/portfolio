@@ -1,0 +1,124 @@
+.typewriter {
+   display: inline-block;
+   font-family: 'Fira Mono', monospace;
+   white-space: pre-wrap;
+   word-break: break-word;
+}
+
+.cursor {
+   display: inline-block;
+   width: 0.7em;
+   height: 1.1em;
+   background: transparent;
+   border-left: 2px solid #0ff;
+   margin-left: 2px;
+   animation: blink-cursor 1s steps(1) infinite;
+   vertical-align: bottom;
+}
+
+@keyframes blink-cursor {
+   0%,
+   50% {
+      opacity: 1;
+   }
+   51%,
+   100% {
+      opacity: 0;
+   }
+}
+
+/* Terminal-specific styling when used in terminal context */
+.terminal .typewriter {
+   color: #0f0;
+   font-family: 'Fira Mono', monospace;
+}
+
+.terminal .cursor {
+   border-left-color: #0f0;
+}
+
+/* Fast typing variant */
+.fast .typewriter {
+   font-weight: 500;
+}
+
+.fast .cursor {
+   border-left-width: 1px;
+   animation-duration: 0.8s;
+}
+
+/* Demo styles */
+.demoContainer {
+   max-width: 800px;
+   margin: 2rem auto;
+   padding: 2rem;
+   background: #1a1a1a;
+   border-radius: 12px;
+   border: 1px solid #333;
+}
+
+.demoTitle {
+   text-align: center;
+   color: #fff;
+   margin-bottom: 2rem;
+   font-size: 1.8rem;
+}
+
+.demoControls {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 1rem;
+   margin-bottom: 2rem;
+}
+
+.demoButton {
+   background: #333;
+   color: #fff;
+   border: 1px solid #555;
+   padding: 0.5rem 1rem;
+   border-radius: 6px;
+   cursor: pointer;
+   transition: all 0.2s ease;
+}
+
+.demoButton:hover {
+   background: #444;
+   border-color: #666;
+}
+
+.demoCounter {
+   color: #888;
+   font-size: 0.9rem;
+}
+
+.demoContent {
+   background: #222;
+   padding: 1.5rem;
+   border-radius: 8px;
+   margin-bottom: 1.5rem;
+}
+
+.demoSubtitle {
+   color: #0ff;
+   margin-bottom: 1rem;
+   font-size: 1.2rem;
+}
+
+.demoText {
+   color: #fff;
+   font-family: 'Fira Mono', monospace;
+   line-height: 1.6;
+   white-space: pre-wrap;
+   min-height: 100px;
+}
+
+.demoInfo {
+   color: #888;
+   font-size: 0.9rem;
+   text-align: center;
+}
+
+.demoInfo p {
+   margin: 0.25rem 0;
+}
