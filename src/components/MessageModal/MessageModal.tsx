@@ -40,17 +40,19 @@ export default function MessageModal({ onClose }: MessageModalProps) {
 
       setLoading(true);
 
+      console.log(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID);
+
       try {
          await emailjs.send(
-            'service_wr75o0t',
-            'template_fme7avk',
+            process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '',
+            process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '',
             {
                name,
                email,
                message,
                time: new Date().toLocaleString(), // optional
             },
-            'vQxRA0FBApM6uubPh'
+            process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''
          );
 
          toast.success('Message sent successfully!');
