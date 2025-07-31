@@ -1,4 +1,4 @@
-import styles from './ProjectsStyles.module.css';
+import styles from './ContactStyles.module.css';
 import React from 'react';
 
 export default function Contact() {

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Title from './title/Title';
 import Projects from './projects/Projects';
 import Skills from './skills/Skills';
-import Contact from './contact/Contanct';
+import Contact from './contact/Contact';
 import SocialIcons from '../components/SocialIcons/SocialIcons';
 
 

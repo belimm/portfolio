@@ -1,4 +1,4 @@
-import styles from './ProjectsStyles.module.css';
+import styles from './SkillsStyles.module.css';
 import React from 'react';
 
 export default function Skills() {

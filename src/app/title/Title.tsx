@@ -8,7 +8,7 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import TechnologyIcons from '../../components/TechnologyIcons/TechnologyIcons';
 import MessageModal from '../../components/MessageModal/MessageModal';
 
-import styles from './ProjectsStyles.module.css';
+import styles from './TitleStyles.module.css';
 import Avatar from '@/components/Avatar/Avatar';
 
 interface TitleProps {
