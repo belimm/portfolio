@@ -6,13 +6,28 @@
    padding: 2rem 0 0 2rem; /* top: 2rem, right: 0, bottom: 0, left: 2rem */
    max-width: 1400px;
    margin: 20% auto;
-   border: 3px solid aqua;
+   
+   font-size: 2.5rem;
+   margin-bottom: 2rem;
+   color: var(--text-primary);
 }
+
+
 
 .sectionTitle {
    font-size: 2.5rem;
    margin-bottom: 2rem;
    color: var(--text-primary);
+   text-align: center;
+   
+   
+}
+
+.skillsTitle{
+   font-size: 2.5rem;
+   margin-bottom: 5rem;
+   color: var(--text-primary);
+   text-align: center;
 }
 
 .projectsContainer {

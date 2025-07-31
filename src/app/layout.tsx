@@ -17,6 +17,24 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
    title: 'Berk Limoncu',
    description: 'Personal Portfolio',
+   openGraph: {
+      title: 'Berk Limoncu',
+      description: 'Personal Portfolio',
+      url: 'https://berklimoncu.com',
+      siteName: 'Berk Limoncu',
+      images: [
+         {
+            url: '/images/og-image.png',
+            width: 1200,
+            height: 630,
+         },
+      ],
+      locale: 'en_US',
+      type: 'website',
+   },
+   icons: {
+      icon: '/bico.ico',
+   },
 };
 
 export default function RootLayout({

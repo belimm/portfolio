@@ -18,7 +18,7 @@ interface TitleProps {
 export default function Title({ onContactClick }: TitleProps) {
    // 1. Manage terminal state here
    const [terminalEntries, setTerminalEntries] = useState([
-      { command: 'whoami', output: 'Berk Limoncu - Full Stack Developer' },
+      { command: 'whoami', output: 'Berk Limoncu - Full Stack & Mobile Developer' },
    ]);
    //const [showTechnologies, setShowTechnologies] = useState(false);
    const [isModalOpen, setIsModalOpen] = useState(false);
@@ -110,7 +110,7 @@ export default function Title({ onContactClick }: TitleProps) {
                /beɾk//
             </div>
             <div className={`${styles.role} ${styles.fadeInUp}`}>
-               Full Stack Developer
+               Full Stack & Mobile Developer
             </div>
             <div className={`${styles.location} ${styles.fadeInUp}`}>
                📍Berlin, Germany
