@@ -1,0 +1,105 @@
+.terminalContainer {
+   background: #222;
+   color: #0f0;
+   font-family: 'Fira Mono', monospace;
+   border-radius: 8px;
+   margin-bottom: 1rem;
+   font-size: 0.95rem;
+   padding: 0.25rem 0;
+   width: 50%;
+   
+   
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+   .terminalContainer {
+      width: 80%;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+   }
+}
+
+@media (max-width: 480px) {
+   .terminalContainer {
+      width: 95%;
+      font-size: 1.1rem;
+      padding: 0.75rem 0;
+   }
+}
+
+.terminalScroll {
+   height: 300px; /* fixed height, smaller */
+   overflow-y: scroll; /* always show scrollbar */
+   padding: 0 0.5rem;
+   scrollbar-width: thin;
+   scrollbar-color: #0ff #222;
+}
+
+/* Mobile responsive styles for terminal scroll */
+@media (max-width: 768px) {
+   .terminalScroll {
+      height: 120px;
+      padding: 0 0.75rem;
+   }
+}
+
+@media (max-width: 480px) {
+   .terminalScroll {
+      height: 150px;
+      padding: 0 1rem;
+   }
+}
+.terminalScroll::-webkit-scrollbar {
+   width: 8px;
+}
+.terminalScroll::-webkit-scrollbar-thumb {
+   background: #0ff;
+   border-radius: 4px;
+}
+.terminalScroll::-webkit-scrollbar-track {
+   background: #222;
+}
+
+.terminalEntry {
+   margin-bottom: 0.5em;
+   word-break: break-word;
+}
+
+.prompt {
+   color: #0ff;
+   margin-right: 0.5em;
+}
+
+.output {
+   color: #fff;
+   margin-left: 1.2em;
+   margin-top: 0.15em;
+}
+
+.terminalTypewriter {
+   color: #0f0;
+   font-family: 'Fira Mono', monospace;
+}
+
+.cursor {
+   display: inline-block;
+   width: 0.7em;
+   height: 1.1em;
+   background: transparent;
+   border-left: 2px solid #0ff;
+   margin-left: 2px;
+   animation: blink-cursor 1s steps(1) infinite;
+   vertical-align: bottom;
+}
+
+@keyframes blink-cursor {
+   0%,
+   50% {
+      opacity: 1;
+   }
+   51%,
+   100% {
+      opacity: 0;
+   }
+}
