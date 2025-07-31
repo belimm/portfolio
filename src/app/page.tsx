@@ -6,6 +6,7 @@ import Projects from './projects/Projects';
 import Skills from './skills/Skills';
 import Contact from './contact/Contanct';
 import SocialIcons from '../components/SocialIcons/SocialIcons';
+import SectionNav from '@/components/SectionNav/SectionNav';
 
 export default function Home() {
    const [isSocialIconsBlinking, setIsSocialIconsBlinking] = useState(false);
@@ -28,6 +29,7 @@ export default function Home() {
             position: 'relative',
          }}>
          <SocialIcons isBlinking={isSocialIconsBlinking} />
+         {/* <SectionNav />*/}
          <Title onContactClick={handleContactClick} />
          <Projects />
          <Skills />
