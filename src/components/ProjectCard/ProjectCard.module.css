@@ -98,3 +98,27 @@
       box-sizing: border-box;
    }
 }
+
+.techList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.techBadge {
+  padding: 0.4rem 0.75rem;
+  border: 2px solid #fff;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  color: #0ff;
+  background: transparent;
+  cursor: default;
+  transition: all 0.3s ease;
+}
+
+.techBadge:hover {
+  background: #0ff;
+  color: #000;
+}

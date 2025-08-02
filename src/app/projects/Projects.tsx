@@ -10,6 +10,7 @@ const projects = [
       p: 'Master Thesis Project',
       paragraph:
          'My master’s thesis explores the technical and architectural challenges of transitioning from monolithic applications to microservices, with a focus on refactorability, scalability, and performance. By implementing and analyzing both architectures in practical scenarios, I evaluate the trade-offs involved in such transitions and provide insights into best practices for building scalable, maintainable systems.',
+      technologies: ['Java', 'Spring Boot', 'Docker'],
    },
    {
       src: '/images/peeka.webp',
@@ -18,6 +19,7 @@ const projects = [
       p: 'See Your Future Baby',
       paragraph:
          'Peeka is a fun and engaging mobile application I developed that uses AI to generate realistic images of what a couple’s future baby might look like. By analyzing facial features from two uploaded photos, Peeka blends them to create a lifelike baby image, offering an entertaining experience powered by machine learning and computer vision.',
+      technologies: ['React', 'Firebase', 'JavaScript'],
    },
    {
       src: '/images/fibabanka-logo.avif',
@@ -26,6 +28,7 @@ const projects = [
       paragraph:
          "Engineered instant credit systems for major e-wallets and e-commerce platforms like Trendyol, developing scalable APIs and dynamic frontend interfaces for seamless financial transactions. Built secure, high-performance banking solutions using Java Enterprise, Spring Boot, React, TypeScript, Git, and SVN to power Türkiye's digital finance ecosystem.",
       url: 'https://www.fibabanka.com.tr/en/personal/loans/consumer-loan',
+      technologies: ['Java', 'Spring Boot', 'React', 'TypeScript'],
    },
    {
       src: '/images/eatwell2earn.jpg',
@@ -34,6 +37,7 @@ const projects = [
       p: 'Eatwell To Earn',
       paragraph:
          'EatWell2Earn is a Web3-powered Telegram Mini App I developed on the TON blockchain. The app lets users upload photos of their meals, analyzes the nutritional quality using AI, and rewards them based on their nutritional score. By combining AI-driven health insights with blockchain-based incentives, EatWell2Earn promotes healthy eating habits in a fun and rewarding way.',
+      technologies: ['React', 'Node.js', 'AWS', 'JavaScript'],
    },
 ];
 
@@ -58,7 +62,7 @@ export default function Projects() {
       const observer = new window.IntersectionObserver(
          ([entry]) => {
             if (entry.isIntersecting) {
-                  setIsAnimated(true);
+               setIsAnimated(true);
             } else {
                setIsAnimated(false); // Reset when out of view
             }
@@ -86,12 +90,13 @@ export default function Projects() {
                <div
                   key={idx}
                   className={`${styles.projectCard} ${
-                     idx === activeIndex ? styles.projectCardActive : styles.projectCardBlur
+                     idx === activeIndex
+                        ? styles.projectCardActive
+                        : styles.projectCardBlur
                   }`}
                   onClick={() => handleSlide(idx)}
                   tabIndex={0}
-                  aria-label={`Show project ${project.h3}`}
-               >
+                  aria-label={`Show project ${project.h3}`}>
                   <ProjectCard {...project} />
                </div>
             ))}
