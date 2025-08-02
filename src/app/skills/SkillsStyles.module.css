@@ -3,16 +3,27 @@
    display: flex;
    flex-direction: column;
    align-items: center;
-   padding: 2rem 0 0 2rem; /* top: 2rem, right: 0, bottom: 0, left: 2rem */
-   max-width: 1400px;
-   margin: 20% auto;
-   
-   font-size: 2.5rem;
-   margin-bottom: 2rem;
-   color: var(--text-primary);
+   justify-content: center;
+   min-height: 60vh;
+   width: 100vw;
+   padding: 2rem 1rem;
+   box-sizing: border-box;
+   margin: 0 auto;
 }
 
-
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem 0.5rem;
+    min-height: 40vh;
+    width: 100vw;
+    box-sizing: border-box;
+    justify-content: flex-start;
+  }
+  .skillsTitle {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+}
 
 .sectionTitle {
    font-size: 2.5rem;

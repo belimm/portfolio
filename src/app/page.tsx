@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Title from './title/Title';
 import Projects from './projects/Projects';
 import Skills from './skills/Skills';
@@ -23,10 +23,15 @@ export default function Home() {
    return (
       <div
          style={{
-            margin: '5%',
+            width: '100vw',
+            minHeight: '100vh',
+            display: 'flex',
             flexDirection: 'column',
-            gap: '2rem',
+            alignItems: 'center',
+            gap: '5rem',
             position: 'relative',
+            padding: 0,
+            margin: 0,
          }}>
          <SocialIcons isBlinking={isSocialIconsBlinking} />
          {/* <SectionNav />*/}
