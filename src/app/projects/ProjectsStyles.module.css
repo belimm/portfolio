@@ -1,16 +1,16 @@
 /* ProjectsStyles.module.css */
 .container {
-   border: 3px solid #00eaff;
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
    min-height: 100vh;
-   padding: 2rem 1rem;
-   background: #181c23;
+
    width: 100vw;
    box-sizing: border-box;
 }
+
+
 
 .sectionTitle {
    font-size: 2.5rem;
@@ -47,6 +47,7 @@
 }
 
 .card {
+   font-family: 'Fira Mono';
    background: #22252c;
    border-radius: 18px;
    box-shadow: 0 4px 32px 0 #00eaff33;
@@ -58,6 +59,13 @@
    display: flex;
    flex-direction: column;
    align-items: center;
+}
+
+.card,
+.title,
+.subtitle,
+.paragraph {
+   font-family: 'Fira Mono', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
 }
 
 @media (max-width: 600px) {
@@ -75,7 +83,7 @@
 
    .projectCard {
       padding: 1rem 0.25rem;
-      min-width: 100vw;
+
       box-sizing: border-box;
       margin: 0 auto;
    }
@@ -162,7 +170,6 @@
 .sliderDots {
    display: flex;
    gap: 1rem;
-   margin-top: 2rem;
 }
 
 .sliderDot {

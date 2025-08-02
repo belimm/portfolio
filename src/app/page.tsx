@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Title from './title/Title';
 import Projects from './projects/Projects';
 import Skills from './skills/Skills';
@@ -28,7 +28,7 @@ export default function Home() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '2rem',
+            gap: '5rem',
             position: 'relative',
             padding: 0,
             margin: 0,

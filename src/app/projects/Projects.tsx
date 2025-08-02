@@ -58,7 +58,7 @@ export default function Projects() {
       const observer = new window.IntersectionObserver(
          ([entry]) => {
             if (entry.isIntersecting) {
-               setIsAnimated(true);
+                  setIsAnimated(true);
             } else {
                setIsAnimated(false); // Reset when out of view
             }

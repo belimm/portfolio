@@ -4,7 +4,7 @@
    align-items: center;
 
    background: var(--project-card-bg, #222);
-   border: 3px solid aqua;
+   /* border: 3px solid aqua; */
    border-radius: 16px;
    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18); /* Slightly stronger shadow */
    padding: 2rem 1rem;
@@ -71,7 +71,7 @@
       padding: 1rem 0.5rem;
       min-height: 50vh;
       max-width: 98vw;
-      width: 100%;
+      width: 90%;
       box-sizing: border-box;
    }
 
