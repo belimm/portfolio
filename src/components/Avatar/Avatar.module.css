@@ -1,10 +1,10 @@
 .avatarWrapper {
-  position: relative;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  overflow: hidden;
-  perspective: 1000px;
+   position: relative;
+   width: 140px;
+   height: 140px;
+   border-radius: 50%;
+   overflow: hidden;
+   perspective: 1000px;
 }
 
 .avatarImg {
@@ -17,15 +17,34 @@
    margin-bottom: 1.5rem;
 }
 
+@media (max-width: 600px) {
+   .avatarWrapper {
+      position: relative;
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      overflow: hidden;
+      perspective: 1000px;
+   }
+   .avatarImg {
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      object-fit: cover;
+
+      margin-bottom: 1.5rem;
+   }
+}
+
 @keyframes coinflip {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(360deg);
-  }
+   0% {
+      transform: rotateY(0deg);
+   }
+   100% {
+      transform: rotateY(360deg);
+   }
 }
 
 .coinFlip {
-  animation: coinflip 1s ease-in-out;
+   animation: coinflip 1s ease-in-out;
 }

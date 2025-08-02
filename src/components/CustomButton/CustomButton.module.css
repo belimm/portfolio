@@ -37,3 +37,23 @@
    position: relative;
    z-index: 1;
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+   .customBtn {
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+   }
+}
+
+/* Responsive adjustments */
+@media (max-width: 460px) {
+   .customBtn {
+      padding: 0.5rem;
+      
+      font-size: 0.9rem;
+      
+   }
+}

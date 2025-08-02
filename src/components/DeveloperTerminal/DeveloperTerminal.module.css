@@ -6,26 +6,7 @@
    margin-bottom: 1rem;
    font-size: 0.95rem;
    padding: 0.25rem 0;
-   width: 50%;
-   
-   
-}
-
-/* Mobile responsive styles */
-@media (max-width: 768px) {
-   .terminalContainer {
-      width: 80%;
-      font-size: 1rem;
-      padding: 0.5rem 0;
-   }
-}
-
-@media (max-width: 480px) {
-   .terminalContainer {
-      width: 95%;
-      font-size: 1.1rem;
-      padding: 0.75rem 0;
-   }
+   width: 90%;
 }
 
 .terminalScroll {
@@ -36,20 +17,6 @@
    scrollbar-color: #0ff #222;
 }
 
-/* Mobile responsive styles for terminal scroll */
-@media (max-width: 768px) {
-   .terminalScroll {
-      height: 120px;
-      padding: 0 0.75rem;
-   }
-}
-
-@media (max-width: 480px) {
-   .terminalScroll {
-      height: 150px;
-      padding: 0 1rem;
-   }
-}
 .terminalScroll::-webkit-scrollbar {
    width: 8px;
 }
@@ -101,5 +68,30 @@
    51%,
    100% {
       opacity: 0;
+   }
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+   .terminalContainer {
+      width: 80%;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+   }
+   .terminalScroll {
+      height: 200px;
+      padding: 0 0.75rem;
+   }
+}
+
+@media (max-width: 480px) {
+   .terminalContainer {
+      width: 75%;
+      font-size: 0.8rem;
+      padding: 0.5rem 0;
+   }
+   .terminalScroll {
+      height: 150px;
+      padding: 0 1rem;
    }
 }

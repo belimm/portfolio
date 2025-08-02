@@ -3,7 +3,7 @@
    display: flex;
    flex-direction: column;
    align-items: center;
-   padding: 2rem 0 0 2rem; /* top: 2rem, right: 0, bottom: 0, left: 2rem */
+   padding: 2rem 0 0 0; /* top: 2rem, right: 0, bottom: 0, left: 2rem */
    max-width: 1400px;
    margin: 0 auto;
    /* border: 3px solid aqua; */
@@ -126,6 +126,27 @@
    .sectionTitle {
       font-size: 2rem;
    }
+}
+
+
+@media (max-width: 600px) {
+   .name {
+     font-size: 1.65rem;
+   }
+   .pronunciation {
+     font-size: 1rem;
+   }
+   .role {
+       font-size: 1.4rem;
+   }
+   .location  {
+       font-size: 0.9rem;
+   }
+   .buttonContainer {
+    
+    width: 75%;
+   }
+
 }
 
 @media (min-width: 1024px) {

@@ -24,5 +24,6 @@ body {
    color: var(--foreground);
    font-family: var(--font-mono), 'Fira Mono', 'Menlo', 'Consolas',
       'Liberation Mono', monospace;
-   padding: 5% 5% 5% 5%;
+   padding: 0;
+   margin: 0;
 }

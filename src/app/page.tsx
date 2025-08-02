@@ -23,10 +23,15 @@ export default function Home() {
    return (
       <div
          style={{
-            margin: '5%',
+            width: '100vw',
+            minHeight: '100vh',
+            display: 'flex',
             flexDirection: 'column',
+            alignItems: 'center',
             gap: '2rem',
             position: 'relative',
+            padding: 0,
+            margin: 0,
          }}>
          <SocialIcons isBlinking={isSocialIconsBlinking} />
          {/* <SectionNav />*/}

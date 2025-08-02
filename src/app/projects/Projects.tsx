@@ -79,24 +79,19 @@ export default function Projects() {
       <section
          id="projects"
          className={`${styles.container} ${isAnimated ? styles.animate : ''}`}
-         ref={sectionRef}
-      >
+         ref={sectionRef}>
          <h2 className={styles.sectionTitle}>Projects</h2>
          <div className={styles.sliderWrapper}>
             {projects.map((project, idx) => (
                <div
                   key={idx}
                   className={`${styles.projectCard} ${
-                     idx === activeIndex
-                        ? styles.projectCardActive
-                        : styles.projectCardBlur
+                     idx === activeIndex ? styles.projectCardActive : styles.projectCardBlur
                   }`}
-                  style={{
-                     transform: `translateX(-${activeIndex * 100}%)`,
-                  }}
                   onClick={() => handleSlide(idx)}
                   tabIndex={0}
-                  aria-label={`Show project ${project.h3}`}>
+                  aria-label={`Show project ${project.h3}`}
+               >
                   <ProjectCard {...project} />
                </div>
             ))}
