@@ -1,6 +1,8 @@
+// TechnologyIcons.tsx
 'use client';
 
 import React, { useState } from 'react';
+import TechnologyModal from '../TechnologyModal/TechnologyModal';
 import {
    SiReact,
    SiJavascript,
@@ -22,28 +24,17 @@ interface TechnologyIconsProps {
    isVisible?: boolean;
 }
 
-const skills = [
-   { name: 'React', level: 9 },
-   { name: 'TypeScript', level: 8 },
-   { name: 'CSS', level: 7 },
-   // Add more skills here
-];
-
-function getBarColor(level: number) {
-   if (level >= 8) return '#006400'; // dark green
-   if (level >= 6) return '#32CD32'; // light green
-   if (level >= 4) return '#FFD700'; // yellow
-   if (level >= 2) return '#FFA500'; // orange
-   return '#FF4500'; // red
-}
-
 const TechnologyIcons: React.FC<TechnologyIconsProps> = ({
    isVisible = false,
 }) => {
-   const [hovered, setHovered] = useState<number | null>(null);
+   const [modalData, setModalData] = useState<{
+      tech: string;
+      level: number;
+      projects: string[];
+   } | null>(null);
 
    const technologies = [
-      { name: 'React', level: 9, icon: SiReact, color: '#61DAFB' },
+      { name: 'React', level: 5, icon: SiReact, color: '#61DAFB' },
       { name: 'React Native', level: 9, icon: SiReactrouter, color: '#61DAFB' },
       { name: 'JavaScript', level: 9, icon: SiJavascript, color: '#F7DF1E' },
       { name: 'Node.js', level: 9, icon: SiNodedotjs, color: '#339933' },
@@ -58,19 +49,36 @@ const TechnologyIcons: React.FC<TechnologyIconsProps> = ({
       { name: 'Git', level: 9, icon: SiGit, color: '#F05032' },
    ];
 
+   function getRelatedProjects(techName: string): string[] {
+      const techProjectMap: { [key: string]: string[] } = {
+         React: ['Peeka', 'EatWell2Earn'],
+         Java: ['Fibabanka', 'Scalable Analyzer'],
+         Firebase: ['Peeka'],
+         'Spring Boot': ['Fibabanka', 'Scalable Analyzer'],
+         Docker: ['Scalable Analyzer'],
+         AWS: ['EatWell2Earn'],
+      };
+      return techProjectMap[techName] || ['No related projects'];
+   }
+
    if (!isVisible) return null;
 
    return (
       <div className={styles.container}>
-         <div className={styles.arrowHint}>
-            <span className={styles.blinkingArrow}>&larr;</span>
-         </div>
          <div className={styles.iconsGrid}>
             {technologies.map((tech, index) => (
                <div
                   key={tech.name}
                   className={styles.techItem}
-                  style={{ animationDelay: `${index * 0.1}s` }}>
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                  onClick={
+                     () => console.log('Clicked on ' + tech.name)
+                     // setModalData({
+                     //    tech: tech.name,
+                     //    level: tech.level,
+                     //    projects: getRelatedProjects(tech.name),
+                     // })
+                  }>
                   <tech.icon
                      size={24}
                      color={tech.color}
@@ -79,56 +87,15 @@ const TechnologyIcons: React.FC<TechnologyIconsProps> = ({
                </div>
             ))}
          </div>
-         <div className={styles.iconsContainer}>
-            {skills.map((skill, idx) => (
-               <div
-                  key={skill.name}
-                  className={styles.iconWrapper}
-                  onMouseEnter={() => setHovered(idx)}
-                  onMouseLeave={() => setHovered(null)}
-                  style={{
-                     color: hovered === idx ? '#000' : '#888',
-                     position: 'relative',
-                     display: 'inline-block',
-                     margin: '0 1rem',
-                  }}>
-                  {hovered === idx && (
-                     <div className={styles.tooltip}>
-                        <div>{skill.name}</div>
-                        <div className={styles.barContainer}>
-                           <div
-                              className={styles.bar}
-                              style={{
-                                 width: `${(skill.level / 10) * 100}%`,
-                                 background: getBarColor(skill.level),
-                              }}
-                           />
-                           <span className={styles.levelText}>
-                              {skill.level}/10
-                           </span>
-                        </div>
 
-                        <div
-                           style={{
-                              width: 48,
-                              height: 48,
-                              borderRadius: '50%',
-                              background: hovered === idx ? '#eee' : '#333',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: 24,
-                              fontWeight: 700,
-                              cursor: 'pointer',
-                              transition: 'background 0.2s',
-                           }}>
-                           {skill.name[0]}
-                        </div>
-                     </div>          
-                  )}
-               </div>
-            ))}
-         </div>
+         {modalData && (
+            <TechnologyModal
+               techName={modalData.tech}
+               level={modalData.level}
+               projects={modalData.projects}
+               onClose={() => setModalData(null)}
+            />
+         )}
       </div>
    );
 };
