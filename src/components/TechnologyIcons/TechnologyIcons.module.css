@@ -104,9 +104,15 @@
    }
 }
 
+
+
+
+
 @media (max-width: 480px) {
    .iconsGrid {
       grid-template-columns: repeat(3, 1fr);
+      justify-content: center;
+      justify-items: center;
    }
 
    .techName {
@@ -171,6 +177,7 @@
    justify-content: center;
    gap: 0.5rem;
    margin-bottom: 1rem;
+   rotate: 90deg; /* Rotate 90deg clockwise */
 }
 
 .blinkingArrow {
