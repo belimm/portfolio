@@ -12,17 +12,17 @@
 }
 
 @media (max-width: 600px) {
-  .container {
-    padding: 1rem 0.5rem;
-    min-height: 40vh;
-    width: 100vw;
-    box-sizing: border-box;
-    justify-content: flex-start;
-  }
-  .skillsTitle {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-  }
+   .container {
+      padding: 1rem 0.5rem;
+      min-height: 40vh;
+      width: 100vw;
+      box-sizing: border-box;
+      justify-content: flex-start;
+   }
+   .skillsTitle {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+   }
 }
 
 .sectionTitle {
@@ -30,14 +30,12 @@
    margin-bottom: 2rem;
    color: var(--text-primary);
    text-align: center;
-   
-   
 }
 
-.skillsTitle{
+.skillsTitle {
    font-size: 2.5rem;
    margin-bottom: 5rem;
-   color: var(--text-primary);
+   color: #ffffff;
    text-align: center;
 }
 
