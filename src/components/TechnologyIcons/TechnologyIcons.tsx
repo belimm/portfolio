@@ -93,7 +93,9 @@ const TechnologyIcons: React.FC<TechnologyIconsProps> = ({
                         position: {
                            top: rect.top + window.scrollY + rect.height + 8,
                            left: isLeftCol
-                              ? rect.left * 1.5 + window.scrollX + rect.width / 2
+                              ? rect.left * 1.5 +
+                                window.scrollX +
+                                rect.width / 2
                               : rect.left + window.scrollX + rect.width / 2,
                         },
                      });
