@@ -97,10 +97,11 @@ export default function Projects() {
                   onClick={() => handleSlide(idx)}
                   tabIndex={0}
                   aria-label={`Show project ${project.h3}`}>
-                  <ProjectCard {...project} />
+                  <ProjectCard {...project} isLongParagraph={!!project.paragraph && project.paragraph.length > 400} />
                </div>
             ))}
          </div>
+         {/* Dots moved outside sliderWrapper for fixed spacing */}
          <div className={styles.sliderDots}>
             {projects.map((_, idx) => (
                <button

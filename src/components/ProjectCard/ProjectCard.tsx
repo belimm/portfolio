@@ -9,6 +9,7 @@ type ProjectCardProps = {
    link?: string;
    url?: string;
    technologies?: string[];
+   isLongParagraph?: boolean;
 };
 
 export default function ProjectCard({
@@ -19,6 +20,7 @@ export default function ProjectCard({
    link,
    url,
    technologies,
+   isLongParagraph,
 }: ProjectCardProps) {
    const Wrapper = link || url ? 'a' : 'div';
    const href = link || url;
@@ -32,7 +34,17 @@ export default function ProjectCard({
          <img src={src} alt={h3} className={styles.image} />
          <h3 className={styles.title}>{h3}</h3>
          <p className={styles.subtitle}>{p}</p>
-         {paragraph && <p className={styles.paragraph}>{paragraph}</p>}
+         {paragraph && (
+            <p
+               className={
+                  styles.paragraph +
+                  ' ' +
+                  (isLongParagraph ? styles.projectDescSmall : styles.projectDesc)
+               }
+            >
+               {paragraph}
+            </p>
+         )}
          {technologies && (
             <div className={styles.techList}>
                {technologies.map((tech: string, index: number) => (
