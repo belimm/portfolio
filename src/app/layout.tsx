@@ -34,6 +34,7 @@ export const metadata: Metadata = {
    },
    icons: {
       icon: '/bico.ico',
+      apple: '/bico.ico'
    },
 };
 
