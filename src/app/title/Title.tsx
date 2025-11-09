@@ -76,10 +76,11 @@ export default function Title({ onContactClick }: TitleProps) {
       ]);
 
       // Open the CV in a new tab
-      window.open(
-         'https://drive.google.com/file/d/1JtAdsEvPX0x-Ec_QyNcTAwne678c5s5k/view?usp=sharing',
-         '_blank'
-      );
+      // window.open(
+      //    'https://drive.google.com/file/d/1JtAdsEvPX0x-Ec_QyNcTAwne678c5s5k/view?usp=sharing',
+      //    '_blank'
+      // );
+      window.open('/BerkLimoncu_CV.pdf', '_blank', 'noopener,noreferrer');
    };
 
    // 2. Update terminal state on button click
