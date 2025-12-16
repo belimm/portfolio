@@ -4,12 +4,14 @@ import React, { useState, useRef } from 'react';
 import styles from './MessageModal.module.css';
 import emailjs from 'emailjs-com';
 import { toast } from 'react-hot-toast';
+import { useTerminal } from '../../contexts/TerminalContext';
 
 interface MessageModalProps {
    onClose: () => void;
 }
 
 export default function MessageModal({ onClose }: MessageModalProps) {
+   const { addTerminalEntry } = useTerminal();
    const [name, setName] = useState('');
    const [email, setEmail] = useState('');
    const [message, setMessage] = useState('');
@@ -25,9 +27,6 @@ export default function MessageModal({ onClose }: MessageModalProps) {
    const validateEmail = (email: string) =>
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-   const NEXT_PUBLIC_EMAILJS_SERVICE_ID = 'service_wr75o0t';
-   const NEXT_PUBLIC_EMAILJS_TEMPLATE_ID = 'template_fme7avk';
-   const NEXT_PUBLIC_EMAILJS_PUBLIC_KEY = 'vQxRA0FBApM6uubPh';
 
    const handleSend = async () => {
       const hasErrors = {
@@ -39,8 +38,6 @@ export default function MessageModal({ onClose }: MessageModalProps) {
       if (hasErrors.name || hasErrors.email || hasErrors.message) return;
 
       setLoading(true);
-
-      console.log(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID);
 
       try {
          await emailjs.send(
@@ -54,6 +51,11 @@ export default function MessageModal({ onClose }: MessageModalProps) {
             },
             process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''
          );
+
+         addTerminalEntry({
+            command: `sendmail from ${email}`,
+            output: 'Message sent successfully! 📧',
+         });
 
          toast.success('Message sent successfully!');
          setTimeout(() => onClose(), 700); // Wait before closing modal

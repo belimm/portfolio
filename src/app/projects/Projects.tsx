@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './ProjectsStyles.module.css';
 import ProjectCard from '../../components/ProjectCard/ProjectCard';
+import { useTerminal } from '../../contexts/TerminalContext';
 
 const projects = [
    {
       src: '/images/scalable-analyzer.png',
-      link: 'https://github.com/belimm/scalable-arch-analyzer',
+      link: '/thesis.pdf',
       h3: 'Scalable Analyzer',
       p: 'Master Thesis Project',
       paragraph:
-         'My master’s thesis explores the technical and architectural challenges of transitioning from monolithic applications to microservices, with a focus on refactorability, scalability, and performance. By implementing and analyzing both architectures in practical scenarios, I evaluate the trade-offs involved in such transitions and provide insights into best practices for building scalable, maintainable systems.',
+         'My masters thesis explores the technical and architectural challenges of transitioning from monolithic applications to microservices, with a focus on refactorability, scalability, and performance. By implementing and analyzing both architectures in practical scenarios, I evaluate the trade-offs involved in such transitions and provide insights into best practices for building scalable, maintainable systems.',
       technologies: ['Java', 'Spring Boot', 'Docker'],
    },
    {
@@ -42,6 +43,7 @@ const projects = [
 ];
 
 export default function Projects() {
+   const { addTerminalEntry } = useTerminal();
    const [activeIndex, setActiveIndex] = useState(0);
    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
    const sectionRef = useRef<HTMLElement | null>(null);
@@ -79,6 +81,38 @@ export default function Projects() {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
    };
 
+   // Handle project click to add terminal entry for each project
+   const handleProjectClick = (project: typeof projects[0]) => {
+      switch (project.h3) {
+         case 'Scalable Analyzer':
+            addTerminalEntry({
+               command: 'curl -X GET https://berk.dev/thesis.pdf',
+               output: 'Opened project Scalable Analyzer in new tab...',
+            });
+            break;
+         case 'Peeka':
+            addTerminalEntry({
+               command: 'curl -X GET https://apps.apple.com/peeka',
+               output: 'Opened project Peeka in new tab...',
+            });
+            break;
+         case 'Fibabanka':
+            addTerminalEntry({
+               command: 'curl -X GET https://www.fibabanka.com.tr',
+               output: 'Opened project Fibabanka in new tab...',
+            });
+            break;
+         case 'EatWell2Earn':
+            addTerminalEntry({
+               command: 'curl -X GET https://github.com/belimm/eatwell-2-earn',
+               output: 'Opened project EatWell2Earn in new tab...',
+            });
+            break;
+         default:
+            break;
+      }
+   };
+
    return (
       <section
          id="projects"
@@ -97,7 +131,11 @@ export default function Projects() {
                   onClick={() => handleSlide(idx)}
                   tabIndex={0}
                   aria-label={`Show project ${project.h3}`}>
-                  <ProjectCard {...project} isLongParagraph={!!project.paragraph && project.paragraph.length > 400} />
+                  <ProjectCard
+                     {...project}
+                     isLongParagraph={!!project.paragraph && project.paragraph.length > 400}
+                     onProjectClick={() => handleProjectClick(project)}
+                  />
                </div>
             ))}
          </div>

@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
+import React, { useState } from 'react';
 
 import DeveloperTerminal from '../../components/DeveloperTerminal/DeveloperTerminal';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import TechnologyIcons from '../../components/TechnologyIcons/TechnologyIcons';
 import MessageModal from '../../components/MessageModal/MessageModal';
+import { useTerminal } from '../../contexts/TerminalContext';
 
 import styles from './TitleStyles.module.css';
 import Avatar from '@/components/Avatar/Avatar';
@@ -16,16 +15,8 @@ interface TitleProps {
 }
 
 export default function Title({ onContactClick }: TitleProps) {
-   // 1. Manage terminal state here
-   const [terminalEntries, setTerminalEntries] = useState([
-      { command: 'whoami', output: 'Berk Limoncu - Full Stack & Mobile Developer' },
-   ]);
-   //const [showTechnologies, setShowTechnologies] = useState(false);
+   const { terminalEntries, addTerminalEntry } = useTerminal();
    const [isModalOpen, setIsModalOpen] = useState(false);
-
-   useEffect(() => {
-      console.log(13);
-   });
 
    // 2. Update terminal state on button click
    // const handleGetCVButtonClick = () => {
@@ -67,19 +58,12 @@ export default function Title({ onContactClick }: TitleProps) {
    // };
 
    const handleGetCVButtonClick = () => {
-      setTerminalEntries((prev) => [
-         ...prev,
-         {
-            command: 'curl -O https://berk.dev/cv.pdf',
-            output: 'Opened CV in new tab...',
-         },
-      ]);
+      addTerminalEntry({
+         command: 'curl -X GET https://berk.dev/cv.pdf',
+         output: 'Opened CV in new tab...',
+      });
 
       // Open the CV in a new tab
-      // window.open(
-      //    'https://drive.google.com/file/d/1JtAdsEvPX0x-Ec_QyNcTAwne678c5s5k/view?usp=sharing',
-      //    '_blank'
-      // );
       window.open('/BerkLimoncu_CV.pdf', '_blank', 'noopener,noreferrer');
    };
 

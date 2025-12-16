@@ -10,6 +10,7 @@ type ProjectCardProps = {
    url?: string;
    technologies?: string[];
    isLongParagraph?: boolean;
+   onProjectClick?: () => void | undefined;
 };
 
 export default function ProjectCard({
@@ -21,16 +22,24 @@ export default function ProjectCard({
    url,
    technologies,
    isLongParagraph,
+   onProjectClick,
 }: ProjectCardProps) {
    const Wrapper = link || url ? 'a' : 'div';
    const href = link || url;
+
+   const handleClick = (e: React.MouseEvent) => {
+      if (onProjectClick) {
+         onProjectClick();
+      }
+   };
 
    return (
       <Wrapper
          href={href}
          className={styles.card}
          target={href ? '_blank' : undefined}
-         rel={href ? 'noopener noreferrer' : undefined}>
+         rel={href ? 'noopener noreferrer' : undefined}
+         onClick={handleClick}>
          <img src={src} alt={h3} className={styles.image} />
          <h3 className={styles.title}>{h3}</h3>
          <p className={styles.subtitle}>{p}</p>
@@ -39,9 +48,10 @@ export default function ProjectCard({
                className={
                   styles.paragraph +
                   ' ' +
-                  (isLongParagraph ? styles.projectDescSmall : styles.projectDesc)
-               }
-            >
+                  (isLongParagraph
+                     ? styles.projectDescSmall
+                     : styles.projectDesc)
+               }>
                {paragraph}
             </p>
          )}
