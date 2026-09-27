@@ -8,7 +8,8 @@ export const LOCALE_PATHS: Record<Locale, string> = { en: '/', tr: '/tr' };
 /** Interface text. Page content (projects, experience, …) comes from the API in the requested language. */
 const en = {
    meta: {
-      title: 'Berk Limoncu · Full-stack developer',
+      // Tab title: just the name, so no browser cuts it down to the role.
+      title: 'Berk Limoncu',
       description:
          'Berk Limoncu is a full-stack developer in Istanbul building AI products, with a background in fintech.',
    },
@@ -71,7 +72,7 @@ export type Dictionary = typeof en;
 
 const tr: Dictionary = {
    meta: {
-      title: 'Berk Limoncu · Full-stack geliştirici',
+      title: 'Berk Limoncu',
       description:
          "Berk Limoncu, İstanbul'da yapay zekâ ürünleri geliştiren, fintech geçmişine sahip bir full-stack geliştirici.",
    },
