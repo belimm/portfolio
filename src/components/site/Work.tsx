@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- images can come from the API's upload host */
 import { Project } from '../../lib/content';
 import { Dictionary } from '../../lib/i18n';
+import ExpandableList from './ExpandableList';
 import Section from './Section';
 import TrackedLink from './TrackedLink';
 import styles from './Work.module.css';
@@ -60,20 +61,30 @@ function ProjectRow({ project, t }: { project: Project; t: Dictionary }) {
    );
 }
 
+// Enough to show range without turning the page into a wall of cards.
+const VISIBLE_PROJECTS = 5;
+
 export default function Work({ projects, t }: { projects: Project[]; t: Dictionary }) {
    if (projects.length === 0) return null;
+   const hidden = projects.length - VISIBLE_PROJECTS;
    return (
       <Section
          id="work"
          index="01"
          title={t.work.title}>
-         <ul className={styles.list}>
+         <ExpandableList
+            limit={VISIBLE_PROJECTS}
+            className={styles.list}
+            buttonClassName={styles.more}
+            revealedClassName={styles.revealed}
+            labels={{ more: t.work.showMore(hidden), less: t.work.showLess }}
+            log={{ command: 'ls ~/projects --all', output: t.work.listed(projects.length) }}>
             {projects.map((project) => (
                <li key={project.id ?? project.title}>
                   <ProjectRow project={project} t={t} />
                </li>
             ))}
-         </ul>
+         </ExpandableList>
       </Section>
    );
 }
