@@ -1,5 +1,6 @@
-import fallbackEn from './fallback-content.en.json';
-import fallbackTr from './fallback-content.tr.json';
+import 'server-only';
+import { unstable_cache } from 'next/cache';
+import { CONTENT_TAG, loadLive } from './cms/repository';
 import { Locale } from './i18n';
 
 export type Profile = {
@@ -18,7 +19,7 @@ export type Profile = {
 };
 
 export type Project = {
-   id: number;
+   id: string;
    title: string;
    subtitle: string;
    description: string;
@@ -29,7 +30,7 @@ export type Project = {
 };
 
 export type ExperienceItem = {
-   id: number;
+   id: string;
    kind: 'work' | 'education';
    title: string;
    organization: string;
@@ -40,11 +41,7 @@ export type ExperienceItem = {
    highlights: string[];
 };
 
-export type SkillGroup = {
-   id: number;
-   name: string;
-   items: string[];
-};
+export type SkillGroup = { id: string; name: string; items: string[] };
 
 export type Content = {
    lang: Locale;
@@ -55,43 +52,28 @@ export type Content = {
    updated_at: string | null;
 };
 
-export const CONTENT_TAG = 'content';
+/** Cached until an admin save calls revalidateTag(CONTENT_TAG). */
+export const getPublished = unstable_cache(loadLive, ['site-content'], {
+   tags: [CONTENT_TAG],
+   revalidate: 3600,
+});
 
-const fallbacks: Record<Locale, Content> = {
-   en: fallbackEn as Content,
-   tr: fallbackTr as Content,
-};
+/** Overlay non-empty translations for `lang` on the English fields. */
+function localize<T extends { translations?: { tr?: Record<string, unknown> } }>(item: T, lang: Locale) {
+   const { translations, ...base } = item;
+   if (lang === 'en') return base;
+   return { ...base, ...(translations?.[lang] ?? {}) } as typeof base;
+}
 
-/**
- * Loads the page content from the portfolio API, already translated to `lang`.
- *
- * During the build (the API is usually not reachable from the build container) and in dev we
- * fall back to the bundled snapshot. At runtime in production a failed fetch throws instead, so
- * Next keeps serving the last good render rather than caching the snapshot over it.
- */
 export async function getContent(lang: Locale): Promise<Content> {
-   const fallback = fallbacks[lang];
-   const apiUrl = process.env.API_URL;
-   const canFallBack =
-      process.env.NEXT_PHASE === 'phase-production-build' ||
-      process.env.NODE_ENV !== 'production';
-
-   if (!apiUrl) return fallback;
-
-   try {
-      const res = await fetch(`${apiUrl.replace(/\/$/, '')}/api/public/content?lang=${lang}`, {
-         next: { revalidate: 300, tags: [CONTENT_TAG] },
-         signal: AbortSignal.timeout(5000),
-      });
-      if (!res.ok) throw new Error(`Portfolio API responded ${res.status}`);
-      const data = (await res.json()) as Content;
-      if (!data.profile) return { ...data, profile: fallback.profile };
-      return data;
-   } catch (error) {
-      if (canFallBack) {
-         console.warn('Using bundled content:', (error as Error).message);
-         return fallback;
-      }
-      throw error;
-   }
+   const { content, savedAt } = await getPublished();
+   return {
+      lang,
+      // /cv/<lang>.pdf serves the active CV for that language, falling back to English.
+      profile: { ...localize(content.profile, lang), cv_url: `/cv/${lang}.pdf` },
+      projects: content.projects.filter((p) => p.visible).map((p) => localize(p, lang)),
+      experience: content.experience.filter((e) => e.visible).map((e) => localize(e, lang)),
+      skills: content.skills.map((s) => localize(s, lang)),
+      updated_at: savedAt,
+   };
 }

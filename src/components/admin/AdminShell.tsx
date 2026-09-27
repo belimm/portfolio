@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import ThemeToggle from '../site/ThemeToggle';
-import { adminFetch } from './api';
+import { adminFetch, inboxSeenAt } from './api';
 import styles from './admin.module.css';
 
 const NAV = [
@@ -12,7 +12,9 @@ const NAV = [
    { href: '/admin/projects', label: 'Projects' },
    { href: '/admin/experience', label: 'Experience' },
    { href: '/admin/skills', label: 'Skills' },
+   { href: '/admin/cv', label: 'CV' },
    { href: '/admin/messages', label: 'Messages' },
+   { href: '/admin/history', label: 'History' },
 ];
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
@@ -21,8 +23,11 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
    useEffect(() => {
       const load = () =>
-         adminFetch<{ read: boolean }[]>('messages')
-            .then((list) => setUnread(list.filter((m) => !m.read).length))
+         adminFetch<{ createdAt: string }[]>('messages')
+            .then((list) => {
+               const seen = inboxSeenAt();
+               setUnread(list.filter((m) => m.createdAt > seen).length);
+            })
             .catch(() => {});
       load();
       window.addEventListener('admin:messages', load);

@@ -1,5 +1,5 @@
 {
-  "lang": "en",
+  "schemaVersion": 1,
   "profile": {
     "name": "Berk Limoncu",
     "pronunciation": "/beɾk/",
@@ -10,12 +10,21 @@
     "email": "berk.limoncu@gmail.com",
     "github_url": "https://github.com/belimm",
     "linkedin_url": "https://www.linkedin.com/in/berklimoncu",
-    "cv_url": "/BerkLimoncu_CV.pdf",
     "available": true,
-    "availability_note": "Open to full-time roles and freelance work"
+    "availability_note": "Open to full-time roles and freelance work",
+    "translations": {
+      "tr": {
+        "role": "Full-stack ve mobil geliştirici",
+        "location": "Berlin, Almanya",
+        "intro": "==Sorunsuz çalışması gereken yazılımlar== geliştiriyorum: banka kredi sistemleri, App Store uygulamaları ve mikroservislerin ne zaman değdiği üzerine bir tez.",
+        "about": "Çoğunlukla React, TypeScript, Node.js ve Spring Boot ile çalışan bir full-stack geliştiriciyim. Güvenilirliğin yenilikten daha önemli olduğu fintech ve sağlık alanlarında çalıştım. Saygılı ve gerçekten işe yarayan bir code review kültürüne çok önem veriyorum.",
+        "availability_note": "Tam zamanlı pozisyonlara ve freelance işlere açığım"
+      }
+    }
   },
   "projects": [
     {
+      "id": "acc8b00f",
       "title": "Scalable Analyzer",
       "subtitle": "Master's thesis",
       "description": "Built the same system twice, once as a monolith and once as microservices, and measured both under load with Prometheus and JMeter to see where the split pays off and where it only adds cost.",
@@ -30,9 +39,15 @@
         "JMeter"
       ],
       "visible": true,
-      "id": 1
+      "translations": {
+        "tr": {
+          "subtitle": "Yüksek lisans tezi",
+          "description": "Aynı sistemi iki kez kurdum: bir kez monolit, bir kez mikroservis olarak. İkisini de Prometheus ve JMeter ile yük altında ölçerek ayrışmanın nerede karşılığını verdiğini, nerede yalnızca maliyet eklediğini inceledim."
+        }
+      }
     },
     {
+      "id": "2afe57c1",
       "title": "Peeka",
       "subtitle": "iOS app · Future baby generator",
       "description": "A consumer app that takes two photos and generates what a couple's baby might look like. I built the React Native client, the Node.js backend and the image generation pipeline.",
@@ -46,9 +61,15 @@
         "AWS"
       ],
       "visible": true,
-      "id": 2
+      "translations": {
+        "tr": {
+          "subtitle": "iOS uygulaması · Gelecekteki bebeğini gör",
+          "description": "İki fotoğraftan bir çiftin bebeğinin nasıl görünebileceğini üreten bir tüketici uygulaması. React Native istemcisini, Node.js backend'ini ve görsel üretim hattını ben geliştirdim."
+        }
+      }
     },
     {
+      "id": "273c244c",
       "title": "Fibabanka",
       "subtitle": "Retail banking · Instant credit",
       "description": "Instant credit for e-wallets and marketplaces like Trendyol, Hepsiburada and Paycell. KYC microservices, partner APIs, batch reporting and the React front end.",
@@ -64,9 +85,15 @@
         "TypeScript"
       ],
       "visible": true,
-      "id": 3
+      "translations": {
+        "tr": {
+          "subtitle": "Bireysel bankacılık · Anında kredi",
+          "description": "Trendyol, Hepsiburada ve Paycell gibi e-cüzdan ve pazaryerleri için anında kredi. KYC mikroservisleri, partner API'leri, toplu raporlama ve React arayüzü."
+        }
+      }
     },
     {
+      "id": "afa558ae",
       "title": "EatWell2Earn",
       "subtitle": "Telegram mini app on TON",
       "description": "Upload a photo of a meal, get a nutrition score from a vision model, and earn tokens for eating well. Built as a Telegram mini app on the TON blockchain.",
@@ -80,11 +107,17 @@
         "TON"
       ],
       "visible": true,
-      "id": 4
+      "translations": {
+        "tr": {
+          "subtitle": "TON üzerinde Telegram mini uygulaması",
+          "description": "Yemeğinin fotoğrafını yükle, bir görüntü modelinden beslenme puanı al ve sağlıklı beslendikçe token kazan. TON blokzinciri üzerinde bir Telegram mini uygulaması olarak geliştirildi."
+        }
+      }
     }
   ],
   "experience": [
     {
+      "id": "66e03e86",
       "kind": "work",
       "title": "Freelance developer",
       "organization": "",
@@ -98,9 +131,22 @@
         "Trading bots for Polymarket with Telegram control and LLM-based sentiment analysis"
       ],
       "visible": true,
-      "id": 1
+      "translations": {
+        "tr": {
+          "title": "Freelance geliştirici",
+          "start": "Mayıs 2024",
+          "end": "Günümüz",
+          "summary": "Uluslararası müşteriler için yapay zekâ destekli uygulamalar, fintech araçları ve kurumsal web platformları.",
+          "highlights": [
+            "React Native, Node.js, Firebase ve AWS ile Peeka ve ArmorUp mobil uygulamaları",
+            "Next.js ve Spring Boot backend'leriyle ulaşım ERP'si ve tedarik zinciri SaaS'ı",
+            "Telegram ile yönetilen, LLM tabanlı duygu analizi yapan Polymarket trading botları"
+          ]
+        }
+      }
     },
     {
+      "id": "5ea38902",
       "kind": "work",
       "title": "Software engineer",
       "organization": "Fibabanka",
@@ -115,9 +161,24 @@
         "CI/CD pipelines with Docker"
       ],
       "visible": true,
-      "id": 2
+      "translations": {
+        "tr": {
+          "title": "Yazılım mühendisi",
+          "location": "İstanbul",
+          "start": "Ara 2022",
+          "end": "Nis 2024",
+          "summary": "50'den fazla partnerin kullandığı gömülü kredi platformunda full-stack geliştirme.",
+          "highlights": [
+            "Kafka ve Redis ile Spring Boot ve Java EE üzerinde KYC mikroservisleri",
+            "Partner bankalar için günde 2 binden fazla işlemi işleyen toplu raporlama sistemi",
+            "React/TypeScript özellikleri ve müşteriye özel arayüzler",
+            "Docker ile CI/CD süreçleri"
+          ]
+        }
+      }
     },
     {
+      "id": "b91125f6",
       "kind": "work",
       "title": "Solution consultant",
       "organization": "Turkcell",
@@ -130,9 +191,22 @@
         "24/7 incident handling with zero data loss"
       ],
       "visible": true,
-      "id": 3
+      "translations": {
+        "tr": {
+          "title": "Çözüm danışmanı",
+          "location": "İstanbul",
+          "start": "Ara 2021",
+          "end": "Nis 2022",
+          "summary": "Sağlık Bakanlığı'nın COVID-19 takip uygulaması Güvende Kal'ın veri operasyonlarını yürüttüm.",
+          "highlights": [
+            "10 binden fazla hastanın takibi için günlük 50 binden fazla kayıtta MySQL operasyonları",
+            "Sıfır veri kaybıyla 7/24 olay yönetimi"
+          ]
+        }
+      }
     },
     {
+      "id": "e5092a6c",
       "kind": "work",
       "title": "Software engineer intern",
       "organization": "Turkcell",
@@ -145,9 +219,22 @@
         "Load balancer improvements for internal microservices"
       ],
       "visible": true,
-      "id": 4
+      "translations": {
+        "tr": {
+          "title": "Stajyer yazılım mühendisi",
+          "location": "İstanbul",
+          "start": "Tem 2021",
+          "end": "Eki 2021",
+          "summary": "250'den fazla çalışan için şirket içi araçlar.",
+          "highlights": [
+            ".NET/Blazor ile günde 100'den fazla rezervasyonu yöneten araç paylaşım uygulaması",
+            "Şirket içi mikroservisler için load balancer iyileştirmeleri"
+          ]
+        }
+      }
     },
     {
+      "id": "403d3a82",
       "kind": "education",
       "title": "MSc Software Engineering",
       "organization": "University of Europe for Applied Sciences",
@@ -157,9 +244,17 @@
       "summary": "Thesis: Scalable Analyzer, monolith vs. microservices under load.",
       "highlights": [],
       "visible": true,
-      "id": 5
+      "translations": {
+        "tr": {
+          "title": "Yazılım Mühendisliği Yüksek Lisansı",
+          "start": "Mar 2024",
+          "end": "Şub 2025",
+          "summary": "Tez: Scalable Analyzer, yük altında monolit ve mikroservis karşılaştırması."
+        }
+      }
     },
     {
+      "id": "19d251d3",
       "kind": "education",
       "title": "BSc Computer Engineering",
       "organization": "Middle East Technical University",
@@ -169,11 +264,19 @@
       "summary": "Senior project: a crawler that scores web page complexity by depth.",
       "highlights": [],
       "visible": true,
-      "id": 6
+      "translations": {
+        "tr": {
+          "title": "Bilgisayar Mühendisliği Lisansı",
+          "start": "Eyl 2016",
+          "end": "Eyl 2022",
+          "summary": "Bitirme projesi: web sayfalarının karmaşıklığını derinliğe göre puanlayan bir crawler."
+        }
+      }
     }
   ],
   "skills": [
     {
+      "id": "15d3b469",
       "name": "Languages",
       "items": [
         "TypeScript",
@@ -182,18 +285,28 @@
         "Python",
         "Rust"
       ],
-      "id": 1
+      "translations": {
+        "tr": {
+          "name": "Diller"
+        }
+      }
     },
     {
+      "id": "7d464a63",
       "name": "Front end",
       "items": [
         "React",
         "React Native",
         "Next.js"
       ],
-      "id": 2
+      "translations": {
+        "tr": {
+          "name": "Frontend"
+        }
+      }
     },
     {
+      "id": "0de2da4e",
       "name": "Back end",
       "items": [
         "Node.js",
@@ -201,9 +314,14 @@
         "Spring Boot",
         "Kafka"
       ],
-      "id": 3
+      "translations": {
+        "tr": {
+          "name": "Backend"
+        }
+      }
     },
     {
+      "id": "9510bd94",
       "name": "Data",
       "items": [
         "PostgreSQL",
@@ -212,9 +330,14 @@
         "MongoDB",
         "Redis"
       ],
-      "id": 4
+      "translations": {
+        "tr": {
+          "name": "Veri"
+        }
+      }
     },
     {
+      "id": "95072e70",
       "name": "Infra",
       "items": [
         "AWS",
@@ -224,8 +347,21 @@
         "CI/CD",
         "Linux"
       ],
-      "id": 5
+      "translations": {
+        "tr": {
+          "name": "Altyapı"
+        }
+      }
     }
   ],
-  "updated_at": null
+  "cv": {
+    "en": {
+      "activeId": null,
+      "versions": []
+    },
+    "tr": {
+      "activeId": null,
+      "versions": []
+    }
+  }
 }

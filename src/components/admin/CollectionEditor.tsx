@@ -5,7 +5,7 @@ import { adminFetch } from './api';
 import { Field, FieldDef, TranslationFields, Translations } from './fields';
 import styles from './admin.module.css';
 
-type Item = { id: number; sort_order: number; visible?: boolean } & Record<string, unknown>;
+type Item = { id: string; visible?: boolean } & Record<string, unknown>;
 
 type CollectionEditorProps = {
    endpoint: 'projects' | 'experience' | 'skills';
@@ -26,15 +26,16 @@ export default function CollectionEditor({
    summarize,
 }: CollectionEditorProps) {
    const [items, setItems] = useState<Item[] | null>(null);
-   const [editing, setEditing] = useState<number | 'new' | null>(null);
+   const [editing, setEditing] = useState<string | 'new' | null>(null);
+   const base = `content/${endpoint}`;
    const [draft, setDraft] = useState<Record<string, unknown>>({});
    const [busy, setBusy] = useState(false);
    const [error, setError] = useState('');
    const [notice, setNotice] = useState('');
 
    useEffect(() => {
-      adminFetch<Item[]>(endpoint)
-         .then(setItems)
+      adminFetch<Record<string, Item[]>>('content')
+         .then((content) => setItems(content[endpoint]))
          .catch((e) => setError(e.message));
    }, [endpoint]);
 
@@ -70,13 +71,13 @@ export default function CollectionEditor({
       e.preventDefault();
       run(async () => {
          if (editing === 'new') {
-            const created = await adminFetch<Item>(endpoint, {
+            const created = await adminFetch<Item>(base, {
                method: 'POST',
                body: JSON.stringify(payload()),
             });
             setItems((prev) => [...(prev ?? []), created]);
          } else {
-            const updated = await adminFetch<Item>(`${endpoint}/${editing}`, {
+            const updated = await adminFetch<Item>(`${base}/${editing}`, {
                method: 'PUT',
                body: JSON.stringify(payload()),
             });
@@ -90,7 +91,7 @@ export default function CollectionEditor({
    const remove = (item: Item) => {
       if (!window.confirm(`Delete “${summarize(item).title}”? This can't be undone.`)) return;
       run(async () => {
-         await adminFetch(`${endpoint}/${item.id}`, { method: 'DELETE' });
+         await adminFetch(`${base}/${item.id}`, { method: 'DELETE' });
          setItems((prev) => prev?.filter((i) => i.id !== item.id) ?? null);
          setEditing(null);
          flash('Deleted.');
@@ -104,7 +105,7 @@ export default function CollectionEditor({
       next.splice(index + delta, 0, moved);
       setItems(next);
       run(async () => {
-         const saved = await adminFetch<Item[]>(`${endpoint}/reorder`, {
+         const saved = await adminFetch<Item[]>(`${base}/reorder`, {
             method: 'POST',
             body: JSON.stringify({ ids: next.map((i) => i.id) }),
          });

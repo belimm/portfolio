@@ -239,7 +239,7 @@ function FileField({
                      setBusy(true);
                      setError('');
                      try {
-                        onChange(await uploadFile(file));
+                        onChange((await uploadFile(file, 'images')).url);
                      } catch (err) {
                         setError((err as Error).message);
                      } finally {

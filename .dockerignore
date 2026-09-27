@@ -6,3 +6,5 @@ node_modules
 !.env.example
 *.md
 .cj
+.data
+admin-totp.png

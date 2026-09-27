@@ -21,7 +21,6 @@ const FIELDS: FieldDef[] = [
    { name: 'email', label: 'Email', type: 'text' },
    { name: 'github_url', label: 'GitHub URL', type: 'text' },
    { name: 'linkedin_url', label: 'LinkedIn URL', type: 'text' },
-   { name: 'cv_url', label: 'CV', type: 'file', accept: 'application/pdf', hint: 'PDF, opens in the CV viewer' },
    { name: 'available', label: 'Show availability note', type: 'checkbox' },
    { name: 'availability_note', label: 'Availability note', type: 'text', wide: true, translatable: true },
 ];
@@ -33,8 +32,8 @@ export default function ProfileEditor() {
    const [notice, setNotice] = useState('');
 
    useEffect(() => {
-      adminFetch<Record<string, unknown>>('profile')
-         .then(setProfile)
+      adminFetch<{ profile: Record<string, unknown> }>('content')
+         .then((content) => setProfile(content.profile))
          .catch((e) => setError(e.message));
    }, []);
 
@@ -48,7 +47,7 @@ export default function ProfileEditor() {
             ...Object.fromEntries(FIELDS.map((f) => [f.name, profile[f.name]])),
             translations: profile.translations ?? {},
          };
-         setProfile(await adminFetch('profile', { method: 'PUT', body: JSON.stringify(body) }));
+         setProfile(await adminFetch('content/profile', { method: 'PUT', body: JSON.stringify(body) }));
          setNotice('Saved. The site is updated.');
          setTimeout(() => setNotice(''), 2500);
       } catch (err) {

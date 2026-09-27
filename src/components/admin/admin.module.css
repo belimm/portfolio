@@ -502,3 +502,73 @@
       flex-wrap: wrap;
    }
 }
+
+/* CV and history */
+.cvSlot {
+   padding-bottom: 32px;
+   margin-bottom: 32px;
+   border-bottom: 1px solid var(--rule);
+}
+
+.cvHead {
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-start;
+   gap: 16px;
+   margin-bottom: 16px;
+}
+
+.cvHead h2 {
+   font-family: var(--font-display);
+   font-size: 22px;
+   font-weight: 400;
+}
+
+.cvUpload {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   gap: 10px;
+   padding: 14px;
+   margin-bottom: 16px;
+   border: 1px dashed var(--rule);
+   border-radius: 6px;
+}
+
+.cvUpload input[type='file'] {
+   font: inherit;
+   font-size: 14px;
+   max-width: 240px;
+}
+
+.cvUpload input:not([type]) {
+   flex: 1;
+   min-width: 180px;
+   padding: 8px 10px;
+   border: 1px solid var(--rule);
+   border-radius: 4px;
+   background: var(--paper);
+   color: var(--ink);
+   font: inherit;
+   font-size: 14px;
+}
+
+.inlineCheck {
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   font-size: 14px;
+}
+
+.inlineCheck input {
+   accent-color: var(--ink);
+}
+
+.liveBadge {
+   font-family: var(--font-code);
+   font-size: 11px;
+   padding: 2px 8px;
+   border-radius: 3px;
+   background: var(--lemon);
+   color: #1c1b18;
+}

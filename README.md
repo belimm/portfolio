@@ -1,191 +1,135 @@
 # berklimoncu.com
 
-My personal site. The content (profile, projects, experience, skills) comes from a small API in [belimm/coolify-test](https://github.com/belimm/coolify-test) and is edited from `/admin` here, without touching code or redeploying.
+My personal site, with a built-in admin at `/admin` for editing the content (profile, projects, experience, skills, CVs) in English and Turkish, without touching code or redeploying. It's one Next.js app: no separate backend and no database server.
 
 - [How it works](#how-it-works)
 - [Run it locally](#run-it-locally)
+- [Admin sign-in and security](#admin-sign-in-and-security)
 - [Editing content](#editing-content)
 - [Languages and theme](#languages-and-theme)
+- [Deploying on Vercel](#deploying-on-vercel)
 - [Project structure](#project-structure)
-- [Deploying on Coolify](#deploying-on-coolify)
 - [Troubleshooting](#troubleshooting)
 
 ## How it works
 
-There are two apps in two repos:
-
-| App | Tech | Repo | Port |
-| --- | --- | --- | --- |
-| **Portfolio**: the public site and the `/admin` editor | Next.js 15 | this repo | 3000 |
-| **API**: stores the content and contact messages | FastAPI + SQLAlchemy + Alembic | [belimm/coolify-test](https://github.com/belimm/coolify-test), `backend/` | 8000 |
-
-The API uses **Postgres** in production and **SQLite** locally (no setup needed).
-
 ```
-             Visitor's browser
-                    │
-                    ▼
-┌───────────────────────────────────────┐          ┌──────────────────────────┐
-│ Portfolio (Next.js)                   │          │ API (FastAPI)            │
-│                                       │          │                          │
-│  /                 homepage ──────────┼─ GET ───▶│ /api/public/content      │
-│  /api/contact      contact form ──────┼─ POST ──▶│ /api/public/messages     │
-│  /admin/*          editor UI          │          │                          │
-│  /api/admin/*      proxy ─────────────┼─ Bearer ▶│ /api/admin/*             │
-│  /api/revalidate   ◀──────────────────┼── POST ──│ after every admin change │
-└───────────────────────────────────────┘          └────────────┬─────────────┘
-                                                                ▼
-                                                        Postgres / SQLite
+Browser ──▶ Next.js (Vercel)
+             ├─ /, /tr                 pages, cached (ISR) and refreshed on every admin save
+             ├─ /cv/en.pdf, /cv/tr.pdf the live CV for each language
+             ├─ /files/uploads/...     uploaded images and PDFs
+             ├─ /api/contact           contact form  ──▶ messages/<time>.json
+             └─ /admin, /api/admin/*   editor (signed session)
+                                              │
+                                              ▼
+                               Vercel Blob (or .data/ locally)
+                               ├─ content/<time>.json   one snapshot per save; newest is live
+                               ├─ uploads/images, uploads/cv
+                               └─ messages/
 ```
 
-### The three flows
-
-**1. Someone opens the homepage.**
-The page is rendered on the server with content from `GET /api/public/content?lang=en|tr` and then cached (ISR). A cached page is served to everyone and rebuilt in the background at most once every 60 seconds. If the API is unreachable during a build, the page uses the snapshots in `src/lib/fallback-content.en.json` and `fallback-content.tr.json`. If the API goes down while the site is running, the last good page is kept.
-
-**2. You edit something in `/admin`.**
-1. You sign in at `/admin/login`. The portfolio forwards the password to the API (`POST /api/auth/login`), receives a signed token, and stores it in an **httpOnly cookie**, which JavaScript on the page can't read.
-2. Every admin action calls the portfolio's own `/api/admin/*` route. That route reads the cookie and forwards the request to the API as `Authorization: Bearer <token>`. The browser never talks to the API directly, so the API needs no CORS setup for the admin.
-3. The API checks the token, saves the change, then calls the portfolio's `/api/revalidate` with a shared secret (`PORTFOLIO_SECRET`). The homepage drops its cache, so the change is live within a second.
-
-`src/middleware.ts` redirects signed-out visitors from `/admin/*` to the login page. The real security check is the API's token validation, which runs on every request.
-
-**3. A visitor sends the contact form.**
-The form posts to the portfolio's `/api/contact`, which forwards it to the API together with the visitor's IP for rate limiting (5 messages per 10 minutes per IP). The message lands in the **Messages** inbox in `/admin`. If EmailJS keys are configured, an email is sent too.
+- **Content is JSON.** Every save writes a new snapshot file instead of overwriting one. The newest is live, and the last 40 are the history you can restore from `/admin/history`. Everything is validated with zod before it's saved (`src/lib/cms/schema.ts`).
+- **Until the first save**, the site shows `src/lib/cms/seed.json`.
+- **Files are served through the app** (`/files/...`, `/cv/...`), so URLs stay on your domain and the Blob store can be private.
+- **Storage is switchable.** With `BLOB_READ_WRITE_TOKEN` set, everything goes to Vercel Blob. Without it, everything goes to the git-ignored `.data/` folder, so local development needs no account.
 
 ## Run it locally
 
-You need **Node 20+** and **Python 3.12+**. Clone both repos side by side and use two terminals.
-
-### Terminal 1: the API (with a virtual environment)
-
 ```bash
-cd ../coolify-test/backend
-python3 -m venv .venv            # once
-source .venv/bin/activate        # every new terminal
-pip install -r requirements.txt  # once, and again when requirements change
-cp .env.example .env             # once; the defaults work as-is
-alembic upgrade head             # creates or updates the database tables
-uvicorn app.main:app --reload --port 8000
+npm install
+cp .env.example .env.local
+npm run admin:credentials -- --email you@example.com --qr admin-totp.png
 ```
 
-On the first start the API fills the empty database with the content from my CV (`app/seed.py`).
-
-Check that it runs:
-
-- http://localhost:8000/health should return `{"status":"ok","database":"up",...}`
-- http://localhost:8000/docs has interactive API docs (Swagger)
-
-Leave the virtual environment with `deactivate`.
-
-### Terminal 2: the portfolio
+The last command prints `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, `SESSION_SECRET` and `ADMIN_TOTP_SECRET`, plus a generated password (shown once). Paste the variables into `.env.local`, save the password in your password manager, scan `admin-totp.png` with an authenticator app (Google Authenticator, 1Password, …), then delete the PNG.
 
 ```bash
-npm install                  # once
-cp .env.example .env.local   # once
 npm run dev
 ```
 
-- Site: http://localhost:3000
-- Admin: http://localhost:3000/admin (password `dev-password`, set by `ADMIN_PASSWORD` in the API's `backend/.env`)
+- Site: http://localhost:3000 (English), http://localhost:3000/tr (Turkish)
+- Admin: http://localhost:3000/admin
 
-`PORTFOLIO_SECRET` must be the same in the API's `backend/.env` and this repo's `.env.local`, or edits won't refresh the homepage right away. They'll still appear within 60 seconds.
+Content, uploads and messages are written to `.data/`. Delete that folder to start over from the seed.
 
-### Against the deployed API
+## Admin sign-in and security
 
-To test the local portfolio with the real data on Coolify, point `.env.local` at the deployed API and restart `npm run dev`:
+| Layer | What it does |
+| --- | --- |
+| Email + password | Only a scrypt hash of the password is stored (`ADMIN_PASSWORD_HASH`). |
+| Two-step codes | With `ADMIN_TOTP_SECRET` set, a 6-digit authenticator code is required too. Each code works once. |
+| Session | HS256-signed JWT in an `httpOnly`, `SameSite=Strict` cookie (`__Host-` prefixed in production), valid for 8 hours. Checked in middleware **and** in every admin route. |
+| Rate limits | Sign-in: 10 attempts per IP per 15 minutes, and a lock after 20 failed attempts per hour from anywhere. Contact form: 5 messages per IP per 10 minutes. |
+| Requests | Admin writes must come from the site's own origin. Uploads are limited to 4 MB, and a file's first bytes must match its type (a renamed file won't pass as a PDF). Links must be `https://` or site paths. |
+| Headers | `noindex`, `no-store` and `X-Frame-Options: DENY` on the admin; `nosniff`, a referrer policy and a permissions policy site-wide. |
 
-```
-API_URL=https://<your api domain>
-PORTFOLIO_SECRET=<the PORTFOLIO_SECRET set on the API in Coolify>
-```
+**Rate limits on Vercel need Upstash Redis.** Serverless instances don't share memory, so without Redis each instance counts on its own. Add Upstash Redis from the Vercel Marketplace (the free plan is plenty); it sets the environment variables automatically. Locally, the in-memory counters are fine.
 
-The deployed API can't reach your laptop, so leave its `PORTFOLIO_REVALIDATE_URL` empty for this. Edits then show up after at most 60 seconds instead of instantly.
-
-### API in Docker
-
-The API repo has a `docker-compose.yml` that runs the API with Postgres: `cd ../coolify-test && docker compose up --build`.
+**To change the password or re-issue the codes**, run `npm run admin:credentials` again and replace the variables. A new `SESSION_SECRET` signs everyone out.
 
 ## Editing content
 
-In `/admin`:
-
 | Page | What it controls |
 | --- | --- |
-| **Profile** | Name, role, headline, about text, links, CV file, availability note |
+| **Profile** | Name, role, headline, about text, links, availability note |
 | **Projects** | The *Work* list: order (↑ ↓), visibility, image, tags, link |
-| **Experience** | Jobs and education (education gets its own heading on the site) |
+| **Experience** | Jobs and education (education gets its own heading) |
 | **Skills** | Skill groups and their items |
-| **Messages** | Contact form inbox. Unread messages show a count in the sidebar |
+| **CV** | One CV per language, with every uploaded version kept. "Make live" switches which one `/cv/<lang>.pdf` serves. |
+| **Messages** | Contact form inbox. The unread count is per browser. |
+| **History** | Every save with a note. Restore any of the last 40. |
 
-To highlight words in the headline, wrap them in double equals signs: `I build ==software that has to work==.`
-
-Every editor has a **Türkçe** section below the English fields. Fill in what you want translated; anything left empty shows the English text on `/tr`.
-
-Uploaded images and PDFs are stored by the API (`/app/uploads` on the server).
+- To highlight words in the headline, wrap them in double equals signs: `I build ==software that has to work==.`
+- Every editor has a **Türkçe** section. Empty Turkish fields show the English text on `/tr`.
+- `/cv/tr.pdf` falls back to the English CV. Until a CV is uploaded, `/cv/en.pdf` serves `public/BerkLimoncu_CV.pdf`.
 
 ## Languages and theme
 
-**Languages.** English is the default at `/`; Turkish lives at `/tr`. The EN / TR switch in the header links between them.
+- **Languages.** English at `/`, Turkish at `/tr`, with an EN / TR switch in the header. Interface text lives in `src/lib/i18n.ts`; content translations are stored per field under `translations.tr`.
+- **Theme.** Dark by default, whatever the visitor's system setting. The sun/moon button switches it and the choice is remembered. A tiny script in `<head>` (`src/lib/theme.ts`) applies it before the first paint, so there's no flash.
 
-- Interface text (navigation, buttons, form labels, CV viewer) comes from `src/lib/i18n.ts`.
-- Content comes from the API. Translatable fields store their Turkish version in a `translations` JSON column (`{"tr": {"intro": "..."}}`), and `GET /api/public/content?lang=tr` returns each field in Turkish when it has a value, otherwise in English.
-- Translatable fields: profile role, location, headline, about and availability note; project subtitle and description; experience title, location, dates, summary and highlights; skill group names.
+## Deploying on Vercel
 
-To add a language: add it to `LOCALES` and the dictionaries in `src/lib/i18n.ts`, add a page like `src/app/tr/page.tsx`, add it to `Language` and `TRANSLATION_LANGUAGES` in the API's `backend/app/schemas.py`, and add a fallback snapshot.
+1. **Blob.** In the Vercel project, open **Storage → Create → Blob**, choose **Private** access and connect it to the project. This adds `BLOB_READ_WRITE_TOKEN`. (If you create a public store instead, also set `BLOB_ACCESS=public`.)
+2. **Upstash Redis.** Open **Storage → Marketplace → Upstash (Redis)**, create a free database and connect it. This adds the Redis variables used for rate limiting.
+3. **Admin variables.** Under **Settings → Environment Variables**, add `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, `SESSION_SECRET` and `ADMIN_TOTP_SECRET` from `npm run admin:credentials`. Optionally add the `NEXT_PUBLIC_EMAILJS_*` keys.
+4. **Redeploy.** Environment changes apply to new deployments.
 
-**Theme.** Dark by default, whatever the visitor's system setting. The sun/moon button switches to light, and the choice is stored in `localStorage`. A tiny script in `<head>` (`src/lib/theme.ts`) applies the saved choice before the first paint, so there's no flash. Colours are CSS variables in `src/app/globals.css`: `:root` is light and `:root[data-theme='dark']` is dark.
+The first time you save in `/admin` on the live site, the content moves from the bundled seed into Blob. Local `.data/` content is not uploaded; make your edits on the live admin.
+
+The `Dockerfile` builds a standalone image if you ever move to Coolify or another host. There, either set a Blob token or mount a persistent volume at `/app/.data`.
 
 ## Project structure
 
 ```
-.
-├─ src/
-│  ├─ app/
-│  │  ├─ page.tsx                English homepage (ISR)
-│  │  ├─ tr/page.tsx             Turkish homepage (ISR)
-│  │  ├─ admin/                  login + editor pages
-│  │  └─ api/                    contact, revalidate, admin proxy/login/logout
-│  ├─ components/
-│  │  ├─ site/                   homepage sections, header, background digits
-│  │  ├─ admin/                  editor UI (generic collection editor, fields, inbox)
-│  │  ├─ CvViewer/               PDF viewer (react-pdf) with a custom frame
-│  │  └─ DeveloperTerminal/      terminal that logs what visitors click
-│  ├─ lib/
-│  │  ├─ content.ts              types + fetching content from the API
-│  │  ├─ i18n.ts                 languages + interface text (EN/TR)
-│  │  ├─ theme.ts                dark/light defaults and the no-flash boot script
-│  │  ├─ fallback-content.*.json used when the API isn't reachable at build time
-│  │  └─ server.ts               server-only helpers (API URL, cookie name, origin check)
-│  └─ middleware.ts              /admin redirect for signed-out visitors
-└─ Dockerfile                    standalone Next.js image for Coolify
+src/
+├─ app/
+│  ├─ page.tsx, tr/page.tsx     homepage in English and Turkish (ISR)
+│  ├─ admin/                    login + editor pages
+│  ├─ api/admin/                content, cv, upload, messages, history, login, logout
+│  ├─ api/contact/              contact form
+│  ├─ cv/[file]/                /cv/en.pdf, /cv/tr.pdf
+│  └─ files/[...path]/          uploaded files
+├─ components/
+│  ├─ site/                     homepage sections, header, background digits
+│  ├─ admin/                    editors, CV manager, history, inbox, login form
+│  └─ CvViewer/                 PDF viewer (react-pdf) with a custom frame
+├─ lib/
+│  ├─ cms/                      schema (zod), repository (snapshots), storage (Blob / .data), uploads, messages, seed
+│  ├─ auth/                     password (scrypt), totp, session (JWT), admin route wrapper
+│  ├─ ratelimit.ts              Upstash Redis or in-memory limits
+│  ├─ content.ts                cached, localized content for the pages
+│  └─ i18n.ts, theme.ts         languages and theme
+└─ middleware.ts                verifies the admin session
+scripts/admin-credentials.mjs   generates sign-in credentials
 ```
-
-The API's structure, migrations and tests are documented in its own README and `backend/CLAUDE.md`.
-
-## Deploying on Coolify
-
-Deploy the API first; its README has the steps ([belimm/coolify-test](https://github.com/belimm/coolify-test)). Then add the portfolio to the same Coolify project:
-
-**Portfolio**: Application from this repo, build pack **Dockerfile**, base directory **`/`**, port **3000**.
-
-| Variable | Value |
-| --- | --- |
-| `API_URL` | the API's internal URL (`http://<api service name>:8000`) or its public URL |
-| `PORTFOLIO_SECRET` | same value as on the API |
-| `NEXT_PUBLIC_EMAILJS_*` | optional build args for email notifications |
-
-`API_URL` and `PORTFOLIO_SECRET` are read at runtime, so changing them needs only a restart. After the portfolio has a domain, set `PORTFOLIO_REVALIDATE_URL=https://<portfolio domain>/api/revalidate` on the API and add the domain to its `CORS_ORIGINS`.
-
-To host the portfolio on Vercel instead, set the same two variables there.
 
 ## Troubleshooting
 
 | Symptom | Fix |
 | --- | --- |
-| Homepage shows old content | Check that `PORTFOLIO_SECRET` matches on both sides and that `PORTFOLIO_REVALIDATE_URL` points to the portfolio. Without it, changes still appear within 60s. |
-| `Using bundled content` in the dev server log | The API isn't running or `API_URL` in `.env.local` is wrong. |
-| Admin login says "Wrong password" | The password is the API's `ADMIN_PASSWORD` (`backend/.env` locally, env vars on Coolify). Restart the API after changing it. |
-| Admin login says "Too many attempts" | 10 failed logins in 15 minutes from one IP. Wait, or restart the API. |
-| `no such table` errors | Run `alembic upgrade head` in the API's `backend/` with the venv activated. |
-| `ModuleNotFoundError` when starting uvicorn | The venv isn't active: `source .venv/bin/activate` in the API's `backend/`. |
+| "Admin sign-in is not configured" | `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH` or `SESSION_SECRET` is missing. |
+| "Wrong email, password or code" | Check your authenticator app's clock is set automatically, and wait for a fresh code (each code works once). |
+| "Sign-in is locked…" | 20 failed attempts in the last hour. Wait, or restart `npm run dev` locally (in-memory counters). |
+| Saving fails on Vercel with "Blob is not configured" | Connect a Blob store (step 1 above) and redeploy. |
+| Uploaded image or CV shows 404 | The store's access mode must match `BLOB_ACCESS` (default `private`). |
