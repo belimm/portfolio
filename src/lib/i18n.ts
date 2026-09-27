@@ -8,14 +8,14 @@ export const LOCALE_PATHS: Record<Locale, string> = { en: '/', tr: '/tr' };
 /** Interface text. Page content (projects, experience, …) comes from the API in the requested language. */
 const en = {
    meta: {
-      title: 'Berk Limoncu · Full-stack & mobile developer',
+      title: 'Berk Limoncu · Full-stack developer',
       description:
-         'Berk Limoncu is a full-stack and mobile developer in Berlin, working with React, TypeScript, Node.js and Spring Boot.',
+         'Berk Limoncu is a full-stack developer in Istanbul building AI products, with a background in fintech.',
    },
    nav: { work: 'Work', experience: 'Experience', skills: 'Skills', contact: 'Contact', sections: 'Sections' },
    header: {
-      clock: 'Berlin',
-      clockTitle: 'Local time in Berlin',
+      clock: 'Istanbul',
+      clockTitle: 'Local time in Istanbul',
       toDark: 'Switch to dark theme',
       toLight: 'Switch to light theme',
       language: 'Language',
@@ -64,14 +64,14 @@ export type Dictionary = typeof en;
 
 const tr: Dictionary = {
    meta: {
-      title: 'Berk Limoncu · Full-stack ve mobil geliştirici',
+      title: 'Berk Limoncu · Full-stack geliştirici',
       description:
-         "Berk Limoncu, Berlin'de React, TypeScript, Node.js ve Spring Boot ile çalışan full-stack ve mobil geliştirici.",
+         "Berk Limoncu, İstanbul'da yapay zekâ ürünleri geliştiren, fintech geçmişine sahip bir full-stack geliştirici.",
    },
    nav: { work: 'İşler', experience: 'Deneyim', skills: 'Yetenekler', contact: 'İletişim', sections: 'Bölümler' },
    header: {
-      clock: 'Berlin',
-      clockTitle: "Berlin'de yerel saat",
+      clock: 'İstanbul',
+      clockTitle: "İstanbul'da yerel saat",
       toDark: 'Koyu temaya geç',
       toLight: 'Açık temaya geç',
       language: 'Dil',

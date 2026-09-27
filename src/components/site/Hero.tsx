@@ -81,7 +81,7 @@ export default function Hero({ profile, t }: { profile: Profile; t: Dictionary }
                {profile.available && profile.availability_note && (
                   <p className={styles.status}>{profile.availability_note}</p>
                )}
-               <DeveloperTerminal title={`${handle}@berlin: ~`} label={t.terminal.label} />
+               <DeveloperTerminal title={`${handle}@istanbul: ~`} label={t.terminal.label} />
             </aside>
          </div>
       </section>

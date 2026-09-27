@@ -22,12 +22,11 @@ const newsreader = Newsreader({
 
 export const metadata: Metadata = {
    metadataBase: new URL('https://berklimoncu.com'),
-   title: 'Berk Limoncu · Full-stack & mobile developer',
-   description:
-      'Berk Limoncu is a full-stack and mobile developer in Berlin, working with React, TypeScript, Node.js and Spring Boot.',
+   title: 'Berk Limoncu · Full-stack developer',
+   description: 'Berk Limoncu is a full-stack developer in Istanbul building AI products, with a background in fintech.',
    openGraph: {
       title: 'Berk Limoncu',
-      description: 'Full-stack & mobile developer in Berlin',
+      description: 'Full-stack developer in Istanbul building AI products',
       url: 'https://berklimoncu.com',
       siteName: 'Berk Limoncu',
       images: [

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import avatar from '../../assets/berk_avatar.jpg';
 import { Dictionary, Locale, LOCALE_PATHS, LOCALES } from '../../lib/i18n';
-import BerlinClock from './BerlinClock';
+import LocalClock from './LocalClock';
 import SectionNav from './SectionNav';
 import ThemeToggle from './ThemeToggle';
 import styles from './Header.module.css';
@@ -26,7 +26,12 @@ export default function Header({ name, lang, t }: HeaderProps) {
             </a>
             <SectionNav labels={t.nav} className={styles.nav} optionalClassName={styles.optional} />
             <div className={styles.tools}>
-               <BerlinClock label={t.header.clock} title={t.header.clockTitle} className={styles.clock} />
+               <LocalClock
+                  timeZone="Europe/Istanbul"
+                  label={t.header.clock}
+                  title={t.header.clockTitle}
+                  className={styles.clock}
+               />
                <nav className={styles.languages} aria-label={t.header.language}>
                   {LOCALES.map((locale) => (
                      <Link
