@@ -1,6 +1,9 @@
 .hero {
    position: relative;
    isolation: isolate;
+}
+
+.inner {
    max-width: var(--page-width);
    margin: 0 auto;
    padding: 64px var(--gutter) 16px;
@@ -105,7 +108,7 @@
 }
 
 @media (max-width: 960px) {
-   .hero {
+   .inner {
       grid-template-columns: 1fr;
       gap: 40px;
       padding-top: 40px;

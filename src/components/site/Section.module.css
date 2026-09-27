@@ -1,4 +1,9 @@
 .section {
+   position: relative;
+   isolation: isolate;
+}
+
+.inner {
    max-width: var(--page-width);
    margin: 0 auto;
    padding: 72px var(--gutter) 0;
@@ -42,7 +47,7 @@
 }
 
 @media (max-width: 860px) {
-   .section {
+   .inner {
       grid-template-columns: 1fr;
       gap: 20px;
       padding-top: 56px;

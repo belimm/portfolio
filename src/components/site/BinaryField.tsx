@@ -14,11 +14,23 @@ type Digit = {
    lemon: boolean;
 };
 
-const DENSITY = 1 / 16000; // digits per px²
 const NEAR = 140; // px around the cursor where digits brighten a little
 
-/** Slowly drifting 0s and 1s behind the hero. Sparse and faint on purpose. */
-export default function BinaryField() {
+// The hero is the showpiece; behind the sections the field is sparser and fainter.
+const VARIANTS = {
+   hero: { density: 1 / 16000, minAlpha: 0.1, alphaRange: 0.18, maxDpr: 2 },
+   // Section canvases are tall; drawing them at 1x keeps GPU memory low (phones included).
+   section: { density: 1 / 22000, minAlpha: 0.09, alphaRange: 0.14, maxDpr: 1 },
+};
+
+type BinaryFieldProps = {
+   /** 'up' drifts from the bottom edge to the top, 'down' the other way. */
+   direction?: 'up' | 'down';
+   variant?: keyof typeof VARIANTS;
+};
+
+/** Slowly drifting 0s and 1s behind a section. Sparse and faint on purpose. */
+export default function BinaryField({ direction = 'up', variant = 'hero' }: BinaryFieldProps) {
    const canvasRef = useRef<HTMLCanvasElement>(null);
 
    useEffect(() => {
@@ -43,12 +55,15 @@ export default function BinaryField() {
          lemonColor = css.getPropertyValue('--lemon').trim() || '#f1d94f';
       };
 
+      const { density, minAlpha, alphaRange, maxDpr } = VARIANTS[variant];
+      const sign = direction === 'up' ? -1 : 1;
+
       const spawn = (y?: number): Digit => ({
          x: Math.random() * width,
          y: y ?? Math.random() * height,
          speed: 5 + Math.random() * 9,
          size: 11 + Math.random() * 5,
-         alpha: 0.1 + Math.random() * 0.18,
+         alpha: minAlpha + Math.random() * alphaRange,
          char: Math.random() < 0.5 ? '0' : '1',
          flipAt: performance.now() + 2000 + Math.random() * 6000,
          lemon: Math.random() < 0.08,
@@ -56,13 +71,13 @@ export default function BinaryField() {
 
       const resize = () => {
          const rect = canvas.getBoundingClientRect();
-         const dpr = Math.min(window.devicePixelRatio || 1, 2);
+         const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
          width = rect.width;
          height = rect.height;
          canvas.width = width * dpr;
          canvas.height = height * dpr;
          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-         const count = Math.round(width * height * DENSITY);
+         const count = Math.round(width * height * density);
          digits = Array.from({ length: count }, () => spawn());
       };
 
@@ -75,8 +90,10 @@ export default function BinaryField() {
 
          for (const d of digits) {
             if (!reducedMotion) {
-               d.y -= d.speed * dt;
-               if (d.y < -20) Object.assign(d, spawn(height + 20));
+               d.y += sign * d.speed * dt;
+               // Leaving one edge: come back in from the opposite one.
+               if (sign < 0 && d.y < -20) Object.assign(d, spawn(height + 20));
+               if (sign > 0 && d.y > height + 20) Object.assign(d, spawn(-20));
                if (now > d.flipAt) {
                   d.char = d.char === '0' ? '1' : '0';
                   d.flipAt = now + 2000 + Math.random() * 6000;
@@ -142,7 +159,7 @@ export default function BinaryField() {
          window.removeEventListener('pointermove', onPointer);
          themeObserver.disconnect();
       };
-   }, []);
+   }, [direction, variant]);
 
-   return <canvas ref={canvasRef} className={styles.field} aria-hidden="true" />;
+   return <canvas ref={canvasRef} className={`${styles.field} ${styles[variant]}`} aria-hidden="true" />;
 }

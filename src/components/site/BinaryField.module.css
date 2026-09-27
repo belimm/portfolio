@@ -5,9 +5,18 @@
    height: 100%;
    z-index: -1;
    pointer-events: none;
-   /* Fade out at the edges so the digits never compete with the text blocks. */
-   mask-image: radial-gradient(ellipse 60% 85% at 82% 35%, #000 25%, transparent 80%);
    animation: fadeIn 1.6s 400ms ease-out both;
+}
+
+/* Hero: concentrated on the right, away from the headline. */
+.hero {
+   mask-image: radial-gradient(ellipse 60% 85% at 82% 35%, #000 25%, transparent 80%);
+}
+
+/* Sections: fade out at the top and bottom so the change of direction between sections is soft. */
+.section {
+   mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+   animation: none;
 }
 
 @keyframes fadeIn {

@@ -1,5 +1,7 @@
 'use client';
 
+// Must come before react-pdf: PDF.js uses these APIs as soon as it loads.
+import './polyfills';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -8,11 +10,10 @@ import type { Dictionary } from '../../lib/i18n';
 import styles from './CvViewer.module.css';
 
 // Must live in the same module that renders <Document>, see react-pdf's README.
-// Legacy worker: it polyfills the newest JS APIs (see next.config.ts).
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-   'pdfjs-dist/legacy/build/pdf.worker.min.mjs',
-   import.meta.url
-).toString();
+// Our own worker entry, so the polyfills also run inside the worker (see pdf.worker.ts).
+if (typeof window !== 'undefined' && !pdfjs.GlobalWorkerOptions.workerPort) {
+   pdfjs.GlobalWorkerOptions.workerPort = new Worker(new URL('./pdf.worker.ts', import.meta.url));
+}
 
 const ZOOM_STEPS = [0.75, 1, 1.25, 1.5];
 const MAX_PAGE_WIDTH = 820;
