@@ -152,7 +152,10 @@ export default function CvViewer({ url, fileName, onClose, labels }: CvViewerPro
                   <Document
                      file={url}
                      onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-                     onLoadError={() => setFailed(true)}
+                     onLoadError={(error) => {
+                        console.error('CV viewer: the PDF failed to load', error);
+                        setFailed(true);
+                     }}
                      loading={<p className={styles.message}>{labels.loading}</p>}
                      className={styles.document}>
                      {Array.from({ length: numPages }, (_, i) => (
@@ -167,6 +170,7 @@ export default function CvViewer({ url, fileName, onClose, labels }: CvViewerPro
                            <Page
                               pageNumber={i + 1}
                               width={pageWidth}
+                              onRenderError={(error) => console.error(`CV viewer: page ${i + 1} failed to render`, error)}
                               loading={<div style={{ width: pageWidth, aspectRatio: '1 / 1.414' }} />}
                            />
                         </div>
