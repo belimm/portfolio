@@ -1,0 +1,17 @@
+.field {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+   height: 100%;
+   z-index: -1;
+   pointer-events: none;
+   /* Fade out at the edges so the digits never compete with the text blocks. */
+   mask-image: radial-gradient(ellipse 60% 85% at 82% 35%, #000 25%, transparent 80%);
+   animation: fadeIn 1.6s 400ms ease-out both;
+}
+
+@keyframes fadeIn {
+   from {
+      opacity: 0;
+   }
+}

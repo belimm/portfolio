@@ -6,7 +6,7 @@ export async function GET() {
    const filePath = path.join(
       process.cwd(),
       'public',
-      'Comparision_Of_Monolith_Microservices.pdf'
+      'thesis.pdf'
    );
    const fileBuffer = await readFile(filePath);
 

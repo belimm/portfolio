@@ -1,29 +1,189 @@
 @import 'tailwindcss';
 
+/* Paper and ink, with one accent: lemon (Limoncu = lemon seller). */
+/* Paper and ink, with one accent: lemon (Limoncu = lemon seller). */
 :root {
-   --background: #171717;
-   --foreground: #171717;
+   color-scheme: light;
+   --paper: #ebe5d8;
+   --paper-raised: #e2dbcc;
+   --paper-top: #f1ece1;
+   --paper-bottom: #e3dccd;
+   --glow: rgba(241, 217, 79, 0.16);
+   --ink: #1c1b18;
+   --ink-soft: #46423b;
+   --muted: #746e62;
+   --rule: #d2cab9;
+   --lemon: #f1d94f;
+   --lemon-text: #6a5800;
+   --mark-bg: linear-gradient(transparent 58%, var(--lemon) 58%, var(--lemon) 92%, transparent 92%);
+   --mark-color: inherit;
+   --grain-opacity: 0.05;
+
+   --font-display: var(--font-newsreader), Georgia, 'Times New Roman', serif;
+   --font-body: var(--font-geist-sans), system-ui, sans-serif;
+   --font-code: var(--font-geist-mono), ui-monospace, Menlo, monospace;
+
+   --page-width: 1120px;
+   --gutter: 24px;
+   --header-height: 64px;
 }
 
-@theme inline {
-   --color-background: var(--background);
-   --color-foreground: var(--foreground);
-   --font-sans: var(--font-geist-sans);
-   --font-mono: var(--font-geist-mono);
+:root[data-theme='dark'] {
+   color-scheme: dark;
+   --paper: #141311;
+   --paper-raised: #1e1c19;
+   --paper-top: #1b1916;
+   --paper-bottom: #0f0e0d;
+   --glow: rgba(232, 207, 69, 0.07);
+   --ink: #ede8dd;
+   --ink-soft: #bcb5a7;
+   --muted: #8b8476;
+   --rule: #2e2c27;
+   --lemon: #e8cf45;
+   --lemon-text: #eed65a;
+   --mark-bg: none;
+   --mark-color: var(--lemon);
+   --grain-opacity: 0.035;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (max-width: 640px) {
    :root {
-      --background: #151823;
-      --foreground: #171717;
+      --gutter: 16px;
    }
 }
 
+@theme inline {
+   --color-background: var(--paper);
+   --color-foreground: var(--ink);
+   --font-sans: var(--font-body);
+   --font-mono: var(--font-code);
+}
+
+html {
+   background: var(--paper);
+   scroll-behavior: smooth;
+   scroll-padding-top: calc(var(--header-height) + 16px);
+}
+
 body {
-   background: var(--background);
-   color: var(--foreground);
-   font-family: var(--font-mono), 'Fira Mono', 'Menlo', 'Consolas',
-      'Liberation Mono', monospace;
-   padding: 0;
-   margin: 0;
+   position: relative;
+   color: var(--ink);
+   font-family: var(--font-body);
+   font-size: 16px;
+   line-height: 1.6;
+   -webkit-font-smoothing: antialiased;
+   text-rendering: optimizeLegibility;
+}
+
+/* Paper: a warm top-to-bottom fade, a faint lemon glow behind the hero, and fine grain.
+   Painted on fixed layers so it doesn't stretch with page height or jank on mobile. */
+body::before,
+body::after {
+   content: '';
+   position: fixed;
+   inset: 0;
+   z-index: -2;
+   pointer-events: none;
+}
+
+body::before {
+   background:
+      radial-gradient(60rem 36rem at 88% -8%, var(--glow), transparent 70%),
+      linear-gradient(180deg, var(--paper-top) 0%, var(--paper) 45%, var(--paper-bottom) 100%);
+}
+
+body::after {
+   opacity: var(--grain-opacity);
+   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+   background: var(--lemon);
+   color: #1c1b18;
+}
+
+a {
+   color: inherit;
+}
+
+:focus-visible {
+   outline: 2px solid var(--ink);
+   outline-offset: 3px;
+}
+
+.mark {
+   background: var(--mark-bg);
+   color: var(--mark-color);
+   padding: 0 0.08em;
+   margin: 0 -0.08em;
+   -webkit-box-decoration-break: clone;
+   box-decoration-break: clone;
+}
+
+.visually-hidden {
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   overflow: hidden;
+   clip: rect(0 0 0 0);
+   white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+   *,
+   *::before,
+   *::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+   }
+}
+
+/* Hero headline: words rise out of their own line box, then the highlighter is drawn. */
+.reveal-word {
+   display: inline-block;
+   overflow: hidden;
+   vertical-align: top;
+   padding-bottom: 0.08em;
+   margin-bottom: -0.08em;
+}
+
+.reveal-word > span {
+   display: inline-block;
+   transform: translateY(105%);
+   animation: word-up 760ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+   animation-delay: calc(var(--i) * 32ms + 120ms);
+}
+
+.mark-draw {
+   background-repeat: no-repeat;
+   background-size: 0% 100%;
+   animation: mark-draw 600ms cubic-bezier(0.6, 0, 0.3, 1) forwards;
+   animation-delay: calc(var(--i) * 32ms + 700ms);
+}
+
+@keyframes word-up {
+   to {
+      transform: translateY(0);
+   }
+}
+
+@keyframes mark-draw {
+   to {
+      background-size: 100% 100%;
+   }
+}
+
+/* Shared entrance for the smaller hero pieces. */
+.fade-up {
+   animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+   animation-delay: var(--delay, 0ms);
+}
+
+@keyframes fade-up {
+   from {
+      opacity: 0;
+      transform: translateY(10px);
+   }
 }

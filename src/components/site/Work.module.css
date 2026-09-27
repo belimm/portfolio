@@ -1,0 +1,151 @@
+.list {
+   list-style: none;
+}
+
+.list li + li {
+   border-top: 1px solid var(--rule);
+}
+
+.row {
+   display: grid;
+   grid-template-columns: 112px minmax(0, 1fr) 132px;
+   gap: 28px;
+   padding: 28px 0;
+   text-decoration: none;
+   color: inherit;
+}
+
+.linked {
+   position: relative;
+}
+
+.linked::before {
+   content: '';
+   position: absolute;
+   inset: 0 -16px;
+   border-radius: 4px;
+   background: var(--paper-raised);
+   opacity: 0;
+   transition: opacity 180ms;
+   z-index: -1;
+}
+
+.linked:hover::before {
+   opacity: 1;
+}
+
+.thumb {
+   width: 112px;
+   aspect-ratio: 1;
+   border-radius: 4px;
+   overflow: hidden;
+   background: var(--paper-raised);
+   box-shadow: inset 0 0 0 1px var(--rule);
+}
+
+.thumb img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   display: block;
+   transition: transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.linked:hover .thumb img {
+   transform: scale(1.04);
+}
+
+.initial {
+   display: grid;
+   place-items: center;
+   height: 100%;
+   font-family: var(--font-display);
+   font-size: 40px;
+   color: var(--muted);
+}
+
+.title {
+   font-family: var(--font-display);
+   font-size: 26px;
+   font-weight: 400;
+   line-height: 1.2;
+   letter-spacing: -0.01em;
+}
+
+.arrow {
+   display: inline-block;
+   margin-left: 8px;
+   font-family: var(--font-body);
+   font-size: 16px;
+   color: var(--muted);
+   transition: transform 180ms, color 180ms;
+}
+
+.linked:hover .arrow {
+   color: var(--ink);
+   transform: translate(2px, -2px);
+}
+
+.subtitle {
+   margin-top: 2px;
+   font-size: 14px;
+   color: var(--muted);
+}
+
+.description {
+   margin-top: 12px;
+   color: var(--ink-soft);
+   max-width: 62ch;
+}
+
+.tags {
+   margin-top: 12px;
+   font-family: var(--font-code);
+   font-size: 12px;
+   color: var(--muted);
+}
+
+.meta {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   gap: 4px;
+   font-family: var(--font-code);
+   font-size: 12px;
+   color: var(--muted);
+   text-align: right;
+   padding-top: 8px;
+}
+
+.host {
+   overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+   .row {
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 16px;
+      padding: 22px 0;
+   }
+
+   .thumb {
+      width: 72px;
+   }
+
+   .title {
+      font-size: 22px;
+   }
+
+   .meta {
+      grid-column: 2;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 12px;
+      padding-top: 0;
+      text-align: left;
+   }
+
+   .linked::before {
+      inset: 0 -8px;
+   }
+}

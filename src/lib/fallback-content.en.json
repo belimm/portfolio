@@ -1,0 +1,231 @@
+{
+  "lang": "en",
+  "profile": {
+    "name": "Berk Limoncu",
+    "pronunciation": "/beɾk/",
+    "role": "Full-stack & mobile developer",
+    "location": "Berlin, Germany",
+    "intro": "I build ==software that has to work==. Lending systems for a bank, consumer apps on the App Store, and a thesis on when microservices are worth it.",
+    "about": "Full-stack developer working mostly with React, TypeScript, Node.js and Spring Boot. I've spent my time in fintech and healthcare, where reliability matters more than novelty, and I care a lot about a code review culture that's respectful and useful.",
+    "email": "berk.limoncu@gmail.com",
+    "github_url": "https://github.com/belimm",
+    "linkedin_url": "https://www.linkedin.com/in/berklimoncu",
+    "cv_url": "/BerkLimoncu_CV.pdf",
+    "available": true,
+    "availability_note": "Open to full-time roles and freelance work"
+  },
+  "projects": [
+    {
+      "title": "Scalable Analyzer",
+      "subtitle": "Master's thesis",
+      "description": "Built the same system twice, once as a monolith and once as microservices, and measured both under load with Prometheus and JMeter to see where the split pays off and where it only adds cost.",
+      "year": "2025",
+      "image_url": "/images/scalable-analyzer.png",
+      "link": "/thesis.pdf",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "Docker",
+        "Prometheus",
+        "JMeter"
+      ],
+      "visible": true,
+      "id": 1
+    },
+    {
+      "title": "Peeka",
+      "subtitle": "iOS app · Future baby generator",
+      "description": "A consumer app that takes two photos and generates what a couple's baby might look like. I built the React Native client, the Node.js backend and the image generation pipeline.",
+      "year": "2024",
+      "image_url": "/images/peeka.webp",
+      "link": "https://apps.apple.com/us/app/future-baby-generator-peeka/id6738985115",
+      "tags": [
+        "React Native",
+        "Node.js",
+        "Firebase",
+        "AWS"
+      ],
+      "visible": true,
+      "id": 2
+    },
+    {
+      "title": "Fibabanka",
+      "subtitle": "Retail banking · Instant credit",
+      "description": "Instant credit for e-wallets and marketplaces like Trendyol, Hepsiburada and Paycell. KYC microservices, partner APIs, batch reporting and the React front end.",
+      "year": "2022–24",
+      "image_url": "/images/fibabanka-logo.avif",
+      "link": "https://www.fibabanka.com.tr/en/personal/loans/consumer-loan",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "Kafka",
+        "Redis",
+        "React",
+        "TypeScript"
+      ],
+      "visible": true,
+      "id": 3
+    },
+    {
+      "title": "EatWell2Earn",
+      "subtitle": "Telegram mini app on TON",
+      "description": "Upload a photo of a meal, get a nutrition score from a vision model, and earn tokens for eating well. Built as a Telegram mini app on the TON blockchain.",
+      "year": "2024",
+      "image_url": "/images/eatwell2earn.jpg",
+      "link": "https://github.com/belimm/eatwell-2-earn",
+      "tags": [
+        "React",
+        "Node.js",
+        "AWS",
+        "TON"
+      ],
+      "visible": true,
+      "id": 4
+    }
+  ],
+  "experience": [
+    {
+      "kind": "work",
+      "title": "Freelance developer",
+      "organization": "",
+      "location": "Berlin",
+      "start": "May 2024",
+      "end": "Present",
+      "summary": "AI-driven apps, fintech tools and enterprise web platforms for international clients.",
+      "highlights": [
+        "Mobile apps Peeka and ArmorUp with React Native, Node.js, Firebase and AWS",
+        "Transportation ERP and supply-chain SaaS on Next.js with Spring Boot backends",
+        "Trading bots for Polymarket with Telegram control and LLM-based sentiment analysis"
+      ],
+      "visible": true,
+      "id": 1
+    },
+    {
+      "kind": "work",
+      "title": "Software engineer",
+      "organization": "Fibabanka",
+      "location": "Istanbul",
+      "start": "Dec 2022",
+      "end": "Apr 2024",
+      "summary": "Full-stack on the embedded lending platform used by 50+ partners.",
+      "highlights": [
+        "KYC microservices in Spring Boot and Java EE with Kafka and Redis",
+        "Batch reporting system handling 2K+ daily transactions for partner banks",
+        "React/TypeScript features and client-specific UI",
+        "CI/CD pipelines with Docker"
+      ],
+      "visible": true,
+      "id": 2
+    },
+    {
+      "kind": "work",
+      "title": "Solution consultant",
+      "organization": "Turkcell",
+      "location": "Istanbul",
+      "start": "Dec 2021",
+      "end": "Apr 2022",
+      "summary": "Ran data operations for Güvende Kal, the Ministry of Health's COVID-19 monitoring app.",
+      "highlights": [
+        "MySQL operations across 50K+ daily records for 10K+ monitored patients",
+        "24/7 incident handling with zero data loss"
+      ],
+      "visible": true,
+      "id": 3
+    },
+    {
+      "kind": "work",
+      "title": "Software engineer intern",
+      "organization": "Turkcell",
+      "location": "Istanbul",
+      "start": "Jul 2021",
+      "end": "Oct 2021",
+      "summary": "Internal tools for 250+ employees.",
+      "highlights": [
+        "Car pooling app in .NET/Blazor handling 100+ daily bookings",
+        "Load balancer improvements for internal microservices"
+      ],
+      "visible": true,
+      "id": 4
+    },
+    {
+      "kind": "education",
+      "title": "MSc Software Engineering",
+      "organization": "University of Europe for Applied Sciences",
+      "location": "Potsdam",
+      "start": "Mar 2024",
+      "end": "Feb 2025",
+      "summary": "Thesis: Scalable Analyzer, monolith vs. microservices under load.",
+      "highlights": [],
+      "visible": true,
+      "id": 5
+    },
+    {
+      "kind": "education",
+      "title": "BSc Computer Engineering",
+      "organization": "Middle East Technical University",
+      "location": "Ankara",
+      "start": "Sep 2016",
+      "end": "Sep 2022",
+      "summary": "Senior project: a crawler that scores web page complexity by depth.",
+      "highlights": [],
+      "visible": true,
+      "id": 6
+    }
+  ],
+  "skills": [
+    {
+      "name": "Languages",
+      "items": [
+        "TypeScript",
+        "Java",
+        "Go",
+        "Python",
+        "Rust"
+      ],
+      "id": 1
+    },
+    {
+      "name": "Front end",
+      "items": [
+        "React",
+        "React Native",
+        "Next.js"
+      ],
+      "id": 2
+    },
+    {
+      "name": "Back end",
+      "items": [
+        "Node.js",
+        "Express",
+        "Spring Boot",
+        "Kafka"
+      ],
+      "id": 3
+    },
+    {
+      "name": "Data",
+      "items": [
+        "PostgreSQL",
+        "MySQL",
+        "MSSQL",
+        "MongoDB",
+        "Redis"
+      ],
+      "id": 4
+    },
+    {
+      "name": "Infra",
+      "items": [
+        "AWS",
+        "GCP",
+        "Firebase",
+        "Docker",
+        "CI/CD",
+        "Linux"
+      ],
+      "id": 5
+    }
+  ],
+  "updated_at": null
+}

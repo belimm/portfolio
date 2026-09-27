@@ -1,0 +1,220 @@
+/* Frame tokens: change these to restyle the viewer without touching the markup. */
+.backdrop {
+   --viewer-folder: #e3dccb;
+   --viewer-folder-ink: #1c1b18;
+   --viewer-desk: #d6cfbd;
+   --viewer-sheet-shadow: 0 1px 2px rgba(28, 27, 24, 0.12), 0 18px 40px -24px rgba(28, 27, 24, 0.45);
+
+   position: fixed;
+   inset: 0;
+   z-index: 50;
+   display: flex;
+   justify-content: center;
+   align-items: flex-end;
+   padding: 48px 24px 0;
+   background: rgba(20, 19, 17, 0.62);
+   animation: fade 200ms ease-out;
+}
+
+:global(:root[data-theme='dark']) .backdrop {
+   --viewer-folder: #2a2823;
+   --viewer-folder-ink: #ede8dd;
+   --viewer-desk: #1d1c19;
+   background: rgba(0, 0, 0, 0.7);
+}
+
+.folder {
+   position: relative;
+   width: min(980px, 100%);
+   height: calc(100% - 24px);
+   display: flex;
+   flex-direction: column;
+   background: var(--viewer-folder);
+   color: var(--viewer-folder-ink);
+   border-radius: 2px 8px 0 0;
+   animation: slide 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* The manila folder tab sticking out above the top-left corner. */
+.tab {
+   position: absolute;
+   left: 0;
+   bottom: 100%;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   height: 32px;
+   padding: 0 20px 0 14px;
+   background: var(--viewer-folder);
+   border-radius: 8px 8px 0 0;
+   font-family: var(--font-code);
+   font-size: 12px;
+   max-width: calc(100% - 40px);
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.tab::after {
+   content: '';
+   position: absolute;
+   right: -14px;
+   bottom: 0;
+   width: 14px;
+   height: 14px;
+   background: radial-gradient(circle at 100% 0, transparent 14px, var(--viewer-folder) 14.5px);
+}
+
+.clip {
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   background: var(--lemon);
+   flex: none;
+}
+
+.toolbar {
+   display: flex;
+   align-items: center;
+   gap: 20px;
+   padding: 10px 16px;
+   border-bottom: 1px solid color-mix(in srgb, var(--viewer-folder-ink) 14%, transparent);
+   font-family: var(--font-code);
+   font-size: 12px;
+}
+
+.group {
+   display: flex;
+   align-items: center;
+   gap: 4px;
+}
+
+.end {
+   margin-left: auto;
+   gap: 16px;
+}
+
+.toolbar button,
+.toolbar a {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   min-width: 30px;
+   height: 30px;
+   border: none;
+   border-radius: 3px;
+   background: transparent;
+   color: inherit;
+   font: inherit;
+   text-decoration: none;
+   cursor: pointer;
+}
+
+.toolbar button:hover:not(:disabled),
+.toolbar a:hover {
+   background: color-mix(in srgb, var(--viewer-folder-ink) 8%, transparent);
+}
+
+.toolbar button:disabled {
+   opacity: 0.35;
+   cursor: default;
+}
+
+.toolbar .text {
+   padding: 0 8px;
+   gap: 8px;
+}
+
+.toolbar kbd {
+   font: inherit;
+   font-size: 10px;
+   padding: 1px 5px;
+   border: 1px solid color-mix(in srgb, var(--viewer-folder-ink) 25%, transparent);
+   border-radius: 3px;
+   opacity: 0.7;
+}
+
+.counter {
+   min-width: 52px;
+   text-align: center;
+   font-variant-numeric: tabular-nums;
+}
+
+.desk {
+   flex: 1;
+   overflow: auto;
+   background: var(--viewer-desk);
+   padding: 32px 16px 64px;
+   overscroll-behavior: contain;
+}
+
+.document {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 28px;
+}
+
+.sheet {
+   position: relative;
+   background: #fff;
+   box-shadow: var(--viewer-sheet-shadow);
+   scroll-margin-top: 24px;
+}
+
+.folio {
+   position: absolute;
+   top: 0;
+   right: calc(100% + 12px);
+   font-family: var(--font-code);
+   font-size: 11px;
+   color: color-mix(in srgb, var(--viewer-folder-ink) 55%, transparent);
+   white-space: nowrap;
+}
+
+.message {
+   padding: 80px 0;
+   text-align: center;
+   font-family: var(--font-code);
+   font-size: 13px;
+}
+
+.message a {
+   text-decoration: underline;
+}
+
+@keyframes fade {
+   from {
+      opacity: 0;
+   }
+}
+
+@keyframes slide {
+   from {
+      transform: translateY(40px);
+      opacity: 0;
+   }
+}
+
+@media (max-width: 640px) {
+   .backdrop {
+      padding: 40px 0 0;
+   }
+
+   .toolbar {
+      gap: 8px;
+      padding: 8px;
+   }
+
+   .toolbar .group:nth-child(2) {
+      display: none;
+   }
+
+   .folio {
+      display: none;
+   }
+
+   .desk {
+      padding: 16px 8px 48px;
+   }
+}

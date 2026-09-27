@@ -1,46 +1,18 @@
-'use client';
+import type { Metadata } from 'next';
+import HomePage from '../components/site/HomePage';
+import { getDictionary } from '../lib/i18n';
 
-import { useState } from 'react';
-import Title from './title/Title';
-import Projects from './projects/Projects';
-import Skills from './skills/Skills';
-import Contact from './contact/Contact';
-import SocialIcons from '../components/SocialIcons/SocialIcons';
-import { TerminalProvider } from '../contexts/TerminalContext';
+// Rebuilt at most once a minute; saving in /admin revalidates it immediately.
+export const revalidate = 60;
+
+const t = getDictionary('en');
+
+export const metadata: Metadata = {
+   title: t.meta.title,
+   description: t.meta.description,
+   alternates: { canonical: '/', languages: { en: '/', tr: '/tr' } },
+};
 
 export default function Home() {
-   const [isSocialIconsBlinking, setIsSocialIconsBlinking] = useState(false);
-
-   const handleContactClick = () => {
-      setIsSocialIconsBlinking(true);
-
-      // Stop blinking after 3 seconds
-      setTimeout(() => {
-         setIsSocialIconsBlinking(false);
-      }, 3000);
-   };
-
-   return (
-      <TerminalProvider>
-         <div
-            style={{
-               width: '100vw',
-               minHeight: '100vh',
-               display: 'flex',
-               flexDirection: 'column',
-               alignItems: 'center',
-               gap: '5rem',
-               position: 'relative',
-               padding: 0,
-               margin: 0,
-            }}>
-            <SocialIcons isBlinking={isSocialIconsBlinking} />
-            {/* <SectionNav />*/}
-            <Title onContactClick={handleContactClick} />
-            <Projects />
-            <Skills />
-            <Contact />
-         </div>
-      </TerminalProvider>
-   );
+   return <HomePage lang="en" />;
 }

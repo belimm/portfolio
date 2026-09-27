@@ -1,0 +1,102 @@
+.form {
+   display: grid;
+   gap: 20px;
+}
+
+.row {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 20px;
+}
+
+.field {
+   display: grid;
+   gap: 6px;
+}
+
+.field span {
+   font-family: var(--font-code);
+   font-size: 12px;
+   color: var(--muted);
+}
+
+.field input,
+.field textarea {
+   width: 100%;
+   padding: 10px 0;
+   background: transparent;
+   border: none;
+   border-bottom: 1px solid var(--rule);
+   color: var(--ink);
+   font: inherit;
+   font-size: 16px;
+   resize: vertical;
+   transition: border-color 150ms;
+}
+
+.field input:focus,
+.field textarea:focus {
+   outline: none;
+   border-bottom-color: var(--ink);
+}
+
+.trap {
+   position: absolute;
+   left: -9999px;
+   width: 1px;
+   height: 1px;
+   opacity: 0;
+}
+
+.footer {
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+   gap: 16px;
+   margin-top: 4px;
+}
+
+.footer button {
+   height: 44px;
+   padding: 0 22px;
+   border: none;
+   border-radius: 3px;
+   background: var(--ink);
+   color: var(--paper);
+   font: inherit;
+   font-size: 15px;
+   font-weight: 500;
+   cursor: pointer;
+}
+
+.footer button:hover {
+   background: var(--ink-soft);
+}
+
+.footer button:disabled {
+   opacity: 0.6;
+   cursor: progress;
+}
+
+.success,
+.error {
+   font-size: 14px;
+}
+
+.success {
+   color: var(--ink-soft);
+}
+
+.error {
+   color: #b3261e;
+}
+
+:global(:root[data-theme='dark']) .error {
+   color: #f2968f;
+}
+
+@media (max-width: 520px) {
+   .row {
+      grid-template-columns: 1fr;
+   }
+}

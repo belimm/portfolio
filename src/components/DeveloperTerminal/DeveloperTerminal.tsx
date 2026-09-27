@@ -1,63 +1,46 @@
-import React, { useEffect, useRef, useState } from 'react';
+'use client';
+
+import React, { useEffect, useRef } from 'react';
+import { useTerminal } from '../../contexts/TerminalContext';
 import styles from './DeveloperTerminal.module.css';
 
-type TerminalEntry = {
-   command: string;
-   output?: string;
-   isTyping?: boolean;
-};
-
-interface DeveloperTerminalProps {
-   entries: TerminalEntry[];
-   autoType?: boolean;
-   typingSpeed?: number;
-}
-
-const DeveloperTerminal: React.FC<DeveloperTerminalProps> = ({
-   entries,
-   autoType = true,
-   typingSpeed = 25,
-}) => {
+/** A small shell that echoes what the visitor does on the page. */
+export default function DeveloperTerminal({ title, label }: { title: string; label: string }) {
+   const { terminalEntries } = useTerminal();
    const scrollRef = useRef<HTMLDivElement>(null);
-   const [isUserScrolledUp, setIsUserScrolledUp] = useState(false);
-
-   // Handler to detect if user is scrolled up
-   const handleScroll = () => {
-      if (!scrollRef.current) return;
-      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-      setIsUserScrolledUp(scrollTop + clientHeight < scrollHeight - 5);
-   };
 
    useEffect(() => {
-      if (!scrollRef.current) return;
-      if (!isUserScrolledUp) {
-         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-      }
-   }, [entries, isUserScrolledUp]);
+      const el = scrollRef.current;
+      if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+   }, [terminalEntries]);
 
    return (
-      <div className={styles.terminalContainer}>
-         <div
-            className={styles.terminalScroll}
-            ref={scrollRef}
-            onScroll={handleScroll}>
-            {entries.map((entry, idx) => (
-               <div key={idx} className={styles.terminalEntry}>
-                  <span className={styles.prompt}>$</span>
-                  {entry.command}
+      <figure className={styles.window} aria-label={label}>
+         <figcaption className={styles.titleBar}>
+            <span className={styles.dots} aria-hidden="true">
+               <i />
+               <i />
+               <i />
+            </span>
+            <span className={styles.title}>{title}</span>
+         </figcaption>
+         <div className={styles.scroll} ref={scrollRef} aria-live="polite">
+            {terminalEntries.map((entry, idx) => (
+               <div key={idx} className={styles.entry}>
+                  <div>
+                     <span className={styles.prompt}>~ $</span>
+                     {entry.command}
+                  </div>
                   {entry.output && (
                      <div className={styles.output}>{entry.output}</div>
                   )}
                </div>
             ))}
-            {/* Blinking cursor on a new line with prompt */}
-            <div className={styles.terminalEntry}>
-               <span className={styles.prompt}>$</span>
+            <div className={styles.entry}>
+               <span className={styles.prompt}>~ $</span>
                <span className={styles.cursor} />
             </div>
          </div>
-      </div>
+      </figure>
    );
-};
-
-export default DeveloperTerminal;
+}

@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface TerminalEntry {
+export interface TerminalEntry {
    command: string;
    output: string;
 }
@@ -16,13 +16,18 @@ const TerminalContext = createContext<TerminalContextType | undefined>(
    undefined
 );
 
-export function TerminalProvider({ children }: { children: ReactNode }) {
-   const [terminalEntries, setTerminalEntries] = useState<TerminalEntry[]>([
-      { command: 'whoami', output: 'Berk Limoncu - Full Stack & Mobile Developer' },
-   ]);
+export function TerminalProvider({
+   children,
+   initialEntries = [],
+}: {
+   children: ReactNode;
+   initialEntries?: TerminalEntry[];
+}) {
+   const [terminalEntries, setTerminalEntries] =
+      useState<TerminalEntry[]>(initialEntries);
 
    const addTerminalEntry = (entry: TerminalEntry) => {
-      setTerminalEntries((prev) => [...prev, entry]);
+      setTerminalEntries((prev) => [...prev, entry].slice(-30));
    };
 
    return (

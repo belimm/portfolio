@@ -1,0 +1,231 @@
+{
+  "lang": "tr",
+  "profile": {
+    "name": "Berk Limoncu",
+    "pronunciation": "/beɾk/",
+    "role": "Full-stack ve mobil geliştirici",
+    "location": "Berlin, Almanya",
+    "intro": "==Sorunsuz çalışması gereken yazılımlar== geliştiriyorum: banka kredi sistemleri, App Store uygulamaları ve mikroservislerin ne zaman değdiği üzerine bir tez.",
+    "about": "Çoğunlukla React, TypeScript, Node.js ve Spring Boot ile çalışan bir full-stack geliştiriciyim. Güvenilirliğin yenilikten daha önemli olduğu fintech ve sağlık alanlarında çalıştım. Saygılı ve gerçekten işe yarayan bir code review kültürüne çok önem veriyorum.",
+    "email": "berk.limoncu@gmail.com",
+    "github_url": "https://github.com/belimm",
+    "linkedin_url": "https://www.linkedin.com/in/berklimoncu",
+    "cv_url": "/BerkLimoncu_CV.pdf",
+    "available": true,
+    "availability_note": "Tam zamanlı pozisyonlara ve freelance işlere açığım"
+  },
+  "projects": [
+    {
+      "title": "Scalable Analyzer",
+      "subtitle": "Yüksek lisans tezi",
+      "description": "Aynı sistemi iki kez kurdum: bir kez monolit, bir kez mikroservis olarak. İkisini de Prometheus ve JMeter ile yük altında ölçerek ayrışmanın nerede karşılığını verdiğini, nerede yalnızca maliyet eklediğini inceledim.",
+      "year": "2025",
+      "image_url": "/images/scalable-analyzer.png",
+      "link": "/thesis.pdf",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "Docker",
+        "Prometheus",
+        "JMeter"
+      ],
+      "visible": true,
+      "id": 1
+    },
+    {
+      "title": "Peeka",
+      "subtitle": "iOS uygulaması · Gelecekteki bebeğini gör",
+      "description": "İki fotoğraftan bir çiftin bebeğinin nasıl görünebileceğini üreten bir tüketici uygulaması. React Native istemcisini, Node.js backend'ini ve görsel üretim hattını ben geliştirdim.",
+      "year": "2024",
+      "image_url": "/images/peeka.webp",
+      "link": "https://apps.apple.com/us/app/future-baby-generator-peeka/id6738985115",
+      "tags": [
+        "React Native",
+        "Node.js",
+        "Firebase",
+        "AWS"
+      ],
+      "visible": true,
+      "id": 2
+    },
+    {
+      "title": "Fibabanka",
+      "subtitle": "Bireysel bankacılık · Anında kredi",
+      "description": "Trendyol, Hepsiburada ve Paycell gibi e-cüzdan ve pazaryerleri için anında kredi. KYC mikroservisleri, partner API'leri, toplu raporlama ve React arayüzü.",
+      "year": "2022–24",
+      "image_url": "/images/fibabanka-logo.avif",
+      "link": "https://www.fibabanka.com.tr/en/personal/loans/consumer-loan",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "Kafka",
+        "Redis",
+        "React",
+        "TypeScript"
+      ],
+      "visible": true,
+      "id": 3
+    },
+    {
+      "title": "EatWell2Earn",
+      "subtitle": "TON üzerinde Telegram mini uygulaması",
+      "description": "Yemeğinin fotoğrafını yükle, bir görüntü modelinden beslenme puanı al ve sağlıklı beslendikçe token kazan. TON blokzinciri üzerinde bir Telegram mini uygulaması olarak geliştirildi.",
+      "year": "2024",
+      "image_url": "/images/eatwell2earn.jpg",
+      "link": "https://github.com/belimm/eatwell-2-earn",
+      "tags": [
+        "React",
+        "Node.js",
+        "AWS",
+        "TON"
+      ],
+      "visible": true,
+      "id": 4
+    }
+  ],
+  "experience": [
+    {
+      "kind": "work",
+      "title": "Freelance geliştirici",
+      "organization": "",
+      "location": "Berlin",
+      "start": "Mayıs 2024",
+      "end": "Günümüz",
+      "summary": "Uluslararası müşteriler için yapay zekâ destekli uygulamalar, fintech araçları ve kurumsal web platformları.",
+      "highlights": [
+        "React Native, Node.js, Firebase ve AWS ile Peeka ve ArmorUp mobil uygulamaları",
+        "Next.js ve Spring Boot backend'leriyle ulaşım ERP'si ve tedarik zinciri SaaS'ı",
+        "Telegram ile yönetilen, LLM tabanlı duygu analizi yapan Polymarket trading botları"
+      ],
+      "visible": true,
+      "id": 1
+    },
+    {
+      "kind": "work",
+      "title": "Yazılım mühendisi",
+      "organization": "Fibabanka",
+      "location": "İstanbul",
+      "start": "Ara 2022",
+      "end": "Nis 2024",
+      "summary": "50'den fazla partnerin kullandığı gömülü kredi platformunda full-stack geliştirme.",
+      "highlights": [
+        "Kafka ve Redis ile Spring Boot ve Java EE üzerinde KYC mikroservisleri",
+        "Partner bankalar için günde 2 binden fazla işlemi işleyen toplu raporlama sistemi",
+        "React/TypeScript özellikleri ve müşteriye özel arayüzler",
+        "Docker ile CI/CD süreçleri"
+      ],
+      "visible": true,
+      "id": 2
+    },
+    {
+      "kind": "work",
+      "title": "Çözüm danışmanı",
+      "organization": "Turkcell",
+      "location": "İstanbul",
+      "start": "Ara 2021",
+      "end": "Nis 2022",
+      "summary": "Sağlık Bakanlığı'nın COVID-19 takip uygulaması Güvende Kal'ın veri operasyonlarını yürüttüm.",
+      "highlights": [
+        "10 binden fazla hastanın takibi için günlük 50 binden fazla kayıtta MySQL operasyonları",
+        "Sıfır veri kaybıyla 7/24 olay yönetimi"
+      ],
+      "visible": true,
+      "id": 3
+    },
+    {
+      "kind": "work",
+      "title": "Stajyer yazılım mühendisi",
+      "organization": "Turkcell",
+      "location": "İstanbul",
+      "start": "Tem 2021",
+      "end": "Eki 2021",
+      "summary": "250'den fazla çalışan için şirket içi araçlar.",
+      "highlights": [
+        ".NET/Blazor ile günde 100'den fazla rezervasyonu yöneten araç paylaşım uygulaması",
+        "Şirket içi mikroservisler için load balancer iyileştirmeleri"
+      ],
+      "visible": true,
+      "id": 4
+    },
+    {
+      "kind": "education",
+      "title": "Yazılım Mühendisliği Yüksek Lisansı",
+      "organization": "University of Europe for Applied Sciences",
+      "location": "Potsdam",
+      "start": "Mar 2024",
+      "end": "Şub 2025",
+      "summary": "Tez: Scalable Analyzer, yük altında monolit ve mikroservis karşılaştırması.",
+      "highlights": [],
+      "visible": true,
+      "id": 5
+    },
+    {
+      "kind": "education",
+      "title": "Bilgisayar Mühendisliği Lisansı",
+      "organization": "Middle East Technical University",
+      "location": "Ankara",
+      "start": "Eyl 2016",
+      "end": "Eyl 2022",
+      "summary": "Bitirme projesi: web sayfalarının karmaşıklığını derinliğe göre puanlayan bir crawler.",
+      "highlights": [],
+      "visible": true,
+      "id": 6
+    }
+  ],
+  "skills": [
+    {
+      "name": "Diller",
+      "items": [
+        "TypeScript",
+        "Java",
+        "Go",
+        "Python",
+        "Rust"
+      ],
+      "id": 1
+    },
+    {
+      "name": "Frontend",
+      "items": [
+        "React",
+        "React Native",
+        "Next.js"
+      ],
+      "id": 2
+    },
+    {
+      "name": "Backend",
+      "items": [
+        "Node.js",
+        "Express",
+        "Spring Boot",
+        "Kafka"
+      ],
+      "id": 3
+    },
+    {
+      "name": "Veri",
+      "items": [
+        "PostgreSQL",
+        "MySQL",
+        "MSSQL",
+        "MongoDB",
+        "Redis"
+      ],
+      "id": 4
+    },
+    {
+      "name": "Altyapı",
+      "items": [
+        "AWS",
+        "GCP",
+        "Firebase",
+        "Docker",
+        "CI/CD",
+        "Linux"
+      ],
+      "id": 5
+    }
+  ],
+  "updated_at": null
+}
