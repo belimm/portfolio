@@ -9,19 +9,14 @@ import { ReadableStream as ReadableStreamPolyfill } from 'web-streams-polyfill';
 
 type AnyFunction = (...args: never[]) => unknown;
 
-// Older Safari releases expose a partial Streams API in workers: a stream exists but lacks
-// getReader(). PDF.js uses that method for the document data channel, so supply the complete
-// implementation only where it is missing. This file runs in both the page and PDF worker.
-if (
-   typeof globalThis.ReadableStream !== 'function' ||
-   typeof globalThis.ReadableStream.prototype.getReader !== 'function'
-) {
-   Object.defineProperty(globalThis, 'ReadableStream', {
-      value: ReadableStreamPolyfill,
-      writable: true,
-      configurable: true,
-   });
-}
+// Older Safari releases expose an incomplete Streams implementation in workers. PDF.js opens
+// a message stream before parsing the document and requires `getReader`, so use one consistent
+// implementation in both the page and worker. Native fetch response bodies stay untouched.
+Object.defineProperty(globalThis, 'ReadableStream', {
+   value: ReadableStreamPolyfill,
+   writable: true,
+   configurable: true,
+});
 
 function define(target: object, name: string, value: AnyFunction) {
    if (!(name in target)) {
