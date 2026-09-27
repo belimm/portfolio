@@ -8,8 +8,9 @@ import type { Dictionary } from '../../lib/i18n';
 import styles from './CvViewer.module.css';
 
 // Must live in the same module that renders <Document>, see react-pdf's README.
+// Legacy worker: it polyfills the newest JS APIs (see next.config.ts).
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-   'pdfjs-dist/build/pdf.worker.min.mjs',
+   'pdfjs-dist/legacy/build/pdf.worker.min.mjs',
    import.meta.url
 ).toString();
 
