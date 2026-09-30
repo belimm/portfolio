@@ -4,7 +4,9 @@ import { Profile } from '../../lib/content';
 import { Dictionary } from '../../lib/i18n';
 import BinaryField from './BinaryField';
 import CvButton from './CvButton';
+import HeroLens from './HeroLens';
 import Highlight from './Highlight';
+import SocialIcon from './SocialIcon';
 import TrackedLink from './TrackedLink';
 import styles from './Hero.module.css';
 
@@ -16,7 +18,8 @@ export default function Hero({ profile, t }: { profile: Profile; t: Dictionary }
    return (
       <section className={styles.hero} id="top">
          <BinaryField variant="hero" direction="up" />
-         <div className={styles.inner}>
+         <HeroLens />
+         <div className={styles.inner} data-lens-source>
             <div className={styles.text}>
                <p className={`${styles.kicker} fade-up`}>
                   {profile.role}
@@ -51,7 +54,9 @@ export default function Hero({ profile, t }: { profile: Profile; t: Dictionary }
                      <li>
                         <TrackedLink
                            href={profile.github_url}
+                           className={styles.withIcon}
                            log={{ command: `open github.com/${handle}`, output: t.hero.openedGithub }}>
+                           <SocialIcon name="github" size={16} />
                            GitHub ↗
                         </TrackedLink>
                      </li>
@@ -60,17 +65,10 @@ export default function Hero({ profile, t }: { profile: Profile; t: Dictionary }
                      <li>
                         <TrackedLink
                            href={profile.linkedin_url}
+                           className={styles.withIcon}
                            log={{ command: 'open linkedin', output: t.hero.openedLinkedin }}>
+                           <SocialIcon name="linkedin" size={16} />
                            LinkedIn ↗
-                        </TrackedLink>
-                     </li>
-                  )}
-                  {profile.email && (
-                     <li>
-                        <TrackedLink
-                           href={`mailto:${profile.email}`}
-                           log={{ command: `mail ${profile.email}`, output: t.hero.openedMail }}>
-                           {profile.email}
                         </TrackedLink>
                      </li>
                   )}

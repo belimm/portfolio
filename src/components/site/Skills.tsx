@@ -1,6 +1,6 @@
 import { SkillGroup } from '../../lib/content';
 import { Dictionary } from '../../lib/i18n';
-import Section from './Section';
+import Section, { stagger } from './Section';
 import styles from './Skills.module.css';
 
 export default function Skills({ groups, t }: { groups: SkillGroup[]; t: Dictionary }) {
@@ -11,8 +11,8 @@ export default function Skills({ groups, t }: { groups: SkillGroup[]; t: Diction
          index="03"
          title={t.skills.title}>
          <dl className={styles.list}>
-            {groups.map((group) => (
-               <div key={group.id ?? group.name} className={styles.row}>
+            {groups.map((group, i) => (
+               <div key={group.id ?? group.name} className={`${styles.row} sr`} style={stagger(i, 220)}>
                   <dt>{group.name}</dt>
                   <dd>{group.items.join(', ')}</dd>
                </div>

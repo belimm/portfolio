@@ -27,7 +27,6 @@ const en = {
       openedCv: 'Opened the CV viewer',
       openedGithub: 'Opened GitHub',
       openedLinkedin: 'Opened LinkedIn',
-      openedMail: 'Opened your mail app',
    },
    terminal: { label: 'Activity log' },
    work: {
@@ -90,7 +89,6 @@ const tr: Dictionary = {
       openedCv: 'CV görüntüleyici açıldı',
       openedGithub: 'GitHub açıldı',
       openedLinkedin: 'LinkedIn açıldı',
-      openedMail: 'E-posta uygulaman açıldı',
    },
    terminal: { label: 'Etkinlik kaydı' },
    work: {

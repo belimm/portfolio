@@ -19,7 +19,7 @@ export default async function HomePage({ lang }: { lang: Locale }) {
             initialEntries={[
                { command: 'whoami', output: `${profile.name}, ${profile.role.toLocaleLowerCase(lang)}` },
             ]}>
-            <Header name={profile.name} lang={lang} t={t} />
+            <Header name={profile.name} lang={lang} t={t} github={profile.github_url} linkedin={profile.linkedin_url} />
             <main>
                <Hero profile={profile} t={t} />
                <Work projects={projects} t={t} />

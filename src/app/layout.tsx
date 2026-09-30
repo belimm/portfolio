@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono, Newsreader } from 'next/font/google';
 
+import { motionBootScript } from '../lib/motion';
 import { DEFAULT_THEME, THEME_COLORS, themeBootScript } from '../lib/theme';
 import './globals.css';
 
@@ -64,6 +65,7 @@ export default function RootLayout({
          suppressHydrationWarning>
          <head>
             <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+            <script dangerouslySetInnerHTML={{ __html: motionBootScript }} />
          </head>
          <body>{children}</body>
       </html>
