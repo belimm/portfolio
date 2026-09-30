@@ -2,7 +2,7 @@
 import { Project } from '../../lib/content';
 import { Dictionary } from '../../lib/i18n';
 import ExpandableList from './ExpandableList';
-import Section from './Section';
+import Section, { stagger } from './Section';
 import TrackedLink from './TrackedLink';
 import styles from './Work.module.css';
 
@@ -79,8 +79,8 @@ export default function Work({ projects, t }: { projects: Project[]; t: Dictiona
             revealedClassName={styles.revealed}
             labels={{ more: t.work.showMore(hidden), less: t.work.showLess }}
             log={{ command: 'ls ~/projects --all', output: t.work.listed(projects.length) }}>
-            {projects.map((project) => (
-               <li key={project.id ?? project.title}>
+            {projects.map((project, i) => (
+               <li key={project.id ?? project.title} className="sr" style={stagger(i, 220)}>
                   <ProjectRow project={project} t={t} />
                </li>
             ))}

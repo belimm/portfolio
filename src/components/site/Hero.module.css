@@ -118,3 +118,22 @@
       max-width: 460px;
    }
 }
+
+/* The text column drifts up and fades as it scrolls out, a little faster than the page. */
+@supports (animation-timeline: view()) {
+   @media (prefers-reduced-motion: no-preference) {
+      .text {
+         /* Ease-in: stays readable while most of it is still on screen, then lets go. */
+         animation: lift cubic-bezier(0.4, 0, 1, 1) both;
+         animation-timeline: view();
+         animation-range: exit 0% exit 100%;
+      }
+   }
+}
+
+@keyframes lift {
+   to {
+      opacity: 0;
+      transform: translateY(-48px);
+   }
+}

@@ -47,6 +47,7 @@ export default function Header({ name, lang, t }: HeaderProps) {
                <ThemeToggle labels={{ toDark: t.header.toDark, toLight: t.header.toLight }} />
             </div>
          </div>
+         <span className={styles.progress} aria-hidden="true" />
       </header>
    );
 }

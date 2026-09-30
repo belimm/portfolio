@@ -150,3 +150,42 @@
       padding-left: 12px;
    }
 }
+
+/* The header eases in on load, so the page settles top-down: header, hero, then sections as they scroll in. */
+.bar {
+   animation: bar-in 600ms cubic-bezier(0.28, 0.11, 0.32, 1) backwards;
+}
+
+@keyframes bar-in {
+   from {
+      opacity: 0;
+      transform: translateY(-8px);
+   }
+}
+
+/* A lemon hairline along the bottom edge that fills as you read down the page. */
+.progress {
+   display: none;
+   position: absolute;
+   inset: auto 0 -1px;
+   height: 1px;
+   background: var(--lemon);
+   transform-origin: left;
+   transform: scaleX(0);
+}
+
+@supports (animation-timeline: scroll()) {
+   @media (prefers-reduced-motion: no-preference) {
+      .progress {
+         display: block;
+         animation: fill linear both;
+         animation-timeline: scroll(root block);
+      }
+   }
+}
+
+@keyframes fill {
+   to {
+      transform: scaleX(1);
+   }
+}

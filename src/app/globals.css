@@ -186,3 +186,43 @@ a {
       transform: translateY(10px);
    }
 }
+
+/* Section reveals: the same entrance as the hero (words slide up out of their line box, same curve and
+   stagger), played when a section opens and reversed, quicker and without the stagger, when you scroll back
+   above it. SectionReveal sets data-in on the section; data-motion comes from the boot script in <head>, so
+   without JS or with reduced motion everything is simply visible. */
+.sr {
+   transition:
+      opacity 700ms cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms),
+      transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms);
+}
+
+.sr-word {
+   display: inline-block;
+   overflow: hidden;
+   vertical-align: top;
+   padding-bottom: 0.12em;
+   margin-bottom: -0.12em;
+}
+
+.sr-word > span {
+   display: inline-block;
+   transition: transform 760ms cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--i, 0) * 32ms + 120ms);
+}
+
+html[data-motion='on'] [data-reveal]:not([data-in]) {
+   --rule-scale: 0;
+}
+
+html[data-motion='on'] [data-reveal]:not([data-in]) .sr {
+   opacity: 0;
+   transform: translateY(18px);
+   transition-duration: 300ms;
+   transition-delay: 0ms;
+}
+
+html[data-motion='on'] [data-reveal]:not([data-in]) .sr-word > span {
+   transform: translateY(105%);
+   transition-duration: 320ms;
+   transition-delay: 0ms;
+}

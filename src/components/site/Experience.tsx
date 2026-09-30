@@ -1,12 +1,12 @@
 import { ExperienceItem } from '../../lib/content';
 import { Dictionary } from '../../lib/i18n';
-import Section from './Section';
+import Section, { stagger } from './Section';
 import styles from './Experience.module.css';
 
-function Entry({ item, at }: { item: ExperienceItem; at: string }) {
+function Entry({ item, at, n }: { item: ExperienceItem; at: string; n: number }) {
    const range = [item.start, item.end].filter(Boolean).join(' – ');
    return (
-      <li className={styles.entry}>
+      <li className={`${styles.entry} sr`} style={stagger(n, 220)}>
          <p className={styles.dates}>{range}</p>
          <div>
             <h3 className={styles.role}>
@@ -40,16 +40,16 @@ export default function Experience({ items, t }: { items: ExperienceItem[]; t: D
    return (
       <Section id="experience" index="02" title={t.experience.title}>
          <ol className={styles.list}>
-            {work.map((item) => (
-               <Entry key={item.id ?? item.title} item={item} at={t.experience.at} />
+            {work.map((item, i) => (
+               <Entry key={item.id ?? item.title} item={item} at={t.experience.at} n={i} />
             ))}
          </ol>
          {education.length > 0 && (
             <>
                <h3 className={styles.subhead}>{t.experience.education}</h3>
                <ol className={styles.list}>
-                  {education.map((item) => (
-                     <Entry key={item.id ?? item.title} item={item} at={t.experience.at} />
+                  {education.map((item, i) => (
+                     <Entry key={item.id ?? item.title} item={item} at={t.experience.at} n={i} />
                   ))}
                </ol>
             </>
