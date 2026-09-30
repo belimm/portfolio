@@ -6,10 +6,10 @@ import styles from './Experience.module.css';
 function Entry({ item, at, n }: { item: ExperienceItem; at: string; n: number }) {
    const range = [item.start, item.end].filter(Boolean).join(' – ');
    return (
-      <li className={`${styles.entry} sr`} style={stagger(n, 220)}>
+      <li className={`${styles.entry} sr flash-by`} style={stagger(n, 220)}>
          <p className={styles.dates}>{range}</p>
          <div>
-            <h3 className={styles.role}>
+            <h3 className={`${styles.role} flash`}>
                {item.title}
                {item.organization && (
                   <>

@@ -226,3 +226,63 @@ html[data-motion='on'] [data-reveal]:not([data-in]) .sr-word > span {
    transition-duration: 320ms;
    transition-delay: 0ms;
 }
+
+/* Hover blink, in the terminal's language. .blink: a lemon block like the terminal cursor blinks after the
+   text. .flash: the text itself flashes lemon twice. Put .blink-by / .flash-by on a parent to trigger from it. */
+.blink::after {
+   content: '';
+   display: inline-block;
+   width: 0.5em;
+   height: 0.85em;
+   margin: 0 -0.7em 0 0.2em; /* takes no room, so nothing shifts when it appears */
+   vertical-align: -0.06em;
+   background: var(--lemon);
+   opacity: 0;
+}
+
+@media (hover: hover) {
+   .blink:hover::after,
+   .blink-by:hover .blink::after {
+      animation: cursor-blink 1.05s steps(1, end) infinite;
+   }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+   .flash:hover,
+   .flash-by:hover .flash {
+      animation: text-flash 900ms steps(1, end);
+   }
+}
+
+/* Reduced motion: no blinking, the cursor just appears. */
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+   .blink:hover::after,
+   .blink-by:hover .blink::after {
+      animation: none;
+      opacity: 1;
+   }
+}
+
+@keyframes cursor-blink {
+   0% {
+      opacity: 1;
+   }
+   50% {
+      opacity: 0;
+   }
+}
+
+@keyframes text-flash {
+   0% {
+      color: var(--lemon-text);
+   }
+   25% {
+      color: var(--ink);
+   }
+   50% {
+      color: var(--lemon-text);
+   }
+   75% {
+      color: var(--ink);
+   }
+}

@@ -24,7 +24,7 @@ export default function Section({ id, index, title, aside, children }: SectionPr
             <div className={styles.label}>
                <span className={`${styles.index} sr`}>{index}</span>
                {/* Same entrance as the hero headline: each word slides up out of its own line box. */}
-               <h2 id={`${id}-title`} className={styles.title}>
+               <h2 id={`${id}-title`} className={`${styles.title} blink`}>
                   {title.split(' ').map((word, i) => (
                      <React.Fragment key={i}>
                         {i > 0 && ' '}

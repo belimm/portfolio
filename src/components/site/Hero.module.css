@@ -58,7 +58,24 @@
    font-size: 15px;
    font-weight: 500;
    text-decoration: none;
-   transition: background-color 150ms, color 150ms, border-color 150ms;
+   position: relative;
+   isolation: isolate;
+   overflow: hidden;
+   transition: color 200ms, border-color 200ms, transform 160ms;
+}
+
+.primary::before,
+.secondary::before {
+   content: '';
+   position: absolute;
+   inset: 0;
+   z-index: -1;
+   transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.primary:active,
+.secondary:active {
+   transform: scale(0.97);
 }
 
 .primary {
@@ -66,8 +83,10 @@
    color: var(--paper);
 }
 
-.primary:hover {
-   background: var(--ink-soft);
+/* Lemon sweeps in from the left; the label flips to dark ink so it stays readable in both themes. */
+.primary::before {
+   background: var(--lemon);
+   transform: translateX(-101%);
 }
 
 .secondary {
@@ -76,14 +95,31 @@
    color: var(--ink);
 }
 
-.secondary:hover {
-   border-color: var(--ink);
+/* The paper tone rises from the bottom edge. */
+.secondary::before {
+   background: var(--paper-raised);
+   transform: translateY(101%);
+}
+
+@media (hover: hover) {
+   .primary:hover {
+      color: #1c1b18;
+   }
+
+   .primary:hover::before,
+   .secondary:hover::before {
+      transform: none;
+   }
+
+   .secondary:hover {
+      border-color: var(--ink);
+   }
 }
 
 .links {
    list-style: none;
    margin-top: 28px;
-   display: flex;
+   display: none;
    flex-wrap: wrap;
    gap: 8px 24px;
    font-size: 14px;
@@ -99,6 +135,24 @@
 .links a:hover {
    color: var(--ink);
    text-decoration-color: var(--ink);
+}
+
+.withIcon {
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+}
+
+.withIcon svg {
+   flex: none;
+   color: var(--muted);
+}
+
+/* GitHub and LinkedIn live in the header; narrow screens have no room for them there, so the hero lists them. */
+@media (max-width: 560px) {
+   .links {
+      display: flex;
+   }
 }
 
 .status {
