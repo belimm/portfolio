@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import avatar from '../../assets/berk_avatar.jpg';
 import { Dictionary, Locale, LOCALE_PATHS, LOCALES } from '../../lib/i18n';
-import type { GithubSummary } from '../../lib/github';
-import GithubPeek from './GithubPeek';
+import type { GithubActivity } from '../../lib/github';
+import GithubPeek, { GithubPeekSkeleton } from './GithubPeek';
 import LocalClock from './LocalClock';
 import SectionNav from './SectionNav';
 import SocialIcon from './SocialIcon';
@@ -18,7 +19,7 @@ type HeaderProps = {
    github?: string;
    linkedin?: string;
    /** Recent contributions, shown in a small card when the GitHub icon is hovered or focused. */
-   githubPeek?: { summary: GithubSummary; login: string; months: number } | null;
+   githubPeek?: { activity: Promise<GithubActivity | null>; months: number } | null;
 };
 
 export default function Header({ name, lang, t, github, linkedin, githubPeek }: HeaderProps) {
@@ -57,7 +58,11 @@ export default function Header({ name, lang, t, github, linkedin, githubPeek }: 
                               log={{ command: `open github.com/${handle}`, output: t.hero.openedGithub }}>
                               <SocialIcon name="github" size={15} />
                            </TrackedLink>
-                           {githubPeek && <GithubPeek {...githubPeek} lang={lang} labels={t.activity} />}
+                           {githubPeek && (
+                              <Suspense fallback={<GithubPeekSkeleton />}>
+                                 <GithubPeek {...githubPeek} lang={lang} labels={t.activity} />
+                              </Suspense>
+                           )}
                         </div>
                      )}
                      {linkedin && (

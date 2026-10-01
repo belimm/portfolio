@@ -94,7 +94,8 @@ export default function ContactForm({ t }: { t: Dictionary['contact'] }) {
             className={styles.trap}
          />
          <div className={styles.footer}>
-            <button type="submit" disabled={sending}>
+            <button type="submit" disabled={sending} aria-busy={sending}>
+               {sending && <span className="spinner" aria-hidden="true" />}
                {sending ? t.sending : t.send}
             </button>
          </div>

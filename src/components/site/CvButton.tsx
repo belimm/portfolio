@@ -1,14 +1,13 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import { useCallback, useState } from 'react';
+import { lazy, Suspense, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTerminal } from '../../contexts/TerminalContext';
 import ViewerBoundary from '../CvViewer/ViewerBoundary';
 import type { Dictionary } from '../../lib/i18n';
 
-// pdf.js only runs in the browser; load it when someone actually opens the CV.
-const CvViewer = dynamic(() => import('../CvViewer/CvViewer'), { ssr: false });
+// pdf.js only runs in the browser; load it when someone actually opens the CV (the Suspense below covers the wait).
+const CvViewer = lazy(() => import('../CvViewer/CvViewer'));
 
 type CvButtonProps = {
    url: string;
@@ -39,11 +38,46 @@ export default function CvButton({ url, className, label, logOutput, labels }: C
          {open &&
             createPortal(
                <ViewerBoundary fallback={<ViewerFallback url={url} labels={labels} onClose={close} />}>
-                  <CvViewer url={url} fileName={fileName} onClose={close} labels={labels} />
+                  <Suspense fallback={<ViewerLoading label={labels.loading} />}>
+                     <CvViewer url={url} fileName={fileName} onClose={close} labels={labels} />
+                  </Suspense>
                </ViewerBoundary>,
                document.body
             )}
       </>
+   );
+}
+
+/** While the viewer's code downloads: the backdrop and a spinner, fading in after a beat so a fast load doesn't flash. */
+function ViewerLoading({ label }: { label: string }) {
+   return (
+      <div
+         role="status"
+         style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 50,
+            display: 'grid',
+            placeItems: 'center',
+            background: 'rgba(20, 19, 17, 0.62)',
+            animation: 'fade-in 220ms 150ms both',
+         }}>
+         <p
+            style={{
+               display: 'flex',
+               alignItems: 'center',
+               gap: 12,
+               padding: '14px 20px',
+               borderRadius: 6,
+               background: 'var(--paper-raised)',
+               color: 'var(--ink)',
+               fontFamily: 'var(--font-code)',
+               fontSize: 13,
+            }}>
+            <span className="spinner" aria-hidden="true" />
+            {label}
+         </p>
+      </div>
    );
 }
 

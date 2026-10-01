@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import DeveloperTerminal from '../DeveloperTerminal/DeveloperTerminal';
 import { Profile } from '../../lib/content';
-import { Dictionary } from '../../lib/i18n';
+import type { GithubActivity } from '../../lib/github';
+import { Dictionary, Locale } from '../../lib/i18n';
 import BinaryField from './BinaryField';
 import CvButton from './CvButton';
 import HeroLens from './HeroLens';
+import GithubPulse, { GithubPulseSkeleton } from './GithubPulse';
 import Highlight from './Highlight';
 import SocialIcon from './SocialIcon';
 import TrackedLink from './TrackedLink';
@@ -19,8 +21,8 @@ export default function Hero({
 }: {
    profile: Profile;
    t: Dictionary;
-   /** One-line summary of recent GitHub contributions, linking down to the GitHub section. Null when that section is left out. */
-   pulse?: string | null;
+   /** Recent GitHub contributions as a one-line summary linking to the GitHub section; streams in when the data arrives. */
+   pulse?: { activity: Promise<GithubActivity | null>; months: number; lang: Locale } | null;
 }) {
    const handle = profile.github_url.split('/').filter(Boolean).pop() ?? 'berk';
 
@@ -84,9 +86,9 @@ export default function Hero({
                </ul>
 
                {pulse && (
-                  <a href="#github" className={`${styles.pulse} fade-up`} style={delay(950)}>
-                     {pulse} ↓
-                  </a>
+                  <Suspense fallback={<GithubPulseSkeleton style={delay(950)} />}>
+                     <GithubPulse {...pulse} t={t} style={delay(950)} />
+                  </Suspense>
                )}
             </div>
 

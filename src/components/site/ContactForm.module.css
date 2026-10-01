@@ -57,6 +57,9 @@
 }
 
 .footer button {
+   display: inline-flex;
+   align-items: center;
+   gap: 10px;
    position: relative;
    isolation: isolate;
    overflow: hidden;

@@ -330,3 +330,30 @@
       margin-top: 4px;
    }
 }
+
+/* Placeholders while the data loads: the same footprint as the real rows. */
+.skelPill {
+   width: 84px;
+   height: 30px;
+   border-radius: 15px;
+}
+
+.skelLabel {
+   width: 70px;
+   height: 11px;
+}
+
+.skelValue {
+   width: 56px;
+   height: 24px;
+   margin-top: 8px;
+}
+
+.skelCalendar {
+   height: 118px;
+}
+
+.skelBars {
+   height: 120px;
+   margin-top: 28px;
+}

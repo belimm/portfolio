@@ -156,7 +156,11 @@ export default function CvViewer({ url, fileName, onClose, labels }: CvViewerPro
                         console.error('CV viewer: the PDF failed to load', error);
                         setFailed(true);
                      }}
-                     loading={<p className={styles.message}>{labels.loading}</p>}
+                     loading={
+                        <p className={styles.message} role="status">
+                           <span className="spinner" aria-hidden="true" /> {labels.loading}
+                        </p>
+                     }
                      className={styles.document}>
                      {Array.from({ length: numPages }, (_, i) => (
                         <div
