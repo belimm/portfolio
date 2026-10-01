@@ -27,6 +27,7 @@ const en = {
       openedCv: 'Opened the CV viewer',
       openedGithub: 'Opened GitHub',
       openedLinkedin: 'Opened LinkedIn',
+      pulse: (count: string, months: number) => `${count} contributions on GitHub in the last ${months} months`,
    },
    terminal: { label: 'Activity log' },
    work: {
@@ -40,7 +41,7 @@ const en = {
    experience: { title: 'Experience', education: 'Education', at: 'at' },
    skills: { title: 'Skills' },
    activity: {
-      title: 'Activity',
+      title: 'GitHub',
       ranges: '{n} months',
       contributions: 'Contributions',
       activeDays: 'Active days',
@@ -109,6 +110,7 @@ const tr: Dictionary = {
       openedCv: 'CV görüntüleyici açıldı',
       openedGithub: 'GitHub açıldı',
       openedLinkedin: 'LinkedIn açıldı',
+      pulse: (count: string, months: number) => `GitHub'da son ${months} ayda ${count} katkı`,
    },
    terminal: { label: 'Etkinlik kaydı' },
    work: {
@@ -122,7 +124,7 @@ const tr: Dictionary = {
    experience: { title: 'Deneyim', education: 'Eğitim', at: '·' },
    skills: { title: 'Yetenekler' },
    activity: {
-      title: 'Aktivite',
+      title: 'GitHub',
       ranges: '{n} ay',
       contributions: 'Katkı',
       activeDays: 'Aktif gün',

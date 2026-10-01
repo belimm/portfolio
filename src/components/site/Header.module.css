@@ -101,7 +101,16 @@
    height: 30px;
    border: 1px solid var(--rule);
    border-radius: 15px;
-   overflow: hidden;
+}
+
+/* Not clipped (no overflow: hidden): the GitHub icon opens a card that hangs below the capsule. */
+.profileWrap {
+   position: relative;
+   display: flex;
+}
+
+.profileWrap + .profileWrap {
+   border-left: 1px solid var(--rule);
 }
 
 .profile {
@@ -112,8 +121,28 @@
    transition: color 150ms, background-color 150ms;
 }
 
-.profile + .profile {
-   border-left: 1px solid var(--rule);
+.profileWrap:first-child .profile {
+   border-radius: 14px 0 0 14px;
+}
+
+.profileWrap:last-child .profile {
+   border-radius: 0 14px 14px 0;
+}
+
+.profileWrap:only-child .profile {
+   border-radius: 14px;
+}
+
+/* The GitHub card opens on hover or keyboard focus, and only where there is a hover: on touch the icon just opens GitHub. */
+@media (hover: hover) {
+   .profileWrap:hover > [data-peek],
+   .profileWrap:has(:focus-visible) > [data-peek] {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      pointer-events: auto;
+      transition-delay: 120ms, 120ms, 0s;
+   }
 }
 
 /* Lemon on hover: yellow in the dark theme, the deeper gold in the light one (pure lemon is unreadable on paper). */

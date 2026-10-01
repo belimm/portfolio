@@ -12,7 +12,16 @@ import styles from './Hero.module.css';
 
 const delay = (ms: number) => ({ '--delay': `${ms}ms` }) as React.CSSProperties;
 
-export default function Hero({ profile, t }: { profile: Profile; t: Dictionary }) {
+export default function Hero({
+   profile,
+   t,
+   pulse,
+}: {
+   profile: Profile;
+   t: Dictionary;
+   /** One-line summary of recent GitHub contributions, linking down to the GitHub section. Null when that section is left out. */
+   pulse?: string | null;
+}) {
    const handle = profile.github_url.split('/').filter(Boolean).pop() ?? 'berk';
 
    return (
@@ -73,6 +82,12 @@ export default function Hero({ profile, t }: { profile: Profile; t: Dictionary }
                      </li>
                   )}
                </ul>
+
+               {pulse && (
+                  <a href="#github" className={`${styles.pulse} fade-up`} style={delay(950)}>
+                     {pulse} ↓
+                  </a>
+               )}
             </div>
 
             <aside className={`${styles.side} fade-up`} style={delay(1000)}>

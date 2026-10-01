@@ -21,10 +21,10 @@ export type ActivityLabels = {
    note: string;
 };
 
-type Props = { days: ContributionDay[]; login: string; locale: 'en' | 'tr'; labels: ActivityLabels };
+type Props = { days: ContributionDay[]; login: string; locale: 'en' | 'tr'; labels: ActivityLabels; initialRange: Range };
 
-const RANGES = [3, 6, 9, 12] as const;
-type Range = (typeof RANGES)[number];
+const RANGES = [3, 6] as const;
+export type Range = (typeof RANGES)[number];
 
 const CELL = 11;
 const GAP = 3;
@@ -49,13 +49,13 @@ const levelOf = (count: number, t: number[]) => (count === 0 ? 0 : count <= t[0]
 
 type Tooltip = { x: number; y: number; value: string; label: string } | null;
 
-export default function ActivityPanel({ days, login, locale, labels }: Props) {
-   const [range, setRange] = useState<Range>(6);
+export default function ActivityPanel({ days, login, locale, labels, initialRange }: Props) {
+   const [range, setRange] = useState<Range>(initialRange);
    const [tooltip, setTooltip] = useState<Tooltip>(null);
    const panelRef = useRef<HTMLDivElement>(null);
    const scrollRef = useRef<HTMLDivElement>(null);
 
-   // When the calendar is wider than the column (phones, 12 months), start at the latest weeks.
+   // When the calendar is wider than the column (phones), start at the latest weeks.
    useEffect(() => {
       const el = scrollRef.current;
       if (el) el.scrollLeft = el.scrollWidth;
@@ -134,7 +134,7 @@ export default function ActivityPanel({ days, login, locale, labels }: Props) {
    const countText = (count: number) => (count === 0 ? labels.none : fill(labels.cellTooltip, { count: number.format(count) }));
 
    // Monthly columns
-   const chartH = 120;
+   const chartH = 88;
    const barMax = Math.max(1, ...view.months.map((m) => m.total));
    const slot = 100 / view.months.length;
    const maxIndex = view.months.findIndex((m) => m.total === barMax);
