@@ -38,7 +38,17 @@ const en = {
       showLess: 'Show fewer',
       listed: (count: number) => `${count} projects`,
    },
-   experience: { title: 'Experience', education: 'Education', at: 'at' },
+   experience: {
+      title: 'Experience',
+      education: 'Education',
+      at: 'at',
+      total: 'In the field',
+      duration: (months: number) => {
+         const y = Math.floor(months / 12);
+         const m = months % 12;
+         return [y && `${y} ${y === 1 ? 'yr' : 'yrs'}`, m && `${m} ${m === 1 ? 'mo' : 'mos'}`].filter(Boolean).join(' ');
+      },
+   },
    skills: { title: 'Skills' },
    activity: {
       title: 'GitHub',
@@ -122,7 +132,17 @@ const tr: Dictionary = {
       showLess: 'Daha az göster',
       listed: (count: number) => `${count} proje`,
    },
-   experience: { title: 'Deneyim', education: 'Eğitim', at: '·' },
+   experience: {
+      title: 'Deneyim',
+      education: 'Eğitim',
+      at: '·',
+      total: 'Sektörde',
+      duration: (months: number) => {
+         const y = Math.floor(months / 12);
+         const m = months % 12;
+         return [y && `${y} yıl`, m && `${m} ay`].filter(Boolean).join(' ');
+      },
+   },
    skills: { title: 'Yetenekler' },
    activity: {
       title: 'GitHub',

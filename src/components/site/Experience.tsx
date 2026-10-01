@@ -1,4 +1,5 @@
 import { ExperienceItem } from '../../lib/content';
+import { parseSpan, spanMonths, totalMonths } from '../../lib/duration';
 import { Dictionary } from '../../lib/i18n';
 import Section, { stagger } from './Section';
 import TrackedLink from './TrackedLink';
@@ -12,8 +13,11 @@ const host = (url: string) => {
    }
 };
 
-function Entry({ item, at, n }: { item: ExperienceItem; at: string; n: number }) {
+function Entry({ item, t, n }: { item: ExperienceItem; t: Dictionary['experience']; n: number }) {
+   const at = t.at;
    const range = [item.start, item.end].filter(Boolean).join(' – ');
+   // Time spent, for jobs only: counted from the dates typed in the admin, up to today for "Present".
+   const span = item.kind === 'work' ? parseSpan(item.start, item.end) : null;
    const title = (
       <span className="fill">
          {item.title}
@@ -27,7 +31,10 @@ function Entry({ item, at, n }: { item: ExperienceItem; at: string; n: number })
    );
    return (
       <li className={`${styles.entry} sr fill-by`} style={stagger(n, 220)}>
-         <p className={styles.dates}>{range}</p>
+         <p className={styles.dates}>
+            {range}
+            {span && <span className={styles.duration}>{t.duration(spanMonths(span))}</span>}
+         </p>
          <div>
             <h3 className={styles.role}>
                {item.link ? (
@@ -63,11 +70,26 @@ export default function Experience({ items, t }: { items: ExperienceItem[]; t: D
    const education = items.filter((i) => i.kind === 'education');
    if (items.length === 0) return null;
 
+   // Time in the field: every job's span, overlapping jobs counted once.
+   const spans = work.flatMap((i) => parseSpan(i.start, i.end) ?? []);
+   const total = totalMonths(spans);
+
    return (
-      <Section id="experience" index="02" title={t.experience.title}>
+      <Section
+         id="experience"
+         index="02"
+         title={t.experience.title}
+         aside={
+            total > 0 && (
+               <p className={styles.total}>
+                  {t.experience.total}
+                  <strong>{t.experience.duration(total)}</strong>
+               </p>
+            )
+         }>
          <ol className={styles.list}>
             {work.map((item, i) => (
-               <Entry key={item.id ?? item.title} item={item} at={t.experience.at} n={i} />
+               <Entry key={item.id ?? item.title} item={item} t={t.experience} n={i} />
             ))}
          </ol>
          {education.length > 0 && (
@@ -75,7 +97,7 @@ export default function Experience({ items, t }: { items: ExperienceItem[]; t: D
                <h3 className={styles.subhead}>{t.experience.education}</h3>
                <ol className={styles.list}>
                   {education.map((item, i) => (
-                     <Entry key={item.id ?? item.title} item={item} at={t.experience.at} n={i} />
+                     <Entry key={item.id ?? item.title} item={item} t={t.experience} n={i} />
                   ))}
                </ol>
             </>
