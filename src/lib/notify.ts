@@ -89,7 +89,6 @@ const escapeHtml = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '
 export function telegramText(message: ContactNotification, source = notificationSource()) {
    const body =
       message.body.length > TELEGRAM_BODY_LIMIT ? `${message.body.slice(0, TELEGRAM_BODY_LIMIT)}…` : message.body;
-   const host = new URL(source.site).host;
    const page = message.page
       ? `${message.page} (${message.language === 'tr' ? 'Turkish' : 'English'})`
       : undefined;
@@ -103,7 +102,8 @@ export function telegramText(message: ContactNotification, source = notification
    const environment = ENVIRONMENT_LABELS[source.environment];
 
    return [
-      `#${source.tag} · <b>${escapeHtml(source.project)}</b> · ${escapeHtml(host)}`,
+      // The full origin, scheme included, so http://localhost tests stand apart from https:// production.
+      `#${source.tag} · <b>${escapeHtml(source.project)}</b> · ${escapeHtml(source.site)}`,
       '📬 New contact form message',
       ...(environment ? [`<i>${environment}</i>`] : []),
       '',

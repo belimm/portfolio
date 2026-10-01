@@ -96,7 +96,7 @@ Every message is saved to the admin inbox (`/admin/messages`). To also hear abou
 
 To notify a group instead, add the bot to the group, send a message there, and use the group's (negative) chat id.
 
-The chat can be shared with other projects (for example a Coolify server), so every message starts with `#portfolio · Portfolio · belim.dev`, then the sender, the page and language, the visitor's city and country (on Vercel), and the time in Istanbul. Anything that isn't production is labelled (`🧪 Local test`, `🔎 Preview deployment`). Tapping `#portfolio` in Telegram shows only this project's messages. Change the name and tag with `NOTIFY_PROJECT_NAME` and `NOTIFY_PROJECT_TAG`.
+The chat can be shared with other projects (for example a Coolify server), so every message starts with `#portfolio · Portfolio · https://www.belim.dev` (or `http://localhost:3000` when testing locally), then the sender, the page and language, the visitor's city and country (on Vercel), and the time in Istanbul. Anything that isn't production is labelled (`🧪 Local test`, `🔎 Preview deployment`). Tapping `#portfolio` in Telegram shows only this project's messages. Change the name and tag with `NOTIFY_PROJECT_NAME` and `NOTIFY_PROJECT_TAG`.
 
 **Webhook**: set `CONTACT_WEBHOOK_URL` and the site POSTs JSON like this:
 
