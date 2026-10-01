@@ -7,8 +7,8 @@ const ID = /^[0-9]{13}-[0-9a-f]{8}$/;
 
 export type Message = { id: string; name: string; email: string; body: string; createdAt: string };
 
-export async function saveMessage(message: Omit<Message, 'id' | 'createdAt'>) {
-   const data = { ...message, createdAt: new Date().toISOString() };
+export async function saveMessage(message: Omit<Message, 'id' | 'createdAt'>, createdAt = new Date().toISOString()) {
+   const data = { ...message, createdAt };
    await storage.put(`${PREFIX}${timestampedName('.json')}`, JSON.stringify(data), 'application/json');
 }
 

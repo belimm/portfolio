@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { after, NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { saveMessage } from '../../../lib/cms/messages';
+import { notifyNewMessage } from '../../../lib/notify';
 import { createLimiter } from '../../../lib/ratelimit';
 import { clientIp } from '../../../lib/request';
 
@@ -28,6 +29,19 @@ export async function POST(req: NextRequest) {
          { status: 429, headers: { 'Retry-After': String(retryAfter) } }
       );
    }
-   await saveMessage(message);
+   const createdAt = new Date().toISOString();
+   try {
+      await saveMessage(message, createdAt);
+   } catch (error) {
+      console.error('Saving a contact message failed:', error);
+      // The inbox is down: the notification is now the only copy, so wait for it.
+      const delivered = await notifyNewMessage({ ...message, createdAt, savedToInbox: false });
+      return delivered
+         ? NextResponse.json({ ok: true }, { status: 202 })
+         : NextResponse.json({ detail: 'Could not save the message' }, { status: 500 });
+   }
+
+   // Saved: notify after the response is sent, so the visitor isn't kept waiting.
+   after(() => notifyNewMessage({ ...message, createdAt, savedToInbox: true }));
    return NextResponse.json({ ok: true }, { status: 202 });
 }
