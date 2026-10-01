@@ -155,6 +155,25 @@
    }
 }
 
+/* One-line GitHub summary under the links; jumps to the GitHub section. */
+.pulse {
+   display: inline-block;
+   margin-top: 20px;
+   font-size: 13px;
+   color: var(--muted);
+   text-decoration: none;
+}
+
+.pulse:hover {
+   color: var(--ink);
+}
+
+@media (max-width: 560px) {
+   .pulse {
+      margin-top: 14px;
+   }
+}
+
 .status {
    font-size: 13px;
    color: var(--ink-soft);

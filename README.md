@@ -115,13 +115,13 @@ With `CONTACT_WEBHOOK_SECRET` set, the request carries `X-Signature-256: sha256=
 
 ## GitHub activity
 
-The Activity section shows the last 3/6/9/12 months of GitHub contributions: totals, active days, longest streak, busiest day, a contribution calendar, contributions per month, and a table view. It's fetched on the server from GitHub's GraphQL API and cached for 6 hours.
+The GitHub section shows the last 3 or 6 months (3 by default) of GitHub contributions: totals, active days, longest streak, busiest day, a contribution calendar, contributions per month, and a table view. It's fetched on the server from GitHub's GraphQL API and cached for 6 hours.
 
 1. Create a token at github.com/settings/tokens (fine-grained, **no extra permissions**: the calendar is public profile data).
 2. Set `GITHUB_TOKEN=<token>` in `.env.local`, and on Vercel later.
 3. To include private work, turn on **Include private contributions on my profile** in your GitHub profile settings. Private repos are counted without names.
 
-Without a token the section is simply left out. The GitHub login comes from the profile's GitHub URL; override it with `GITHUB_ACTIVITY_LOGIN`.
+Without a token the section (and the one-line summary in the hero that links to it) is simply left out. The GitHub login comes from the profile's GitHub URL; override it with `GITHUB_ACTIVITY_LOGIN`.
 
 ## Languages and theme
 

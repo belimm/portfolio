@@ -1,7 +1,7 @@
 import 'server-only';
 
 /**
- * GitHub contribution calendar for the Activity section.
+ * GitHub contribution calendar for the GitHub section.
  *
  * Needs GITHUB_TOKEN (a fine-grained token with no permissions is enough: the calendar is public
  * profile data). Private work appears in the calendar as anonymous counts when "Include private
@@ -21,6 +21,41 @@ const QUERY = `
          }
       }
    }`;
+
+export type GithubSummary = {
+   total: number;
+   active: number;
+   longest: number;
+   busiest: ContributionDay;
+   /** Contributions per 7-day block, oldest first. */
+   weekly: number[];
+};
+
+/** Stats for the last `months` months, counted the same way as the section's range filter. */
+export function summarize(days: ContributionDay[], months: number): GithubSummary {
+   const start = new Date(`${days[days.length - 1].date}T00:00:00Z`);
+   start.setUTCMonth(start.getUTCMonth() - months);
+   const startIso = start.toISOString().slice(0, 10);
+   const inRange = days.filter((d) => d.date > startIso);
+
+   let longest = 0;
+   let run = 0;
+   const weekly: number[] = [];
+   inRange.forEach((d, i) => {
+      run = d.count > 0 ? run + 1 : 0;
+      longest = Math.max(longest, run);
+      if (i % 7 === 0) weekly.push(0);
+      weekly[weekly.length - 1] += d.count;
+   });
+
+   return {
+      total: inRange.reduce((sum, d) => sum + d.count, 0),
+      active: inRange.filter((d) => d.count > 0).length,
+      longest,
+      busiest: inRange.reduce((best, d) => (d.count > best.count ? d : best), inRange[0]),
+      weekly,
+   };
+}
 
 /** "https://github.com/belimm" -> "belimm" */
 export function githubLogin(profileUrl: string) {
