@@ -1,0 +1,332 @@
+/* One hue (lemon) as a sequential ramp, checked in OKLab: lightness is monotonic in both themes
+   (light: L .88 -> .37, darker = more; dark: L .27 -> .88, brighter = more), adjacent steps ΔE >= 13.
+   Level 0 is "no contributions". The scale, tooltips and the table carry exact values. */
+.panel {
+   --heat-0: #ddd6c6;
+   --heat-1: #dfbf45;
+   --heat-2: #b8911a;
+   --heat-3: #8a6c08;
+   --heat-4: #4d3f00;
+   --bar: #b8911a;
+
+   position: relative;
+   padding-top: 20px;
+}
+
+:global(:root[data-theme='dark']) .panel {
+   --heat-0: #272520;
+   --heat-1: #5c4c17;
+   --heat-2: #8f7622;
+   --heat-3: #c6a533;
+   --heat-4: #f0d85c;
+   --bar: #c6a533;
+}
+
+.toolbar {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   gap: 6px;
+}
+
+.range {
+   height: 30px;
+   padding: 0 12px;
+   border: 1px solid var(--rule);
+   border-radius: 15px;
+   background: transparent;
+   color: var(--ink-soft);
+   font-family: var(--font-code);
+   font-size: 12px;
+   cursor: pointer;
+   transition: color 150ms, border-color 150ms, background-color 150ms;
+}
+
+.range:hover {
+   color: var(--ink);
+   border-color: var(--ink-soft);
+}
+
+.range[aria-pressed='true'] {
+   background: var(--ink);
+   border-color: var(--ink);
+   color: var(--paper);
+}
+
+.profile {
+   margin-left: auto;
+   font-family: var(--font-code);
+   font-size: 12px;
+   color: var(--muted);
+   text-decoration: none;
+}
+
+.profile:hover {
+   color: var(--lemon-text);
+}
+
+/* Stat tiles */
+.stats {
+   display: grid;
+   grid-template-columns: repeat(4, minmax(0, 1fr));
+   gap: 1px;
+   margin: 20px 0 28px;
+   background: var(--rule);
+   border: 1px solid var(--rule);
+   border-radius: 6px;
+   overflow: hidden;
+}
+
+.stats > div {
+   padding: 14px 16px;
+   background: var(--paper);
+}
+
+.stats dt {
+   font-family: var(--font-code);
+   font-size: 11px;
+   color: var(--muted);
+}
+
+.stats dd {
+   margin-top: 4px;
+   font-size: 24px;
+   font-weight: 600;
+   line-height: 1.2;
+   color: var(--ink);
+}
+
+.sub {
+   display: block;
+   margin-top: 2px;
+   font-size: 12px;
+   font-weight: 400;
+   color: var(--muted);
+}
+
+/* Calendar heatmap */
+.calendarScroll {
+   overflow-x: auto;
+   padding-bottom: 4px;
+   scrollbar-width: thin;
+}
+
+.calendar {
+   display: block;
+}
+
+.axis {
+   font-family: var(--font-code);
+   font-size: 10px;
+   fill: var(--muted);
+}
+
+.l0 {
+   fill: var(--heat-0);
+   background: var(--heat-0);
+}
+.l1 {
+   fill: var(--heat-1);
+   background: var(--heat-1);
+}
+.l2 {
+   fill: var(--heat-2);
+   background: var(--heat-2);
+}
+.l3 {
+   fill: var(--heat-3);
+   background: var(--heat-3);
+}
+.l4 {
+   fill: var(--heat-4);
+   background: var(--heat-4);
+}
+
+.calendar rect {
+   transition: opacity 120ms;
+}
+
+.calendar rect:hover {
+   stroke: var(--ink);
+   stroke-width: 1;
+}
+
+.legend {
+   display: flex;
+   align-items: center;
+   justify-content: flex-end;
+   gap: 3px;
+   margin-top: 8px;
+   font-family: var(--font-code);
+   font-size: 11px;
+   color: var(--muted);
+}
+
+.legend i {
+   width: 11px;
+   height: 11px;
+   border-radius: 2px;
+}
+
+.legend span:first-child {
+   margin-right: 4px;
+}
+
+.legend span:last-child {
+   margin-left: 4px;
+}
+
+/* Monthly columns */
+.chartTitle {
+   margin: 28px 0 12px;
+   font-family: var(--font-code);
+   font-size: 12px;
+   font-weight: 400;
+   color: var(--muted);
+}
+
+.barRow {
+   display: flex;
+   align-items: flex-end;
+   border-bottom: 1px solid var(--rule);
+}
+
+.barSlot {
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-end;
+   align-items: center;
+   height: 100%;
+   outline: none;
+   cursor: default;
+}
+
+.bar {
+   display: block;
+   width: min(24px, 60%);
+   min-height: 2px;
+   border-radius: 4px 4px 0 0;
+   background: var(--bar);
+   transition: filter 120ms;
+}
+
+.barSlot:hover .bar,
+.barSlot:focus-visible .bar {
+   filter: brightness(1.15);
+}
+
+.barSlot:focus-visible {
+   box-shadow: inset 0 0 0 1px var(--ink-soft);
+   border-radius: 4px;
+}
+
+.barValue {
+   margin-bottom: 4px;
+   font-family: var(--font-code);
+   font-size: 11px;
+   color: var(--ink-soft);
+}
+
+.barLabels {
+   display: flex;
+   margin-top: 6px;
+   font-family: var(--font-code);
+   font-size: 11px;
+   color: var(--muted);
+}
+
+.barLabels span {
+   text-align: center;
+}
+
+/* Tooltip: value first, label second */
+.tooltip {
+   position: absolute;
+   z-index: 5;
+   transform: translate(-50%, calc(-100% - 8px));
+   display: flex;
+   flex-direction: column;
+   gap: 1px;
+   padding: 6px 10px;
+   border: 1px solid var(--rule);
+   border-radius: 6px;
+   background: var(--paper-raised);
+   box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.45);
+   pointer-events: none;
+   white-space: nowrap;
+}
+
+.tooltip strong {
+   font-size: 13px;
+   font-weight: 600;
+   color: var(--ink);
+}
+
+.tooltip span {
+   font-family: var(--font-code);
+   font-size: 11px;
+   color: var(--muted);
+}
+
+.note {
+   margin-top: 24px;
+   font-size: 13px;
+   color: var(--muted);
+   max-width: 62ch;
+}
+
+.table {
+   margin-top: 12px;
+   font-size: 14px;
+}
+
+.table summary {
+   width: fit-content;
+   font-family: var(--font-code);
+   font-size: 12px;
+   color: var(--ink-soft);
+   cursor: pointer;
+}
+
+.table table {
+   width: 100%;
+   max-width: 480px;
+   margin-top: 10px;
+   border-collapse: collapse;
+}
+
+.table th,
+.table td {
+   padding: 6px 0;
+   border-bottom: 1px solid var(--rule);
+   text-align: left;
+   font-weight: 400;
+}
+
+.table td {
+   text-align: right;
+   font-variant-numeric: tabular-nums;
+}
+
+.table thead th {
+   font-family: var(--font-code);
+   font-size: 11px;
+   color: var(--muted);
+}
+
+.table thead th:not(:first-child) {
+   text-align: right;
+}
+
+@media (max-width: 640px) {
+   .stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+   }
+
+   .profile {
+      margin-left: 0;
+      width: 100%;
+      margin-top: 4px;
+   }
+}

@@ -1,17 +1,20 @@
 import { TerminalProvider } from '../../contexts/TerminalContext';
 import { getContent } from '../../lib/content';
+import { getGithubActivity, githubLogin } from '../../lib/github';
 import { getDictionary, Locale } from '../../lib/i18n';
 import Header from './Header';
 import Hero from './Hero';
 import Work from './Work';
 import Experience from './Experience';
 import Skills from './Skills';
+import Activity from './Activity';
 import Contact from './Contact';
 import Footer from './Footer';
 
 export default async function HomePage({ lang }: { lang: Locale }) {
    const t = getDictionary(lang);
    const { profile, projects, experience, skills, updated_at } = await getContent(lang);
+   const activity = await getGithubActivity(githubLogin(profile.github_url));
 
    return (
       <div lang={lang}>
@@ -25,6 +28,7 @@ export default async function HomePage({ lang }: { lang: Locale }) {
                <Work projects={projects} t={t} />
                <Experience items={experience} t={t} />
                <Skills groups={skills} t={t} />
+               <Activity activity={activity} lang={lang} t={t} />
                <Contact profile={profile} t={t} />
             </main>
             <Footer name={profile.name} updatedAt={updated_at} lang={lang} t={t} />

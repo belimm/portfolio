@@ -6,7 +6,7 @@ import styles from './Contact.module.css';
 
 export default function Contact({ profile, t }: { profile: Profile; t: Dictionary }) {
    return (
-      <Section id="contact" index="04" title={t.contact.title}>
+      <Section id="contact" index="05" title={t.contact.title}>
          <div className={styles.grid}>
             <div className="sr" style={stagger(0, 220)}>
                <p className={styles.lead}>
