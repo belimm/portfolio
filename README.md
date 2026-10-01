@@ -96,11 +96,16 @@ Every message is saved to the admin inbox (`/admin/messages`). To also hear abou
 
 To notify a group instead, add the bot to the group, send a message there, and use the group's (negative) chat id.
 
+The chat can be shared with other projects (for example a Coolify server), so every message starts with `#portfolio · Portfolio · belim.dev`, then the sender, the page and language, the visitor's city and country (on Vercel), and the time in Istanbul. Anything that isn't production is labelled (`🧪 Local test`, `🔎 Preview deployment`). Tapping `#portfolio` in Telegram shows only this project's messages. Change the name and tag with `NOTIFY_PROJECT_NAME` and `NOTIFY_PROJECT_TAG`.
+
 **Webhook**: set `CONTACT_WEBHOOK_URL` and the site POSTs JSON like this:
 
 ```json
-{ "type": "contact_message", "name": "Ada", "email": "ada@example.com", "body": "Hello!",
-  "createdAt": "2026-10-01T09:30:00.000Z", "savedToInbox": true, "inboxUrl": "https://www.belim.dev/admin/messages" }
+{ "type": "contact_message",
+  "source": { "project": "Portfolio", "tag": "portfolio", "site": "https://www.belim.dev", "environment": "production" },
+  "name": "Ada", "email": "ada@example.com", "body": "Hello!", "createdAt": "2026-10-01T09:30:00.000Z",
+  "page": "/tr", "language": "tr", "city": "Berlin", "country": "Germany",
+  "savedToInbox": true, "inboxUrl": "https://www.belim.dev/admin/messages" }
 ```
 
 With `CONTACT_WEBHOOK_SECRET` set, the request carries `X-Signature-256: sha256=<HMAC-SHA256 of the body>` so the receiver can check it came from the site.

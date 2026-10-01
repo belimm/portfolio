@@ -46,7 +46,11 @@ console.log(`Bot: @${bot.username}`);
 if (chatId) {
    await telegram('sendMessage', {
       chat_id: chatId,
-      text: '<b>Test from your portfolio</b>\nContact form messages will arrive here.',
+      text: [
+         `#${(process.env.NOTIFY_PROJECT_TAG || fromEnvFile('NOTIFY_PROJECT_TAG') || 'portfolio').replace(/\W/g, '')} · <b>${process.env.NOTIFY_PROJECT_NAME || fromEnvFile('NOTIFY_PROJECT_NAME') || 'Portfolio'}</b>`,
+         '🔧 Test message from <code>npm run telegram:setup</code>',
+         'Contact form messages from this project will arrive in this chat.',
+      ].join('\n'),
       parse_mode: 'HTML',
    });
    console.log(`Sent a test message to chat ${chatId}. If it arrived, set the same two variables on Vercel.`);

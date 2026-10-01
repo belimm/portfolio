@@ -8,6 +8,10 @@ import { createHmac } from 'crypto';
  * - Telegram: TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID (see `npm run telegram:setup`)
  * - Webhook:  CONTACT_WEBHOOK_URL, optionally signed with CONTACT_WEBHOOK_SECRET
  *
+ * The Telegram chat is shared with other projects, so every notification says where it came from:
+ * a #portfolio tag and the site, the environment (production / preview / local), the page and
+ * language, the visitor's location when the platform provides it, and the time.
+ *
  * Runs on the server, so no token ever reaches the browser. Failures are logged, never thrown:
  * a broken notification must not break the contact form.
  */
@@ -18,6 +22,19 @@ export type ContactNotification = {
    createdAt: string;
    /** False when saving to the admin inbox failed, so this notification is the only copy. */
    savedToInbox: boolean;
+   /** Path of the page the form was sent from, e.g. "/" or "/tr". */
+   page?: string;
+   language?: 'en' | 'tr';
+   /** From the hosting platform's geolocation headers, when available. */
+   city?: string;
+   country?: string;
+};
+
+export type NotificationSource = {
+   project: string;
+   tag: string;
+   site: string;
+   environment: 'production' | 'preview' | 'development' | 'local';
 };
 
 const TIMEOUT_MS = 5000;
@@ -33,20 +50,71 @@ function siteUrl() {
    return (process.env.SITE_URL || 'https://www.belim.dev').replace(/\/$/, '');
 }
 
+/** Identifies this project in a chat or webhook shared with other projects. */
+export function notificationSource(): NotificationSource {
+   const vercelEnv = process.env.VERCEL_ENV;
+   const environment =
+      vercelEnv === 'production' || vercelEnv === 'preview' || vercelEnv === 'development'
+         ? vercelEnv
+         : process.env.NODE_ENV === 'production'
+           ? 'production'
+           : 'local';
+   return {
+      project: process.env.NOTIFY_PROJECT_NAME || 'Portfolio',
+      // Telegram hashtags: letters, digits and underscores only.
+      tag: (process.env.NOTIFY_PROJECT_TAG || 'portfolio').replace(/\W/g, ''),
+      site: siteUrl(),
+      environment,
+   };
+}
+
+const ENVIRONMENT_LABELS: Record<NotificationSource['environment'], string> = {
+   production: '',
+   preview: '🔎 Preview deployment',
+   development: '🧪 Development',
+   local: '🧪 Local test',
+};
+
+const timeFormat = new Intl.DateTimeFormat('en-GB', {
+   timeZone: 'Europe/Istanbul',
+   day: 'numeric',
+   month: 'short',
+   year: 'numeric',
+   hour: '2-digit',
+   minute: '2-digit',
+});
+
 const escapeHtml = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-export function telegramText(message: ContactNotification) {
+export function telegramText(message: ContactNotification, source = notificationSource()) {
    const body =
       message.body.length > TELEGRAM_BODY_LIMIT ? `${message.body.slice(0, TELEGRAM_BODY_LIMIT)}…` : message.body;
+   const host = new URL(source.site).host;
+   const page = message.page
+      ? `${message.page} (${message.language === 'tr' ? 'Turkish' : 'English'})`
+      : undefined;
+   const location = [message.city, message.country].filter(Boolean).join(', ');
+   const details: [string, string | undefined][] = [
+      ['From', `${escapeHtml(message.name)} &lt;${escapeHtml(message.email)}&gt;`],
+      ['Page', page],
+      ['Location', location || undefined],
+      ['Time', `${timeFormat.format(new Date(message.createdAt))} (Istanbul)`],
+   ];
+   const environment = ENVIRONMENT_LABELS[source.environment];
+
    return [
-      `<b>New message from ${escapeHtml(message.name)}</b>`,
-      escapeHtml(message.email),
+      `#${source.tag} · <b>${escapeHtml(source.project)}</b> · ${escapeHtml(host)}`,
+      '📬 New contact form message',
+      ...(environment ? [`<i>${environment}</i>`] : []),
       '',
-      escapeHtml(body),
+      ...details
+         .filter(([, value]) => value)
+         .map(([label, value]) => `<b>${label}:</b> ${label === 'From' ? value : escapeHtml(value!)}`),
       '',
+      `<blockquote>${escapeHtml(body)}</blockquote>`,
       message.savedToInbox
-         ? `<a href="${siteUrl()}/admin/messages">Open the inbox</a>`
-         : '⚠️ Saving to the inbox failed. This is the only copy.',
+         ? `<a href="${source.site}/admin/messages">Open the inbox</a>`
+         : '⚠️ Saving to the inbox failed. This notification is the only copy.',
    ].join('\n');
 }
 
@@ -71,10 +139,12 @@ async function sendTelegram(message: ContactNotification) {
 }
 
 async function sendWebhook(message: ContactNotification) {
+   const source = notificationSource();
    const payload = JSON.stringify({
       type: 'contact_message',
+      source,
       ...message,
-      inboxUrl: `${siteUrl()}/admin/messages`,
+      inboxUrl: `${source.site}/admin/messages`,
    });
    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
    const secret = process.env.CONTACT_WEBHOOK_SECRET;
