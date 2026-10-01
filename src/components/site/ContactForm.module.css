@@ -103,22 +103,6 @@
    cursor: progress;
 }
 
-.success,
-.error {
-   font-size: 14px;
-}
-
-.success {
-   color: var(--ink-soft);
-}
-
-.error {
-   color: #b3261e;
-}
-
-:global(:root[data-theme='dark']) .error {
-   color: #f2968f;
-}
 
 @media (max-width: 520px) {
    .row {
