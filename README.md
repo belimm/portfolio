@@ -6,6 +6,7 @@ My personal site, with a built-in admin at `/admin` for editing the content (pro
 - [Run it locally](#run-it-locally)
 - [Admin sign-in and security](#admin-sign-in-and-security)
 - [Editing content](#editing-content)
+- [Contact form notifications](#contact-form-notifications)
 - [Languages and theme](#languages-and-theme)
 - [Deploying on Vercel](#deploying-on-vercel)
 - [Project structure](#project-structure)
@@ -82,6 +83,34 @@ Content, uploads and messages are written to `.data/`. Delete that folder to sta
 - To highlight words in the headline, wrap them in double equals signs: `I build ==software that has to work==.`
 - Every editor has a **Türkçe** section. Empty Turkish fields show the English text on `/tr`.
 - `/cv/tr.pdf` falls back to the English CV. Until a CV is uploaded, `/cv/en.pdf` serves `public/BerkLimoncu_CV.pdf`.
+
+## Contact form notifications
+
+Every message is saved to the admin inbox (`/admin/messages`). To also hear about it right away, set up one or both server-side channels. They run after the response is sent, and if saving to the inbox ever fails, the notification is sent before answering so the message isn't lost.
+
+**Telegram**
+1. In Telegram, open [@BotFather](https://t.me/BotFather), send `/newbot` and follow the steps. Copy the token.
+2. Put `TELEGRAM_BOT_TOKEN=<token>` in `.env.local`, open your new bot in Telegram and send it any message.
+3. Run `npm run telegram:setup`. It prints your `TELEGRAM_CHAT_ID`. Add it to `.env.local` and run the command again to get a test message.
+4. Add both variables to Vercel (Settings → Environment Variables, Production) and redeploy.
+
+To notify a group instead, add the bot to the group, send a message there, and use the group's (negative) chat id.
+
+The chat can be shared with other projects (for example a Coolify server), so every message starts with `#portfolio · Portfolio · https://www.belim.dev` (or `http://localhost:3000` when testing locally), then the sender, the page and language, the visitor's city and country (on Vercel), and the time in Istanbul. Anything that isn't production is labelled (`🧪 Local test`, `🔎 Preview deployment`). Tapping `#portfolio` in Telegram shows only this project's messages. Change the name and tag with `NOTIFY_PROJECT_NAME` and `NOTIFY_PROJECT_TAG`.
+
+**Webhook**: set `CONTACT_WEBHOOK_URL` and the site POSTs JSON like this:
+
+```json
+{ "type": "contact_message",
+  "source": { "project": "Portfolio", "tag": "portfolio", "site": "https://www.belim.dev", "environment": "production" },
+  "name": "Ada", "email": "ada@example.com", "body": "Hello!", "createdAt": "2026-10-01T09:30:00.000Z",
+  "page": "/tr", "language": "tr", "city": "Berlin", "country": "Germany",
+  "savedToInbox": true, "inboxUrl": "https://www.belim.dev/admin/messages" }
+```
+
+With `CONTACT_WEBHOOK_SECRET` set, the request carries `X-Signature-256: sha256=<HMAC-SHA256 of the body>` so the receiver can check it came from the site.
+
+**EmailJS** (the old email notification) still works if its `NEXT_PUBLIC_EMAILJS_*` keys are set, but it runs in the visitor's browser and fails silently. If emails stop, check the EmailJS dashboard (the Gmail connection needs reconnecting from time to time, and the free plan has a monthly limit).
 
 ## Languages and theme
 
