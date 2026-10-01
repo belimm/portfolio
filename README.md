@@ -7,6 +7,7 @@ My personal site, with a built-in admin at `/admin` for editing the content (pro
 - [Admin sign-in and security](#admin-sign-in-and-security)
 - [Editing content](#editing-content)
 - [Contact form notifications](#contact-form-notifications)
+- [GitHub activity](#github-activity)
 - [Languages and theme](#languages-and-theme)
 - [Deploying on Vercel](#deploying-on-vercel)
 - [Project structure](#project-structure)
@@ -111,6 +112,16 @@ The chat can be shared with other projects (for example a Coolify server), so ev
 With `CONTACT_WEBHOOK_SECRET` set, the request carries `X-Signature-256: sha256=<HMAC-SHA256 of the body>` so the receiver can check it came from the site.
 
 **EmailJS** (the old email notification) still works if its `NEXT_PUBLIC_EMAILJS_*` keys are set, but it runs in the visitor's browser and fails silently. If emails stop, check the EmailJS dashboard (the Gmail connection needs reconnecting from time to time, and the free plan has a monthly limit).
+
+## GitHub activity
+
+The Activity section shows the last 3/6/9/12 months of GitHub contributions: totals, active days, longest streak, busiest day, a contribution calendar, contributions per month, and a table view. It's fetched on the server from GitHub's GraphQL API and cached for 6 hours.
+
+1. Create a token at github.com/settings/tokens (fine-grained, **no extra permissions**: the calendar is public profile data).
+2. Set `GITHUB_TOKEN=<token>` in `.env.local`, and on Vercel later.
+3. To include private work, turn on **Include private contributions on my profile** in your GitHub profile settings. Private repos are counted without names.
+
+Without a token the section is simply left out. The GitHub login comes from the profile's GitHub URL; override it with `GITHUB_ACTIVITY_LOGIN`.
 
 ## Languages and theme
 
