@@ -55,6 +55,8 @@ const experienceFields = {
    kind: z.enum(['work', 'education']).default('work'),
    title: required(200),
    organization: text(200).default(''),
+   /** The company's or school's website; makes the entry's title a link. */
+   link: link.default(''),
    location: text(200).default(''),
    start: text(40).default(''),
    end: text(40).default(''),

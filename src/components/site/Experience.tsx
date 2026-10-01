@@ -1,21 +1,47 @@
 import { ExperienceItem } from '../../lib/content';
 import { Dictionary } from '../../lib/i18n';
 import Section, { stagger } from './Section';
+import TrackedLink from './TrackedLink';
 import styles from './Experience.module.css';
+
+const host = (url: string) => {
+   try {
+      return new URL(url).hostname.replace(/^www\./, '');
+   } catch {
+      return url;
+   }
+};
 
 function Entry({ item, at, n }: { item: ExperienceItem; at: string; n: number }) {
    const range = [item.start, item.end].filter(Boolean).join(' – ');
+   const title = (
+      <span className="fill">
+         {item.title}
+         {item.organization && (
+            <>
+               <span className={styles.at}> {at} </span>
+               {item.organization}
+            </>
+         )}
+      </span>
+   );
    return (
-      <li className={`${styles.entry} sr flash-by`} style={stagger(n, 220)}>
+      <li className={`${styles.entry} sr fill-by`} style={stagger(n, 220)}>
          <p className={styles.dates}>{range}</p>
          <div>
-            <h3 className={`${styles.role} flash`}>
-               {item.title}
-               {item.organization && (
-                  <>
-                     <span className={styles.at}> {at} </span>
-                     {item.organization}
-                  </>
+            <h3 className={styles.role}>
+               {item.link ? (
+                  <TrackedLink
+                     href={item.link}
+                     className={styles.link}
+                     log={{ command: `open ${host(item.link)}`, output: `Opened ${item.organization || item.title}` }}>
+                     {title}
+                     <span className={styles.arrow} aria-hidden="true">
+                        ↗
+                     </span>
+                  </TrackedLink>
+               ) : (
+                  title
                )}
             </h3>
             {item.location && <p className={styles.location}>{item.location}</p>}
