@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 import { useTerminal } from '../../contexts/TerminalContext';
 import type { Dictionary } from '../../lib/i18n';
+import Toast, { ToastData } from './Toast';
 import styles from './ContactForm.module.css';
 
-type Status = { kind: 'idle' | 'sending' | 'sent' | 'error'; text?: string };
 
 const emailjsConfig = {
    service: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
@@ -43,26 +43,30 @@ async function notifyByEmail(fields: Record<string, string>) {
 
 export default function ContactForm({ t }: { t: Dictionary['contact'] }) {
    const { addTerminalEntry } = useTerminal();
-   const [status, setStatus] = useState<Status>({ kind: 'idle' });
+   const [sending, setSending] = useState(false);
+   const [toast, setToast] = useState<ToastData | null>(null);
+   const show = (kind: ToastData['kind'], title: string, text: string) =>
+      setToast({ id: Date.now(), kind, title, text });
 
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const form = e.currentTarget;
       const fields = Object.fromEntries(new FormData(form)) as Record<string, string>;
-      setStatus({ kind: 'sending' });
+      setSending(true);
 
       // The inbox is the source of truth; the email is a heads-up. Either one landing is a success.
       const [saved, mailed] = await Promise.allSettled([saveToInbox(fields), notifyByEmail(fields)]);
 
       if (saved.status === 'fulfilled' || mailed.status === 'fulfilled') {
          form.reset();
-         setStatus({ kind: 'sent', text: t.sent });
+         show('success', t.sentTitle, t.sentText);
          addTerminalEntry({ command: `mail --from ${fields.email}`, output: t.delivered });
       } else {
          const rateLimited =
             saved.status === 'rejected' && saved.reason instanceof InboxError && saved.reason.status === 429;
-         setStatus({ kind: 'error', text: rateLimited ? t.tooMany : t.failed });
+         show('error', t.failedTitle, rateLimited ? t.tooMany : t.failed);
       }
+      setSending(false);
    };
 
    return (
@@ -90,17 +94,11 @@ export default function ContactForm({ t }: { t: Dictionary['contact'] }) {
             className={styles.trap}
          />
          <div className={styles.footer}>
-            <button type="submit" disabled={status.kind === 'sending'}>
-               {status.kind === 'sending' ? t.sending : t.send}
+            <button type="submit" disabled={sending}>
+               {sending ? t.sending : t.send}
             </button>
-            {status.text && (
-               <p
-                  role="status"
-                  className={status.kind === 'error' ? styles.error : styles.success}>
-                  {status.text}
-               </p>
-            )}
          </div>
+         <Toast toast={toast} onClose={() => setToast(null)} closeLabel={t.dismiss} />
       </form>
    );
 }
