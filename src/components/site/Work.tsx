@@ -26,8 +26,8 @@ function ProjectRow({ project, t }: { project: Project; t: Dictionary }) {
             )}
          </div>
          <div className={styles.main}>
-            <h3 className={`${styles.title} flash`}>
-               {project.title}
+            <h3 className={styles.title}>
+               <span className="fill">{project.title}</span>
                {project.link && <span className={styles.arrow} aria-hidden="true">↗</span>}
             </h3>
             {project.subtitle && <p className={styles.subtitle}>{project.subtitle}</p>}
@@ -46,12 +46,12 @@ function ProjectRow({ project, t }: { project: Project; t: Dictionary }) {
       </>
    );
 
-   if (!project.link) return <div className={`${styles.row} flash-by`}>{inner}</div>;
+   if (!project.link) return <div className={`${styles.row} fill-by`}>{inner}</div>;
 
    return (
       <TrackedLink
          href={project.link}
-         className={`${styles.row} ${styles.linked} flash-by`}
+         className={`${styles.row} ${styles.linked} fill-by`}
          log={{
             command: `open ${hostOf(project.link)}`,
             output: t.work.opened(project.title),

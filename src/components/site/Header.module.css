@@ -116,8 +116,10 @@
    border-left: 1px solid var(--rule);
 }
 
-.profile:hover {
-   color: var(--ink);
+/* Lemon on hover: yellow in the dark theme, the deeper gold in the light one (pure lemon is unreadable on paper). */
+.profile:hover,
+.profile:focus-visible {
+   color: var(--lemon-text);
    background: var(--paper-raised);
 }
 

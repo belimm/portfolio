@@ -121,7 +121,7 @@
       "kind": "work",
       "title": "Freelance developer",
       "organization": "",
-      "location": "Berlin",
+      "location": "Berlin, DE",
       "start": "May 2024",
       "end": "Present",
       "summary": "AI-driven apps, fintech tools and enterprise web platforms for international clients.",
@@ -143,14 +143,15 @@
             "Telegram ile yönetilen, LLM tabanlı duygu analizi yapan Polymarket trading botları"
           ]
         }
-      }
+      },
+      "link": ""
     },
     {
       "id": "5ea38902",
       "kind": "work",
       "title": "Software engineer",
       "organization": "Fibabanka",
-      "location": "Istanbul",
+      "location": "Istanbul, TR",
       "start": "Dec 2022",
       "end": "Apr 2024",
       "summary": "Full-stack on the embedded lending platform used by 50+ partners.",
@@ -164,7 +165,7 @@
       "translations": {
         "tr": {
           "title": "Yazılım mühendisi",
-          "location": "İstanbul",
+          "location": "İstanbul, TR",
           "start": "Ara 2022",
           "end": "Nis 2024",
           "summary": "50'den fazla partnerin kullandığı gömülü kredi platformunda full-stack geliştirme.",
@@ -175,14 +176,15 @@
             "Docker ile CI/CD süreçleri"
           ]
         }
-      }
+      },
+      "link": "https://www.fibabanka.com.tr"
     },
     {
       "id": "b91125f6",
       "kind": "work",
       "title": "Solution consultant",
       "organization": "Turkcell",
-      "location": "Istanbul",
+      "location": "Istanbul, TR",
       "start": "Dec 2021",
       "end": "Apr 2022",
       "summary": "Ran data operations for Güvende Kal, the Ministry of Health's COVID-19 monitoring app.",
@@ -194,7 +196,7 @@
       "translations": {
         "tr": {
           "title": "Çözüm danışmanı",
-          "location": "İstanbul",
+          "location": "İstanbul, TR",
           "start": "Ara 2021",
           "end": "Nis 2022",
           "summary": "Sağlık Bakanlığı'nın COVID-19 takip uygulaması Güvende Kal'ın veri operasyonlarını yürüttüm.",
@@ -203,14 +205,15 @@
             "Sıfır veri kaybıyla 7/24 olay yönetimi"
           ]
         }
-      }
+      },
+      "link": "https://www.turkcell.com.tr"
     },
     {
       "id": "e5092a6c",
       "kind": "work",
       "title": "Software engineer intern",
       "organization": "Turkcell",
-      "location": "Istanbul",
+      "location": "Istanbul, TR",
       "start": "Jul 2021",
       "end": "Oct 2021",
       "summary": "Internal tools for 250+ employees.",
@@ -222,7 +225,7 @@
       "translations": {
         "tr": {
           "title": "Stajyer yazılım mühendisi",
-          "location": "İstanbul",
+          "location": "İstanbul, TR",
           "start": "Tem 2021",
           "end": "Eki 2021",
           "summary": "250'den fazla çalışan için şirket içi araçlar.",
@@ -231,14 +234,15 @@
             "Şirket içi mikroservisler için load balancer iyileştirmeleri"
           ]
         }
-      }
+      },
+      "link": "https://www.turkcell.com.tr"
     },
     {
       "id": "403d3a82",
       "kind": "education",
       "title": "MSc Software Engineering",
       "organization": "University of Europe for Applied Sciences",
-      "location": "Potsdam",
+      "location": "Potsdam, DE",
       "start": "Mar 2024",
       "end": "Feb 2025",
       "summary": "Thesis: Scalable Analyzer, monolith vs. microservices under load.",
@@ -251,14 +255,15 @@
           "end": "Şub 2025",
           "summary": "Tez: Scalable Analyzer, yük altında monolit ve mikroservis karşılaştırması."
         }
-      }
+      },
+      "link": "https://www.ue-germany.com"
     },
     {
       "id": "19d251d3",
       "kind": "education",
       "title": "BSc Computer Engineering",
       "organization": "Middle East Technical University",
-      "location": "Ankara",
+      "location": "Ankara, TR",
       "start": "Sep 2016",
       "end": "Sep 2022",
       "summary": "Senior project: a crawler that scores web page complexity by depth.",
@@ -271,7 +276,8 @@
           "end": "Eyl 2022",
           "summary": "Bitirme projesi: web sayfalarının karmaşıklığını derinliğe göre puanlayan bir crawler."
         }
-      }
+      },
+      "link": "https://www.metu.edu.tr"
     }
   ],
   "skills": [

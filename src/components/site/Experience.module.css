@@ -28,6 +28,27 @@
    line-height: 1.25;
 }
 
+.link {
+   text-decoration: none;
+   color: inherit;
+}
+
+.arrow {
+   display: inline-block;
+   margin-left: 8px;
+   font-family: var(--font-body);
+   font-size: 15px;
+   color: var(--muted);
+   transition: transform 180ms, color 180ms;
+}
+
+@media (hover: hover) {
+   .link:hover .arrow {
+      color: var(--lemon-text);
+      transform: translate(2px, -2px);
+   }
+}
+
 .at {
    font-style: italic;
    color: var(--muted);

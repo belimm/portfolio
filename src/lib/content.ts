@@ -34,6 +34,7 @@ export type ExperienceItem = {
    kind: 'work' | 'education';
    title: string;
    organization: string;
+   link: string;
    location: string;
    start: string;
    end: string;
