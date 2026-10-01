@@ -75,3 +75,19 @@
 .spark i[data-empty] {
    background: var(--rule);
 }
+
+/* Placeholders, the same sizes as the real rows. */
+.skelHead {
+   height: 12px;
+   width: 60%;
+   margin-bottom: 12px;
+}
+
+.skelStat {
+   height: 38px;
+}
+
+.skelSpark {
+   height: 32px;
+   margin-top: 14px;
+}

@@ -42,6 +42,7 @@ const en = {
    skills: { title: 'Skills' },
    activity: {
       title: 'GitHub',
+      loading: 'Loading GitHub stats…',
       ranges: '{n} months',
       contributions: 'Contributions',
       activeDays: 'Active days',
@@ -125,6 +126,7 @@ const tr: Dictionary = {
    skills: { title: 'Yetenekler' },
    activity: {
       title: 'GitHub',
+      loading: 'GitHub verileri yükleniyor…',
       ranges: '{n} ay',
       contributions: 'Katkı',
       activeDays: 'Aktif gün',

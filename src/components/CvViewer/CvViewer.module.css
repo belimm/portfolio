@@ -179,6 +179,11 @@
    font-size: 13px;
 }
 
+.message .spinner {
+   margin-right: 6px;
+   vertical-align: -0.15em;
+}
+
 .message a {
    text-decoration: underline;
 }

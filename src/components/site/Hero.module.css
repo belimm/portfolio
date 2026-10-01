@@ -156,6 +156,13 @@
 }
 
 /* One-line GitHub summary under the links; jumps to the GitHub section. */
+.pulseSkeleton {
+   width: 280px;
+   max-width: 100%;
+   height: 14px;
+   margin-top: 22px;
+}
+
 .pulse {
    display: inline-block;
    margin-top: 20px;
@@ -164,8 +171,58 @@
    text-decoration: none;
 }
 
-.pulse:hover {
+/* Draws the eye without a hover: the text breathes between muted and lemon, and a lemon band runs down the arrow. */
+.pulseText {
+   animation: pulse-glow 2.8s ease-in-out infinite;
+}
+
+.pulse:hover .pulseText {
+   animation: none;
    color: var(--ink);
+}
+
+.arrow {
+   display: inline-block;
+   margin-left: 6px;
+   background-image: linear-gradient(to bottom, var(--muted) 0 42%, var(--lemon-text) 50%, var(--muted) 58% 100%);
+   background-size: 100% 300%;
+   -webkit-background-clip: text;
+   background-clip: text;
+   color: transparent;
+   animation: arrow-sweep 1.6s ease-in-out infinite, arrow-bob 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+   50% {
+      color: var(--lemon-text);
+   }
+}
+
+@keyframes arrow-sweep {
+   from {
+      background-position: 0 100%;
+   }
+   to {
+      background-position: 0 0;
+   }
+}
+
+@keyframes arrow-bob {
+   50% {
+      transform: translateY(3px);
+   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .pulseText,
+   .arrow {
+      animation: none;
+   }
+
+   .arrow {
+      background-image: none;
+      color: var(--lemon-text);
+   }
 }
 
 @media (max-width: 560px) {

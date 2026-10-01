@@ -290,3 +290,62 @@ html[data-motion='on'] [data-reveal]:not([data-in]) .sr-word > span {
       background-position: 0 0;
    }
 }
+
+/* Loading states. .spinner is a small ring in the current text colour; .skeleton is a placeholder block
+   with a slow lemon-tinted shimmer. Reduced motion: the ring turns slowly, the shimmer stands still. */
+.spinner {
+   display: inline-block;
+   flex: none;
+   width: 1em;
+   height: 1em;
+   border: 2px solid currentColor;
+   border-right-color: transparent;
+   border-radius: 50%;
+   animation: spin 800ms linear infinite;
+}
+
+@keyframes fade-in {
+   from {
+      opacity: 0;
+   }
+}
+
+@keyframes spin {
+   to {
+      transform: rotate(360deg);
+   }
+}
+
+.skeleton {
+   display: block;
+   border-radius: 4px;
+   background-color: var(--paper-raised);
+   background-image: linear-gradient(
+      100deg,
+      transparent 30%,
+      color-mix(in srgb, var(--lemon) 22%, transparent) 50%,
+      transparent 70%
+   );
+   background-size: 220% 100%;
+   background-repeat: no-repeat;
+   animation: shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+   from {
+      background-position: 120% 0;
+   }
+   to {
+      background-position: -120% 0;
+   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .spinner {
+      animation-duration: 2.4s;
+   }
+
+   .skeleton {
+      animation: none;
+   }
+}
